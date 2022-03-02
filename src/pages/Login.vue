@@ -28,6 +28,7 @@
                     rounded
                     unelevated
                     class="q-mt-xl col-12"
+                    to="/register"
                   />
 
                   <div class="text-center text-subtitle1 col-12 q-pt-sm" style="font-size:16px">
@@ -117,7 +118,7 @@ export default {
   },
   data () {
     return {
-      panel: 2,
+      panel: 1,
       panelOp: [
         { value: 1 },
         { value: 2 }
