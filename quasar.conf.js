@@ -40,7 +40,8 @@ module.exports = function (/* ctx */) {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'material-icons' // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it
+      'bootstrap-icons'
     ],
 
     // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build

@@ -1,39 +1,53 @@
 <template>
   <q-tab-panels v-model="step" animated class="absolute-full">
     <q-tab-panel :name="1">
-      <div class="text-h6">Mails</div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <step-one
+        @nextStep="nextStep"
+        :progressValue="23"
+      />
     </q-tab-panel>
 
     <q-tab-panel :name="2">
-      <div class="text-h6">Alarms</div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      <step-two
+        @nextStep="nextStep"
+        :progressValue="55"
+      />
+    </q-tab-panel>
+
+    <q-tab-panel :name="3">
+      <step-three
+        @nextStep="nextStep"
+        :progressValue="75"
+        @prevStep="prevStep"
+      />
     </q-tab-panel>
   </q-tab-panels>
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import StepOne from '../components/registerSteps/StepOne.vue'
+import StepTwo from '../components/registerSteps/StepTwo.vue'
+import StepThree from '../components/registerSteps/StepThree.vue'
+
 export default {
+  components: { StepOne, StepTwo, StepThree },
   data () {
     return {
-      step: 1,
+      step: 2,
       form: {
         email: '',
         password: ''
-      },
-      repeatPassword: ''
+      }
     }
   },
-  validations () {
-    return {
-      form: {
-        email: { required },
-        password: { required }
-      },
-      repeatPassword: {
-        sameAsPassword: value => value === this.form.password
-      }
+  methods: {
+    nextStep (stateStep) {
+      console.log(stateStep, 'nexxx')
+      if (stateStep) this.form = stateStep
+      this.step++
+    },
+    prevStep () {
+      this.step--
     }
   }
 }
@@ -43,6 +57,7 @@ export default {
 
 .q-tab-panel {
   padding: 0 !important;
+  background-color: #D9F2EE;
 }
 
 </style>

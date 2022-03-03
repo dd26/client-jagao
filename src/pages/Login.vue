@@ -77,7 +77,7 @@
                   <q-input
                     v-model="form.password"
                     placeholder="**************"
-                    :error="$v.form.password"
+                    :error="$v.form.password.$error"
                     @blur="$v.form.password.$touch()"
                     class="col-12"
                     outlined
@@ -120,8 +120,8 @@ export default {
     return {
       panel: 1,
       panelOp: [
-        { value: 1 },
-        { value: 2 }
+        { value: 1, label: '' },
+        { value: 2, label: '' }
       ],
       form: {
         email: '',
