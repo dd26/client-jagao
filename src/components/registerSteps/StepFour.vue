@@ -9,7 +9,7 @@
 
         <div class="btn-progress-container row justify-center items-center col-12 q-pt-md">
           <q-btn
-            @click="nextStep"
+            to="/login"
             icon="arrow_forward"
             round
             class="btn-progress"
