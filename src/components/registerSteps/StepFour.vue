@@ -1,5 +1,5 @@
 <template>
-  <section class="column fit">
+  <section class="column fit" style="overflow: hidden">
     <div class="col-6 container-img-2"></div>
     <div class="col-6 column">
       <div class="q-pt-lg window-width row justify-center col-1">

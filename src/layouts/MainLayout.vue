@@ -1,24 +1,22 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
+    <q-header>
+      <q-toolbar class="row justify-between">
         <q-btn
           flat
           dense
           round
-          icon="menu"
+          size="10px"
+          icon="img:vectors/menu1.svg"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-avatar size="26px">
+          <img src="vectors/avatar1.svg" />
+        </q-avatar>
       </q-toolbar>
     </q-header>
-
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
@@ -40,8 +38,18 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
-      <router-view />
+    <q-footer>
+      <q-tabs v-model="tab">
+        <q-tab :name="1" icon="img:vectors/home1.svg" />
+        <q-tab :name="2" icon="img:vectors/search1.svg" />
+        <q-tab :name="3" icon="img:vectors/icon1.svg" />
+      </q-tabs>
+    </q-footer>
+
+    <q-page-container class="bg-primary">
+      <section class="card-view">
+        <router-view />
+      </section>
     </q-page-container>
   </q-layout>
 </template>
@@ -55,42 +63,6 @@ const linksData = [
     caption: 'quasar.dev',
     icon: 'school',
     link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
   }
 ]
 
@@ -99,9 +71,19 @@ export default {
   components: { EssentialLink },
   data () {
     return {
+      tab: 1,
       leftDrawerOpen: false,
       essentialLinks: linksData
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.card-view {
+  background-color: #FFF;
+  border-radius: 20px 20px 0 0;
+}
+
+</style>

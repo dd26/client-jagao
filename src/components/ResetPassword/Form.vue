@@ -15,6 +15,7 @@
               dense
             />
             <q-btn
+              to="/reset-password"
               label="Reset"
               color="primary"
               rounded

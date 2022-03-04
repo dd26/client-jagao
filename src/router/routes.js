@@ -9,6 +9,10 @@ const routes = [
     component: () => import('pages/Register.vue')
   },
   {
+    path: '/reset-password',
+    component: () => import('pages/ResetPassword.vue')
+  },
+  {
     path: '/',
     component: () => import('pages/Splash.vue')
   },
