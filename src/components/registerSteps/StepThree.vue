@@ -226,7 +226,7 @@
             type="textarea"
             bg-color="white"
             dense
-            label="Your Adress #1-02"
+            placeholder="Your Adress #1-02"
           />
         </div>
 
@@ -235,7 +235,6 @@
           <q-input
             v-model="stateForm.discountCoupon"
             placeholder="A1B2C3"
-            @blur="$v.stateForm.discountCoupon.$touch()"
             class="col-12"
             outlined
             bg-color="white"
@@ -258,6 +257,53 @@
             />
           </div>
         </section>
+
+        <section v-if="stateForm.isEmployee" class="col-12 row q-px-md">
+          <div class="q-pt-md text-bold text-primary q-pb-md" style="font-size:20px; font-weight: 700;">Attach your CV here</div>
+
+          <div
+            @click="clickEmployeeFile"
+            class="col-12 container-upload-file-employee bg-primary row"
+          >
+            <div class="col-2 row items-center justify-center">
+              <q-icon name="img:vectors/attach1.svg" size="20px" />
+            </div>
+            <div class="col-10 row justify-start items-center container-name-file-employee">
+              <div class="q-pl-md" style="font-size: 16px;font-weight: 300;color: #B3B3B3">
+                {{ employeeFile ? subCadena(employeeFile.name, 19) : 'Attach your CV' }}
+              </div>
+            </div>
+            <q-file
+              ref="employeeFilePdf"
+              accept=".pdf"
+              style="display: none;"
+              v-model="employeeFile"
+            />
+          </div>
+        </section>
+
+        <div class="col-12 text-center q-pt-lg" style="font-weight: 400; font-size: 16px; line-height: 20px">When all your information has been validated you can use our tools to get the services!</div>
+
+        <div class="col-12 text-center q-pt-md text-primary" style="font-size: 16px; font-weight: 500; line-height: 20px">You will receive a notification when your profile is validated.</div>
+
+        <div class="col-12 text-center q-pt-md" style="color: #A1A1A1; font-size: 12px; font-weight: 400;">Privacy Policy</div>
+
+        <div class="btn-progress-container col-12 row justify-center items-center q-pt-xl">
+          <q-btn
+            @click="nextStep"
+            icon="arrow_forward"
+            round
+            class="btn-progress"
+            size="lg"
+            color="primary"
+          />
+          <q-circular-progress
+            size="80px"
+            :value="progressVal"
+            color="primary"
+            :thickness="0.07"
+          />
+        </div>
       </section>
 
     </q-scroll-area>
@@ -302,7 +348,8 @@ export default {
         city: '',
         address: '',
         discountCoupon: '',
-        isEmployee: false
+        isEmployee: false,
+        profileImg: null
       },
       isPwd: false,
       progressVal: 0,
@@ -326,7 +373,8 @@ export default {
         { label: 'City 1', value: 1 },
         { label: 'City 2', value: 2 },
         { label: 'City 3', value: 3 }
-      ]
+      ],
+      employeeFile: null
     }
   },
   mounted () {
@@ -334,6 +382,24 @@ export default {
     this.progressVal = this.progressValue
   },
   methods: {
+    nextStep () {
+      this.stateForm.profileImg = this.profile.file
+      this.stateForm.birthdate = this.birthdate
+      console.log(this.$v.stateForm)
+      this.$v.stateForm.$touch()
+      if (this.$v.stateForm.$invalid) return
+      this.$emit('nextStep', this.stateForm)
+    },
+    subCadena (cadena, longitud) {
+      if (cadena.length > longitud) {
+        return cadena.substring(0, longitud) + '...'
+      } else {
+        return cadena
+      }
+    },
+    clickEmployeeFile () {
+      this.$refs.employeeFilePdf.$el.click()
+    },
     formatDate () {
       const date = this.birthdate.split('/')
       const month = date[1]
@@ -346,11 +412,6 @@ export default {
     },
     clickProfileImg () {
       this.$refs.profileImgRef.$el.click()
-    },
-    nextStep () {
-      this.$v.stateForm.$touch()
-      if (this.$v.stateForm.$invalid) return
-      this.$emit('nextStep', this.stateForm)
     },
     onInputProfile () {
       this.profile.img = URL.createObjectURL(this.profile.file)
@@ -382,6 +443,9 @@ export default {
         },
         address: {
           required
+        },
+        profileImg: {
+          required
         }
       }
     }
@@ -390,6 +454,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.container-name-file-employee {
+  border: 4px solid $primary;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: #D9F2EE;
+}
+
+.container-upload-file-employee {
+  cursor: pointer;
+  border-radius: 8px;
+  height: 60px;
+}
 .img-profile-container {
   width: 150px;
   height: 150px;

@@ -21,6 +21,14 @@
         @prevStep="prevStep"
       />
     </q-tab-panel>
+
+    <q-tab-panel :name="4">
+      <step-four
+        @nextStep="nextStep"
+        :progressValue="100"
+        :name="form.name"
+      />
+    </q-tab-panel>
   </q-tab-panels>
 </template>
 
@@ -28,22 +36,24 @@
 import StepOne from '../components/registerSteps/StepOne.vue'
 import StepTwo from '../components/registerSteps/StepTwo.vue'
 import StepThree from '../components/registerSteps/StepThree.vue'
+import StepFour from '../components/registerSteps/StepFour.vue'
 
 export default {
-  components: { StepOne, StepTwo, StepThree },
+  components: { StepOne, StepTwo, StepThree, StepFour },
   data () {
     return {
-      step: 2,
+      step: 4,
       form: {
         email: '',
-        password: ''
+        password: '',
+        name: 'Isabel'
       }
     }
   },
   methods: {
     nextStep (stateStep) {
       console.log(stateStep, 'nexxx')
-      if (stateStep) this.form = stateStep
+      if (stateStep) this.form = { ...this.form, ...stateStep }
       this.step++
     },
     prevStep () {
