@@ -42,7 +42,7 @@ export default {
   components: { StepOne, StepTwo, StepThree, StepFour },
   data () {
     return {
-      step: 4,
+      step: 1,
       form: {
         email: '',
         password: '',

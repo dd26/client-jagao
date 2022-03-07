@@ -16,15 +16,12 @@
           :key="itm.id"
           class="card-style-items col-5 flex flex-center"
         >
-        <!--
-
-            <div class="row">
-              <div class="col-12 style-icon">
-                <q-icon :name="itm.icon" size="50px" />
-              </div>
-
+          <div class="row justify-center">
+            <div class="col-6 style-icon row items-center justify-center">
+              <q-icon :name="itm.icon" size="44px" />
             </div>
-         -->
+            <div class="col-12 text-center q-pt-sm text-primary" style="font-size:20px; font-weight: 700; line-height: 18px;"> {{itm.title}} </div>
+          </div>
         </q-card>
       </section>
     </section>
@@ -64,6 +61,7 @@ export default {
   background-position: center;
   height: 175px;
   width: 100%;
+  border-radius: 20px 20px 0 0;
 }
 
 .card-style-items {

@@ -88,6 +88,7 @@
                   </q-input>
 
                   <q-btn
+                    to="/home"
                     label="Sign in"
                     color="primary"
                     rounded

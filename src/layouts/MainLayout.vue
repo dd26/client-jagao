@@ -12,9 +12,16 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-avatar size="26px">
-          <img src="vectors/avatar1.svg" />
-        </q-avatar>
+        <q-btn
+          flat
+          round
+          dense
+          to="/profile"
+        >
+          <q-avatar size="26px">
+            <img src="vectors/avatar1.svg" />
+          </q-avatar>
+        </q-btn>
       </q-toolbar>
     </q-header>
     <q-drawer

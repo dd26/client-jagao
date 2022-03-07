@@ -20,8 +20,14 @@ const routes = [
     path: '/home',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue') },
+      { path: '/profile', component: () => import('pages/client/Profile.vue') },
+      { path: '/cards/form', component: () => import('pages/client/card/Form.vue') },
+      { path: '/address/form', component: () => import('pages/client/address/Form.vue') }
     ]
+  },
+  {
+    path: '/success', component: () => import('pages/Success.vue')
   },
   {
     path: '/',
