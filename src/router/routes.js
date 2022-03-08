@@ -21,9 +21,13 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-      { path: '/profile', component: () => import('pages/client/Profile.vue') },
+      { path: '/profile/client', component: () => import('pages/client/Profile.vue') },
+      { path: '/profile/employee', component: () => import('pages/employee/Profile.vue') },
       { path: '/cards/form', component: () => import('pages/client/card/Form.vue') },
-      { path: '/address/form', component: () => import('pages/client/address/Form.vue') }
+      { path: '/address/form', component: () => import('pages/client/address/Form.vue') },
+      { path: '/services/form', component: () => import('pages/employee/services/Form.vue') },
+      { path: '/settings', component: () => import('pages/Setting.vue') },
+      { path: '/notifications/employee', component: () => import('pages/employee/Notifications.vue') }
     ]
   },
   {
