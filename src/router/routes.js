@@ -27,7 +27,10 @@ const routes = [
       { path: '/address/form', component: () => import('pages/client/address/Form.vue') },
       { path: '/services/form', component: () => import('pages/employee/services/Form.vue') },
       { path: '/settings', component: () => import('pages/Setting.vue') },
-      { path: '/notifications/employee', component: () => import('pages/employee/Notifications.vue') }
+      { path: '/notifications/client', component: () => import('src/pages/client/Notifications.vue') },
+      { path: '/notifications/employee', component: () => import('src/pages/employee/Notifications.vue') },
+      { path: '/accounts', component: () => import('pages/account/List.vue') },
+      { path: '/accounts/form', component: () => import('pages/account/Form.vue') }
     ]
   },
   {

@@ -21,6 +21,7 @@
           v-ripple
           v-for="(itm, ind) in configs"
           :key="ind"
+          :to="itm.to"
         >
           <q-item-section>
             <q-item-label class="row items-center q-pl-xl">
@@ -48,7 +49,7 @@ export default {
     return {
       configs: [
         { icon: 'img:vectors/edit3.svg', title: 'Edit Profile' },
-        { icon: 'img:vectors/bank1.svg', title: 'Bank information' },
+        { icon: 'img:vectors/bank1.svg', title: 'Bank information', to: '/accounts' },
         { icon: 'img:vectors/notification1.svg', title: 'Notifications' },
         { icon: 'img:vectors/info1.svg', title: 'Technical Support' }
       ]

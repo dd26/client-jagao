@@ -47,7 +47,7 @@
 
     <q-footer>
       <q-tabs v-model="tab">
-        <q-tab :name="1" icon="img:vectors/home1.svg" />
+        <q-tab :name="1" icon="img:vectors/home1.svg" @click="$router.push('/home')" />
         <q-tab :name="2" icon="img:vectors/search1.svg" />
         <q-tab :name="3" icon="img:vectors/icon1.svg" @click="$router.push('/notifications/employee')" />
       </q-tabs>
