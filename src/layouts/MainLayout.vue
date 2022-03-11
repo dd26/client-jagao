@@ -16,7 +16,7 @@
           flat
           round
           dense
-          to="/profile/employee"
+          to="/profile/other"
         >
           <q-avatar size="26px">
             <img src="vectors/avatar1.svg" />
