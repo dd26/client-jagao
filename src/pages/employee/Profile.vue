@@ -120,7 +120,7 @@ export default {
   },
   data () {
     return {
-      hasVerified: true,
+      hasVerified: false,
       name: 'Isabel Summerton',
       states: [
         { name: 'Available', id: 1, color: 'positive' },

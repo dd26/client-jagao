@@ -81,7 +81,7 @@ export default {
   components: { ItemAddressesProfile },
   data () {
     return {
-      hasVerified: true,
+      hasVerified: false,
       name: 'Isabel Summerton'
     }
   }
@@ -89,4 +89,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.verified-style {
+  background-color: rgb(255, 255, 255);
+  padding: 5px;
+  border-radius: 50%;
+}
+
 </style>

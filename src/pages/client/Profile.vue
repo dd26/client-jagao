@@ -70,7 +70,7 @@ export default {
   components: { AddressScroll, CardScroll },
   data () {
     return {
-      hasVerified: true,
+      hasVerified: false,
       name: 'Isabel Summerton'
     }
   }

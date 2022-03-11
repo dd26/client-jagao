@@ -83,6 +83,7 @@
                     outlined
                     bg-color="white"
                     dense
+                    type="password"
                   >
                     <q-icon name="lock" slot="prepend" />
                   </q-input>
