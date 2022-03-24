@@ -83,13 +83,18 @@
                     outlined
                     bg-color="white"
                     dense
-                    type="password"
+                    :type="isPwd ? 'password' : 'text'"
                   >
                     <q-icon name="lock" slot="prepend" />
+                    <q-icon
+                      @click="isPwd = !isPwd"
+                      :name="isPwd ? 'visibility' : 'visibility_off'"
+                      slot="append"
+                    />
                   </q-input>
 
                   <q-btn
-                    to="/home"
+                    @click="submit"
                     label="Sign in"
                     color="primary"
                     rounded
@@ -114,6 +119,7 @@
 // importar vuelidate
 import { required } from 'vuelidate/lib/validators'
 import ResetPassword from '../components/ResetPassword/Form'
+import { mapMutations } from 'vuex'
 export default {
   components: {
     ResetPassword
@@ -129,7 +135,8 @@ export default {
         email: '',
         password: ''
       },
-      forgotPassDlg: false
+      forgotPassDlg: false,
+      isPwd: true
     }
   },
   validations () {
@@ -138,6 +145,22 @@ export default {
         email: { required },
         password: { required }
       }
+    }
+  },
+  methods: {
+    ...mapMutations('generals', ['login']),
+    async submit () {
+      this.$v.form.$touch()
+      if (this.$v.form.$invalid) return
+
+      this.$q.loading.show()
+      await this.$api.post('login_app', this.form).then(res => {
+        this.$q.loading.hide()
+        if (res) {
+          this.login(res)
+          this.$router.push('/home')
+        }
+      })
     }
   }
 }
