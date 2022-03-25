@@ -122,12 +122,13 @@
           class="btn-progress"
           size="lg"
           color="primary"
+          :disable="isLoading"
         />
         <q-circular-progress
           size="80px"
-          :value="progressVal"
           color="primary"
           :thickness="0.07"
+          :indeterminate="isLoading"
         />
       </div>
     </div>
@@ -151,7 +152,8 @@ export default {
         { name: 'cancel', color: 'negative', value: 'n' }
       ],
       isPwd: false,
-      progressVal: 0
+      progressVal: 0,
+      isLoading: false
     }
   },
   mounted () {
@@ -159,10 +161,23 @@ export default {
     this.progressVal = this.progressValue
   },
   methods: {
-    nextStep () {
+    async nextStep () {
       this.$v.$touch()
       if (this.$v.$invalid) return
-      this.$emit('nextStep', this.stateForm)
+      this.isLoading = true
+      await this.$api.post('mail_verify', this.stateForm).then(res => {
+        this.isLoading = false
+        console.log(res, 'res')
+        if (res.status === 'error') {
+          this.$q.notify({
+            color: 'negative',
+            textColor: 'white',
+            message: res.message
+          })
+        } else if (res.status === 'success') {
+          this.$emit('nextStep', this.stateForm)
+        }
+      })
     }
   },
   validations () {

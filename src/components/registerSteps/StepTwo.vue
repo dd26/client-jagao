@@ -25,7 +25,7 @@
         />
         <q-circular-progress
           size="80px"
-          :value="progressValue"
+          :indeterminate="isLoading"
           color="primary"
           :thickness="0.07"
         />
@@ -46,7 +46,8 @@ export default {
   props: ['progressValue'],
   data () {
     return {
-      progressVal: 0
+      progressVal: 0,
+      isLoading: false
     }
   },
   mounted () {

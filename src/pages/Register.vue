@@ -19,6 +19,7 @@
         @nextStep="nextStep"
         :progressValue="75"
         @prevStep="prevStep"
+        :form="form"
       />
     </q-tab-panel>
 
