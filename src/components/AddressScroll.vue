@@ -55,7 +55,20 @@ export default {
         backgroundColor: '#027be3',
         width: '0',
         opacity: 0
-      }
+      },
+      data: []
+    }
+  },
+  mounted () {
+    this.getAddresses()
+  },
+  methods: {
+    async getAddresses () {
+      this.$q.loading.show()
+      await this.$api.get('addresses').then(res => {
+        this.$q.loading.hide()
+        this.data = res
+      })
     }
   }
 }

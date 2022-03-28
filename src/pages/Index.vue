@@ -43,6 +43,14 @@ export default {
         { icon: 'img:vectors/wheel1.svg', title: 'Company Service', id: 4 }
       ]
     }
+  },
+  mounted () {
+    this.getUserInfo()
+  },
+  methods: {
+    async getUserInfo () {
+      this.user = await this.$getUserInfo()
+    }
   }
 }
 </script>

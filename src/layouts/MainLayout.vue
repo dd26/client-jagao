@@ -16,10 +16,10 @@
           flat
           round
           dense
-          to="/profile/other"
+          :to="role === 2 ? '/profile/employee' : '/profile/client'"
         >
           <q-avatar size="26px">
-            <img src="vectors/avatar1.svg" />
+            <img :src="userAvatarUrl" />
           </q-avatar>
         </q-btn>
       </q-toolbar>
@@ -80,7 +80,21 @@ export default {
     return {
       tab: 1,
       leftDrawerOpen: false,
-      essentialLinks: linksData
+      essentialLinks: linksData,
+      userAvatarUrl: 'vectors/avatar1.svg',
+      role: null
+    }
+  },
+  mounted () {
+    this.getUserInfo()
+  },
+  methods: {
+    async getUserInfo () {
+      const user = await this.$getUserInfo()
+      const folder = user.role_id === 3 ? 'customers' : 'specialists'
+      this.role = user.role_id
+      this.userAvatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
+      console.log(this.userAvatarUrl, 'avatarUrl')
     }
   }
 }
