@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     nextStep () {
-      this.$emit('nextStep')
+      this.$router.push('/login')
     }
   }
 }

@@ -203,7 +203,6 @@ export default {
 
 .btn-progress-container {
   position: relative;
-
 }
 
 </style>

@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  props: ['name', 'progressValue'],
+  props: ['name', 'progressValue', 'isEmployee'],
   data () {
     return {
       progressVal: 0
@@ -40,6 +40,10 @@ export default {
   },
   mounted () {
     this.progressVal = this.progressValue
+    console.log(this.isEmployee, 'isEMployee')
+    if (this.isEmployee) {
+      this.$emit('nextStep')
+    }
   },
   methods: {
     nextStep () {

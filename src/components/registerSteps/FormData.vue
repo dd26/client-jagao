@@ -248,21 +248,9 @@
 
         <section class="col-12 q-px-md row">
           <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Important</div>
-
-          <div class="col-12 row">
-            <q-checkbox
-              v-model="stateForm.isEmployee"
-              size="lg"
-              val="lg"
-              label="I want to work"
-              keep-color
-              color="primary"
-              class="q-mt-md"
-            />
-          </div>
         </section>
 
-        <section v-if="stateForm.isEmployee" class="col-12 row q-px-md">
+        <section class="col-12 row q-px-md">
           <div class="q-pt-md text-bold text-primary q-pb-md" style="font-size:20px; font-weight: 700;">Attach your CV here</div>
 
           <div
@@ -376,7 +364,6 @@ export default {
         city: '',
         address: '',
         discountCoupon: '',
-        isEmployee: false,
         profileImg: null
       },
       isPwd: false,

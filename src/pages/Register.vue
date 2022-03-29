@@ -8,14 +8,23 @@
     </q-tab-panel>
 
     <q-tab-panel :name="2">
-      <step-two
+      <select-user-type
         @nextStep="nextStep"
+        @prevStep="prevStep"
         :progressValue="55"
       />
     </q-tab-panel>
 
     <q-tab-panel :name="3">
-      <step-three
+      <illustration-info
+        v-bind="form"
+        @nextStep="nextStep"
+        @prevStep="prevStep"
+      />
+    </q-tab-panel>
+
+    <q-tab-panel :name="4">
+      <form-data
         @nextStep="nextStep"
         :progressValue="75"
         @prevStep="prevStep"
@@ -23,11 +32,19 @@
       />
     </q-tab-panel>
 
-    <q-tab-panel :name="4">
+    <q-tab-panel :name="5">
       <step-four
         @nextStep="nextStep"
         :progressValue="100"
         :name="form.name"
+        :isEmployee="form.isEmployee"
+      />
+    </q-tab-panel>
+
+    <q-tab-panel :name="6">
+      <mail-step
+        @nextStep="nextStep"
+        :progressValue="100"
       />
     </q-tab-panel>
   </q-tab-panels>
@@ -35,12 +52,14 @@
 
 <script>
 import StepOne from '../components/registerSteps/StepOne.vue'
-import StepTwo from '../components/registerSteps/StepTwo.vue'
-import StepThree from '../components/registerSteps/StepThree.vue'
+import FormData from '../components/registerSteps/FormData.vue'
 import StepFour from '../components/registerSteps/StepFour.vue'
+import SelectUserType from 'src/components/registerSteps/SelectUserType.vue'
+import IllustrationInfo from 'src/components/registerSteps/IllustrationInfo.vue'
+import MailStep from 'src/components/registerSteps/MailStep.vue'
 
 export default {
-  components: { StepOne, StepTwo, StepThree, StepFour },
+  components: { StepOne, FormData, StepFour, SelectUserType, IllustrationInfo, MailStep },
   data () {
     return {
       step: 1,
@@ -53,8 +72,8 @@ export default {
   },
   methods: {
     nextStep (stateStep) {
-      console.log(stateStep, 'nexxx')
       if (stateStep) this.form = { ...this.form, ...stateStep }
+      console.log(stateStep, 'stateStep', this.form, 'form')
       this.step++
     },
     prevStep () {
