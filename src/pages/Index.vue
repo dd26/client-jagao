@@ -7,6 +7,54 @@
       </div>
     </section>
 
+    <section class="q-pa-md q-px-lg">
+      <q-input
+        v-model="search"
+        dense
+        borderless
+        placeholder="Find new services"
+        class="q-px-md"
+        style="background-color: #D9F2EE; border-radius: 100px"
+      >
+        <q-icon name="search" slot="prepend" color="primary" />
+      </q-input>
+    </section>
+
+    <section class="q-px-lg row">
+      <div class="col-12 text-left text-primary" style="font-size: 25px; font-weight: 700">Active Services</div>
+      <q-scroll-area
+        class="col-12"
+        style="height: 140px;"
+        horizontal
+      >
+        <div class="row no-wrap">
+          <q-card
+            v-for="n in 3"
+            :key="n"
+            style="width: 250px; height: 130px; border-radius: 12px;"
+            class="bg-secondary q-my-xs q-ml-sm row"
+          >
+            <div class="col-4 row items-center justify-center">
+              <q-icon
+                name="img:vectors/home1.svg"
+                size="40px"
+              />
+            </div>
+            <div class="col-8 q-pa-xs q-px-sm row items-center">
+              <div class="text-white" style="font-weight: 700; font-size: 16px;">Home Cleaning</div>
+              <div class="text-white text-caption">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </div>
+              <div class="row q-gutter-x-sm">
+                <q-icon name="bi-calendar-event" size="xs" color="white" />
+                <div class="text-caption text-white">20/03/2022</div>
+              </div>
+            </div>
+          </q-card>
+        </div>
+      </q-scroll-area>
+    </section>
+
     <section class="row q-pt-xl">
       <div class="col-12 text-center text-primary" style="font-size: 25px; font-weight: 700">Services</div>
 
@@ -33,6 +81,7 @@ export default {
   name: 'PageIndex',
   data () {
     return {
+      search: '',
       user: {
         name: 'Isabel'
       },

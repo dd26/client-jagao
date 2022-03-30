@@ -158,7 +158,11 @@ export default {
         this.$q.loading.hide()
         if (res) {
           this.login(res)
-          this.$router.push('/home')
+          if (res.role_id === 3) {
+            this.$router.push('/home')
+          } else {
+            this.$router.push('/home/employee')
+          }
         }
       })
     }

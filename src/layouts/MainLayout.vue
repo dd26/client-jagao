@@ -28,21 +28,65 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-1"
+      content-class="bg-secondary"
     >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+      <section class="fit column text-white">
+
+        <section class="col-2 q-pa-md">
+          <div class="row">
+            <img src="logos/logo2.svg" width="100px" height="90px" />
+          </div>
+        </section>
+
+        <section class="col-7 column justify-center">
+          <q-list class="text-white">
+            <q-item
+              v-for="(item, index) in menuItems"
+              :key="index"
+              clickable
+              v-ripple
+            >
+              <q-item-section avatar>
+                <q-icon
+                  :name="item.icon"
+                  size="sm"
+                  color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label> {{ item.title }} </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </section>
+
+        <section class="col-3 q-pa-md column justify-end">
+          <div class="row">
+            <q-item
+              clickable
+              v-ripple
+              class="col-12"
+              @click="logoutBtnClicked"
+            >
+              <q-item-section avatar>
+                <q-icon
+                  name="img:vectors/icon5.svg"
+                  size="sm"
+                  color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label> Log Out </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <section class="row col-12 q-pa-md">
+              <div class="text-subtitle1 text-bold col-12">Jagao 2022</div>
+              <div class="text-caption col-12">Privacy Policy</div>
+            </section>
+          </div>
+        </section>
+      </section>
     </q-drawer>
 
     <q-footer>
@@ -62,25 +106,37 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksData = [
+import { mapMutations } from 'vuex'
+const menuItemsData = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'My services',
+    icon: 'img:vectors/icon7.svg',
+    to: '/home'
+  },
+  {
+    title: 'History',
+    icon: 'img:vectors/icon8.svg',
+    to: '/home'
+  },
+  {
+    title: 'Switch Account',
+    icon: 'img:vectors/icon6.svg',
+    to: '/home'
+  },
+  {
+    title: 'Help',
+    icon: 'img:vectors/icon4.svg',
+    to: '/home'
   }
 ]
 
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
   data () {
     return {
       tab: 1,
       leftDrawerOpen: false,
-      essentialLinks: linksData,
+      menuItems: menuItemsData,
       userAvatarUrl: 'vectors/avatar1.svg',
       role: null
     }
@@ -89,6 +145,11 @@ export default {
     this.getUserInfo()
   },
   methods: {
+    ...mapMutations('generals', ['logout']),
+    logoutBtnClicked () {
+      this.logout()
+      this.$router.push('/login')
+    },
     async getUserInfo () {
       const user = await this.$getUserInfo()
       const folder = user.role_id === 3 ? 'customers' : 'specialists'
