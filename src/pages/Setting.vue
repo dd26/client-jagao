@@ -22,6 +22,7 @@
           v-for="(itm, ind) in configs"
           :key="ind"
           :to="itm.to"
+          exact
         >
           <q-item-section>
             <q-item-label class="row items-center q-pl-xl">
@@ -48,10 +49,12 @@ export default {
   data () {
     return {
       configs: [
-        { icon: 'img:vectors/edit3.svg', title: 'Edit Profile' },
-        { icon: 'img:vectors/bank1.svg', title: 'Bank information', to: '/accounts' },
-        { icon: 'img:vectors/notification1.svg', title: 'Notifications' },
-        { icon: 'img:vectors/info1.svg', title: 'Technical Support' }
+        { icon: 'img:vectors/edit3.svg', title: 'Edit Profile', to: '/profile/info' },
+        { icon: 'settings', title: 'Skilss' },
+        { icon: 'img:vectors/bank1.svg', title: 'Bank info', to: '/accounts' },
+        { icon: 'lock', title: 'Password & Security', to: '/' },
+        { icon: 'img:vectors/notification1.svg', title: 'Notifications' }
+        /* { icon: 'img:vectors/info1.svg', title: 'Technical Support' } */
       ]
     }
   }

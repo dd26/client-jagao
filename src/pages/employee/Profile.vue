@@ -22,7 +22,7 @@
     <section class="row justify-center">
       <div class="col-6 row justify-center" style="position:relative;max-width: 150px;">
         <q-avatar size="150px">
-          <img src="vectors/avatar2.svg" width="100%" height="100%">
+          <img :src="avatarUrl" width="100%" height="100%">
         </q-avatar>
         <div class="absolute-bottom-right q-mr-sm verified-style">
           <q-icon :name="!hasVerified ? 'img:vectors/verified1.svg' : 'img:vectors/verified2.svg'" size="lg">
@@ -134,7 +134,8 @@ export default {
         { progress: '00/04', icon: 'img:vectors/can1.svg', title: 'House Service', id: 2 },
         { progress: '00/04', icon: 'img:vectors/briefcase1.svg', title: 'Road Service', id: 3 },
         { progress: '00/04', icon: 'img:vectors/wheel1.svg', title: 'Company Service', id: 4 }
-      ]
+      ],
+      avatarUrl: 'vectors/avatar2.svg'
     }
   },
   computed: {
@@ -142,7 +143,20 @@ export default {
       return this.states.find(state => state.id === this.state)
     }
   },
+  mounted () {
+    this.getUserInfo()
+  },
   methods: {
+    async getUserInfo () {
+      const user = await this.$getUserInfo()
+      if (user) {
+        this.name = user.name
+        this.hasVerified = user.verified
+        const folder = user.role_id === 3 ? 'customers' : 'specialists'
+        this.role = user.role_id
+        this.avatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
+      }
+    },
     changeState (id) {
       this.state = id
       this.expanded = false

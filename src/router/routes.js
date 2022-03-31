@@ -25,6 +25,7 @@ const routes = [
       { path: '/profile/client', component: () => import('pages/client/Profile.vue') },
       { path: '/profile/employee', component: () => import('pages/employee/Profile.vue') },
       { path: '/profile/other', component: () => import('pages/Profile.vue') },
+      { path: '/profile/info', component: () => import('pages/profile/Info.vue') },
       { path: '/cards/form', component: () => import('pages/client/card/Form.vue') },
       { path: '/address/form', component: () => import('pages/client/address/Form.vue') },
       { path: '/services/form', component: () => import('pages/employee/services/Form.vue') },
@@ -34,7 +35,8 @@ const routes = [
       { path: '/notifications/employee', component: () => import('src/pages/employee/Notifications.vue') },
       { path: '/notifications/other', component: () => import('src/pages/Notifications.vue') },
       { path: '/accounts', component: () => import('pages/account/List.vue') },
-      { path: '/accounts/form', component: () => import('pages/account/Form.vue') }
+      { path: '/accounts/form', component: () => import('pages/account/Form.vue') },
+      { path: '/search', component: () => import('pages/employee/Search.vue') }
     ]
   },
   {
