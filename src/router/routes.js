@@ -26,6 +26,7 @@ const routes = [
       { path: '/profile/employee', component: () => import('pages/employee/Profile.vue') },
       { path: '/profile/other', component: () => import('pages/Profile.vue') },
       { path: '/profile/info', component: () => import('pages/profile/Info.vue') },
+      { path: '/profile/info/:id', component: () => import('pages/profile/Form.vue') },
       { path: '/cards/form', component: () => import('pages/client/card/Form.vue') },
       { path: '/address/form', component: () => import('pages/client/address/Form.vue') },
       { path: '/services/form', component: () => import('pages/employee/services/Form.vue') },
