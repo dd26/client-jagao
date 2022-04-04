@@ -10,6 +10,7 @@
       />
       <q-space />
       <q-btn
+        to="/settings"
         dense
         flat
         round
@@ -72,7 +73,8 @@ export default {
     return {
       hasVerified: false,
       name: 'Isabel Summerton',
-      avatarUrl: 'vectors/avatar2.svg'
+      avatarUrl: 'vectors/avatar2.svg',
+      role_id: null
     }
   },
   mounted () {
@@ -81,12 +83,13 @@ export default {
   methods: {
     async getUserInfo () {
       const user = await this.$getUserInfo()
-      console.log(user, 'user')
       this.hasVerified = user.verified
       this.name = user.name
+      user.role_id = user.user.role_id
+      this.role_id = user.role_id
       const folder = user.role_id === 3 ? 'customers' : 'specialists'
       this.role = user.role_id
-      this.avatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
+      this.avatarUrl = `${this.$api_url()}image/${folder}/${user.user_id}`
     }
   }
 }

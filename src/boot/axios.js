@@ -11,7 +11,6 @@ export default async ({ store, Vue }) => {
   Vue.prototype.$api = axiosInstance
 
   axiosInstance.interceptors.response.use(function (response) {
-    console.log(response, 'response')
     if (response.config.method === 'post') {
       if (response.status === 201) {
         if (response.data.token === undefined) {

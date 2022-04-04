@@ -152,10 +152,11 @@ export default {
     },
     async getUserInfo () {
       const user = await this.$getUserInfo()
+      user.role_id = user.user.role_id
       const folder = user.role_id === 3 ? 'customers' : 'specialists'
       this.role = user.role_id
       this.userAvatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
-      console.log(this.userAvatarUrl, 'avatarUrl')
+      console.log(this.userAvatarUrl, 'avatarUrl', user, 'userrrrrrr')
     }
   }
 }

@@ -94,12 +94,15 @@ export default {
     async getUserInfo () {
       const user = await this.$getUserInfo()
       if (user) {
+        user.role_id = user.user.role_id
+        user.name = user.user.name
         const folder = user.role_id === 3 ? 'customers' : 'specialists'
         this.folder = folder
         this.avatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
         const route = user.role_id === 3 ? 'customer_by_user_id' : 'specialist_by_user_id'
         this.route = route
-        const roleUserInfo = await this.$api.get(`${route}/${user.id}`)
+        console.log(route, 'route', user, 'user INFOOOOOOOOOOOOOOOOOOOO')
+        const roleUserInfo = await this.$api.get(`${route}/${user.user_id}`)
         this.userInfo = {
           ...user,
           ...roleUserInfo
@@ -107,7 +110,6 @@ export default {
         this.id = user.id
         this.role = user.role_id
         this.img_id = roleUserInfo.id
-        console.log(this.userInfo, 'userInfo')
       }
     }
   }
