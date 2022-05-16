@@ -91,9 +91,9 @@
 
     <q-footer>
       <q-tabs v-model="tab">
-        <q-tab :name="1" icon="img:vectors/home1.svg" @click="$router.push('/home')" />
-        <q-tab :name="2" icon="img:vectors/search1.svg" @click="$router.push('/search')" />
-        <q-tab :name="3" icon="img:vectors/icon1.svg" @click="$router.push('/notifications/employee')" />
+        <q-tab :name="1" icon="img:vectors/home1.svg" @click="$router.push(routeFooter.home)" />
+        <q-tab :name="2" icon="img:vectors/search1.svg" @click="$router.push(routeFooter.search)" />
+        <q-tab :name="3" icon="img:vectors/notify1.svg" @click="$router.push(routeFooter.notifications)" />
       </q-tabs>
     </q-footer>
 
@@ -130,6 +130,18 @@ const menuItemsData = [
   }
 ]
 
+const routeEmployee = {
+  home: '/home/employee',
+  search: '/search',
+  notifications: '/notifications/employee'
+}
+
+const routeCustomer = {
+  home: '/home',
+  search: '/search',
+  notifications: '/notifications'
+}
+
 export default {
   name: 'MainLayout',
   data () {
@@ -138,7 +150,12 @@ export default {
       leftDrawerOpen: false,
       menuItems: menuItemsData,
       userAvatarUrl: 'vectors/avatar1.svg',
-      role: null
+      role: null,
+      routeFooter: {
+        home: '/home',
+        search: '/search',
+        notifications: '/notifications/employee'
+      }
     }
   },
   mounted () {
@@ -156,7 +173,7 @@ export default {
       const folder = user.role_id === 3 ? 'customers' : 'specialists'
       this.role = user.role_id
       this.userAvatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
-      console.log(this.userAvatarUrl, 'avatarUrl', user, 'userrrrrrr')
+      this.routeFooter = user.role_id === 3 ? routeCustomer : routeEmployee
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pb-md">
     <section class="bg-image-card row items-center justify-start q-px-xl">
       <div class="row">
         <div class="col-12" style="font-weight: 400; font-size: 16px;">Hello, {{user.name}}! </div>
@@ -32,7 +32,7 @@
             v-for="n in 3"
             :key="n"
             style="width: 250px; height: 130px; border-radius: 12px;"
-            class="bg-secondary q-my-xs q-ml-sm row"
+            class="bg-primary q-my-xs q-ml-sm row no-shadow"
           >
             <div class="col-4 row items-center justify-center">
               <q-icon

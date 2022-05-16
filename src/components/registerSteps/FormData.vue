@@ -250,7 +250,7 @@
           <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Important</div>
         </section>
 
-        <section class="col-12 row q-px-md">
+        <section class="col-12 row q-px-md" v-if="form.isEmployee">
           <div class="q-pt-md text-bold text-primary q-pb-md" style="font-size:20px; font-weight: 700;">Attach your CV here</div>
 
           <div

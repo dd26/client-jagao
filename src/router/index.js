@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuelidate from 'vuelidate'
 import routes from './routes'
+import money from 'v-money'
+Vue.use(money, { precision: 2 })
 
 Vue.use(VueRouter)
 Vue.use(Vuelidate)
