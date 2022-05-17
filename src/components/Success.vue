@@ -7,7 +7,7 @@
 
         <div class="btn-progress-container row justify-center items-center col-12 q-pt-md">
           <q-btn
-            to="/home"
+            @click="$router.go(-2)"
             icon="arrow_forward"
             round
             class="btn-progress"

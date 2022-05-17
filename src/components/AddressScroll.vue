@@ -18,14 +18,34 @@
       >
         <div class="row no-wrap q-gutter-x-md q-pl-md">
           <q-card
-            v-for="n in data"
-            :key="n"
+            v-for="(n, index) in data"
+            :key="index"
             class="style-card-item row items-center"
           >
+            <q-btn
+              v-if="n.id"
+              icon="img:vectors/close1.svg"
+              flat
+              size="xs"
+              color="primary"
+              round
+              style="position: absolute; right: 10px; top: 10px;"
+              @click="deleteAddressConfirm(n.id)"
+            />
             <div class="row col-12 items-center">
               <div class="col-4">
-                <q-icon v-if="!n.default_name_image" name="img:vectors/home2.svg" size="42px" />
-                <img v-else :src="`${$api_url()}image/customers/2`" width="50px" height="50px" style="border-radius: 12px" />
+                <q-icon
+                  v-if="!n.default_name_image"
+                  name="img:vectors/home2.svg"
+                  size="42px"
+                />
+                <img
+                  v-else
+                  :src="`${$api_url()}image_two/address/${n.default_name_image}`"
+                  width="50px"
+                  height="50px"
+                  style="border-radius: 12px"
+                />
               </div>
               <div v-if="!n.id" class="col-6 q-gutter-y-xs row">
                 <div class="skeleton-style col-12"></div>
@@ -41,11 +61,24 @@
         </div>
       </q-scroll-area>
     </div>
+    <q-dialog
+      v-model="deleteItemDlg"
+      persistent
+      full-width
+    >
+      <delete-item
+        :id="id"
+        :route="route"
+        @deleted="deleted"
+      />
+    </q-dialog>
   </section>
 </template>
 
 <script>
+import DeleteItem from './DeleteItem.vue'
 export default {
+  components: { DeleteItem },
   data () {
     return {
       barStyle: {
@@ -61,7 +94,10 @@ export default {
         width: '0',
         opacity: 0
       },
-      data: []
+      data: [],
+      route: 'addresses',
+      id: null,
+      deleteItemDlg: false
     }
   },
   mounted () {
@@ -70,10 +106,19 @@ export default {
   methods: {
     async getAddresses () {
       this.$q.loading.show()
-      await this.$api.get('addresses').then(res => {
+      await this.$api.get(this.route).then(res => {
         this.$q.loading.hide()
         this.data = res.length > 0 ? res : [1, 2, 3]
       })
+    },
+    deleteAddressConfirm (id) {
+      this.id = id
+      this.deleteItemDlg = true
+    },
+    deleted () {
+      this.deleteItemDlg = false
+      this.id = null
+      this.getAddresses()
     }
   }
 }

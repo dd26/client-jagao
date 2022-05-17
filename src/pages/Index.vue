@@ -2,7 +2,7 @@
   <q-page class="q-pb-md">
     <section class="bg-image-card row items-center justify-start q-px-xl">
       <div class="row">
-        <div class="col-12" style="font-weight: 400; font-size: 16px;">Hello, {{user.name}}! </div>
+        <div class="col-12" style="font-weight: 400; font-size: 16px;">Hello, {{user.name ? user.name : user.user.name}}! </div>
         <div class="text-primary col-12" style="font-weight: 700; font-size: 20px;">Let’s start work! </div>
       </div>
     </section>

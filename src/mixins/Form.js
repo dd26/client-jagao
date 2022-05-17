@@ -44,17 +44,40 @@ export const FormMixin = {
           this.beforeSave()
         }
         if (this.insert) { // modo inserción
-          this.$api.post(this.route, this.form).then(res => {
-            this.$q.loading.hide()
-            if (res) {
-              if (typeof this.afterSave === 'function') {
-                this.afterSave(res)
+          if (!this.formData) {
+            this.$api.post(this.route, this.form).then(res => {
+              this.$q.loading.hide()
+              if (res) {
+                if (typeof this.afterSave === 'function') {
+                  this.afterSave(res)
+                }
+                if (this.stayAfterSave) {
+                  this.$router.go(-1)
+                }
               }
-              if (this.stayAfterSave) {
-                this.$router.go(-1)
-              }
+            })
+          } else {
+            const formData = new FormData()
+            for (const key in this.form) {
+              formData.append(key, this.form[key])
             }
-          })
+            console.log(formData, 'formData')
+            this.$api.post(this.route, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then(res => {
+              this.$q.loading.hide()
+              if (res) {
+                if (typeof this.afterSave === 'function') {
+                  this.afterSave(res)
+                }
+                if (this.stayAfterSave) {
+                  this.$router.go(-1)
+                }
+              }
+            })
+          }
         } else {
           this.$api.put(`${this.route}/${this.id}`, this.form).then(res => {
             this.$q.loading.hide()

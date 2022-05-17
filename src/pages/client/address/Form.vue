@@ -89,6 +89,19 @@
         />
       </div>
 
+      <div class="col-12 row q-pt-md">
+        <div class="col-12">Upload an image (Optional)</div>
+        <q-file
+          v-model="addressImage"
+          outlined
+          dense
+          label="click here to upload an image"
+          accept="image/*"
+          class="col-12 q-pt-xs"
+          bg-color="grey-3"
+        />
+      </div>
+
       <div class="col-12 row justify-center q-pt-lg">
         <q-btn
           @click="save"
@@ -118,21 +131,24 @@ export default {
         postalCode: null
       },
       route: 'addresses',
+      formData: true,
       cities: [
         { name: 'New York', value: 'NY' },
         { name: 'Rome', value: 'RM' },
         { name: 'London', value: 'LDN' },
         { name: 'Istanbul', value: 'IST' },
         { name: 'Paris', value: 'PRS' }
-      ]
+      ],
+      addressImage: null
     }
   },
   methods: {
     beforeValidate () {
-      console.log('beforeValidate', this.form)
+      if (this.addressImage) {
+        this.form.image = this.addressImage
+      }
     },
     afterSave () {
-      console.log('afterSave')
       this.$router.push('/success?message=You successfully added an address!')
     }
   },

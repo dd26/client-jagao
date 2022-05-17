@@ -45,9 +45,11 @@
           v-model="form.name"
           dense
           class="col-12"
-          style="background: #EDEDED"
+          bg-color="grey-3"
           placeholder="Name on card"
           outlined
+          :error="$v.form.name.$error"
+          @blur="$v.form.name.$touch()"
         />
       </div>
 
@@ -57,9 +59,11 @@
           v-model="form.cardNumber"
           dense
           class="col-12"
-          style="background: #EDEDED"
+          bg-color="grey-3"
           placeholder="1234 5678 9101 1112"
           outlined
+          :error="$v.form.cardNumber.$error"
+          @blur="$v.form.cardNumber.$touch()"
         />
       </div>
 
@@ -70,10 +74,12 @@
             v-model="form.expiredDate"
             dense
             class="col-12"
-            style="background: #EDEDED"
+            bg-color="grey-3"
             placeholder="12/34"
             outlined
             mask="##/##"
+            :error="$v.form.expiredDate.$error"
+            @blur="$v.form.expiredDate.$touch()"
           />
         </div>
 
@@ -83,9 +89,12 @@
             v-model="form.securityCode"
             dense
             class="col-12"
-            style="background: #EDEDED"
+            bg-color="grey-3"
             placeholder="123"
             outlined
+            mask="###"
+            :error="$v.form.securityCode.$error"
+            @blur="$v.form.securityCode.$touch()"
           />
         </div>
       </div>
@@ -96,15 +105,17 @@
           v-model="form.postalCode"
           dense
           class="col-12"
-          style="background: #EDEDED"
+          bg-color="grey-3"
           placeholder="12345"
           outlined
+          :error="$v.form.postalCode.$error"
+          @blur="$v.form.postalCode.$touch()"
         />
       </div>
 
       <div class="col-12 row justify-center q-pt-lg">
         <q-btn
-          to="/success?message=You successfully added a card!"
+          @click="save"
           dense
           color="primary"
           icon="add"
@@ -118,12 +129,34 @@
 </template>
 
 <script>
+import { FormMixin } from '../../../mixins/Form'
+import { required } from 'vuelidate/lib/validators'
 export default {
+  mixins: [FormMixin],
   data () {
     return {
       form: {
-
-      }
+        name: null,
+        cardNumber: null,
+        expiredDate: null,
+        securityCode: null,
+        postalCode: null
+      },
+      route: 'cards'
+    }
+  },
+  methods: {
+    afterSave () {
+      this.$router.push('/success?message=You successfully added a card!')
+    }
+  },
+  validations: {
+    form: {
+      name: { required },
+      cardNumber: { required },
+      expiredDate: { required },
+      securityCode: { required },
+      postalCode: { required }
     }
   }
 }
