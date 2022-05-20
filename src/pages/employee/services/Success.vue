@@ -9,7 +9,7 @@
         flat
         @click="$router.go(-1)"
       />
-      <div class="text-primary col-12" style="font-size: 20px; font-weight: 700;">Peding services</div>
+      <div class="text-primary col-12" style="font-size: 20px; font-weight: 700;">Successful services</div>
     </div>
 
     <section class="row q-px-lg q-pb-md">

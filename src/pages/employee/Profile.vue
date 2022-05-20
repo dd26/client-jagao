@@ -2,7 +2,7 @@
   <q-page class="q-pb-xl">
     <div class="row q-pt-md q-px-md">
       <q-btn
-        to="/home"
+        to="/home/employee"
         dense
         flat
         size="11px"
@@ -22,14 +22,21 @@
     <section class="row justify-center">
       <div class="col-6 row justify-center" style="position:relative;max-width: 150px;">
         <q-avatar size="150px">
-          <img :src="avatarUrl" width="100%" height="100%">
+          <img
+            :src="avatarUrl"
+            width="100%"
+            height="100%"
+          >
         </q-avatar>
         <div class="absolute-bottom-right q-mr-sm verified-style">
-          <q-icon :name="!hasVerified ? 'img:vectors/verified1.svg' : 'img:vectors/verified2.svg'" size="lg">
+          <q-icon
+            :name="!hasVerified ? 'img:vectors/verified1.svg' : 'img:vectors/verified2.svg'"
+            size="lg"
+          >
             <q-popup-proxy>
               <q-card class="bg-primary text-white q-pa-md" style="border-radius: 12px;">
                 <div style="font-size: 14px;">
-                  Hello Isabel, the Jagao® system is verifying your information, once this stage has finished and your account has been activated you will be able to use all our services!
+                  Hello {{ name }}, the Jagao® system is verifying your information, once this stage has finished and your account has been activated you will be able to use all our services!
                   <br> <br>
                   <b style="font-weight: 700;"> You will receive a notification when your account is verified!</b>
                 </div>
@@ -150,15 +157,27 @@ export default {
     async getUserInfo () {
       const user = await this.$getUserInfo()
       if (user) {
-        this.name = user.name
-        this.hasVerified = user.verified
+        this.name = user.user.name
         const folder = user.role_id === 3 ? 'customers' : 'specialists'
         this.role = user.role_id
         this.avatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
+        this.hasVerified = user.user.verified
+        this.state = user.user.status
       }
     },
-    changeState (id) {
+    async changeState (id) {
       this.state = id
+      this.$q.loading.show()
+      await this.$api.put('/users/change_status', { status: id }).then(res => {
+        this.$q.loading.hide()
+        if (res) {
+          this.$q.notify({
+            color: 'positive',
+            textColor: 'white',
+            message: 'Your status has been changed!'
+          })
+        }
+      })
       this.expanded = false
     }
   }

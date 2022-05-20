@@ -36,7 +36,7 @@
 
     <section class="row q-pa-md items-center">
       <q-space />
-      <div class="row" @click="$router.push('/login')">
+      <div class="row" @click="logoutBtnClicked">
         <div>Log out</div>
         <q-icon name="img:vectors/logout1.svg" size="xs" class="q-pl-sm" />
       </div>
@@ -45,17 +45,54 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+const routeCustomer = {
+  notification: '/notifications/client',
+  profile: '/profile/info',
+  accounts: '/accounts'
+}
+
+const routeEmployee = {
+  notification: '/notifications/employee',
+  profile: '/profile/info',
+  accounts: '/accounts'
+}
+
 export default {
   data () {
     return {
-      configs: [
-        { icon: 'img:vectors/edit3.svg', title: 'Edit Profile', to: '/profile/info' },
+      routes: {
+        notification: '/notifications/client',
+        profile: '/profile/info',
+        accounts: '/accounts'
+      }
+    }
+  },
+  computed: {
+    configs () {
+      const data = [
+        { icon: 'img:vectors/edit3.svg', title: 'Edit Profile', to: this.routes.profile },
         { icon: 'settings', title: 'Skilss' },
-        { icon: 'img:vectors/bank1.svg', title: 'Bank info', to: '/accounts' },
+        { icon: 'img:vectors/bank1.svg', title: 'Bank info', to: this.routes.accounts },
         { icon: 'lock', title: 'Password & Security', to: '/' },
-        { icon: 'img:vectors/notification1.svg', title: 'Notifications' }
-        /* { icon: 'img:vectors/info1.svg', title: 'Technical Support' } */
+        { icon: 'img:vectors/notification1.svg', title: 'Notifications', to: this.routes.notification }
       ]
+      return data
+    }
+  },
+  mounted () {
+    this.getUserInfo()
+  },
+  methods: {
+    ...mapMutations('generals', ['logout']),
+    logoutBtnClicked () {
+      this.logout()
+      this.$router.push('/login')
+    },
+    async getUserInfo () {
+      const user = await this.$getUserInfo()
+      user.role_id = user.user.role_id
+      this.routes = user.role_id === 3 ? routeCustomer : routeEmployee
     }
   }
 }

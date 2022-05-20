@@ -135,9 +135,16 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.getUserInfo()
+  },
   methods: {
     mod (value) {
       return value % 2 === 0 ? 'bg-secondary' : 'bg-primary'
+    },
+    async getUserInfo () {
+      const user = await this.$getUserInfo()
+      this.name = user.user.name
     }
   }
 }
