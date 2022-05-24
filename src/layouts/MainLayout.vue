@@ -45,6 +45,8 @@
               :key="index"
               clickable
               v-ripple
+              :to="item.to"
+              active-class="my-menu-link"
             >
               <q-item-section avatar>
                 <q-icon
@@ -107,7 +109,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-const menuItemsData = [
+const menuItemsDataCustomer = [
   {
     title: 'My services',
     icon: 'img:vectors/icon7.svg',
@@ -130,6 +132,34 @@ const menuItemsData = [
   }
 ]
 
+const menuItemsDataEmployee = [
+  {
+    title: 'Pending services',
+    icon: 'img:vectors/icon7.svg',
+    to: '/services/pending'
+  },
+  {
+    title: 'Successful services',
+    icon: 'img:vectors/icon7.svg',
+    to: '/services/susuccessful'
+  },
+  {
+    title: 'Transactions',
+    icon: 'img:vectors/transaction1.svg',
+    to: '/home/employee'
+  },
+  {
+    title: 'Switch Account',
+    icon: 'img:vectors/icon6.svg',
+    to: '/home/employee'
+  },
+  {
+    title: 'Help',
+    icon: 'img:vectors/icon4.svg',
+    to: '/home/employee'
+  }
+]
+
 const routeEmployee = {
   home: '/home/employee',
   search: '/search',
@@ -148,7 +178,7 @@ export default {
     return {
       tab: 1,
       leftDrawerOpen: false,
-      menuItems: menuItemsData,
+      menuItems: menuItemsDataCustomer,
       userAvatarUrl: 'vectors/avatar1.svg',
       role: null,
       routeFooter: {
@@ -174,6 +204,7 @@ export default {
       this.role = user.role_id
       this.userAvatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
       this.routeFooter = user.role_id === 3 ? routeCustomer : routeEmployee
+      this.menuItems = user.role_id === 3 ? menuItemsDataCustomer : menuItemsDataEmployee
     }
   }
 }
@@ -184,6 +215,10 @@ export default {
 .card-view {
   background-color: #FFF;
   border-radius: 20px 20px 0 0;
+}
+
+.my-menu-link {
+  color: #FFF;
 }
 
 </style>

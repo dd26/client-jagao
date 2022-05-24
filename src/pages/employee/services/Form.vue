@@ -28,29 +28,11 @@
         />
       </div>
 
-      <div class="row col-12">
-        <div class="col-12 text-primary" style="font-weight: 700; font-size: 25px;">Subcategory</div>
-        <q-select
-          v-model="form.subcategory"
-          :options="subcategories"
-          outlined
-          label="Room"
-          style="background-color: #EDEDED;"
-          class="col-12 q-mt-sm"
-          dense
-        />
-      </div>
+      <div class="col-12 text-primary text-bold" style="font-size: 25px; font-weight: 700;">Subcategory</div>
+      <div class="col-12" style="font-size: 16px;color: #5C5C5C">Select category</div>
 
-      <div class="row col-12">
-        <div class="col-12 text-primary" style="font-weight: 700; font-size: 25px;">Description</div>
-        <q-input
-          v-model="form.description"
-          outlined
-          style="background-color: #EDEDED;"
-          class="col-12 q-mt-sm"
-          dense
-          type="textarea"
-        />
+      <div class="col-12 row justify-center">
+        <img src="illustrations/6.svg" alt="ilus1">
       </div>
 
       <div class="col-12 row justify-center q-pt-lg">

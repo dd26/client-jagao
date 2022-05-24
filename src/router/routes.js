@@ -32,6 +32,7 @@ const routes = [
       { path: '/services/form', component: () => import('pages/employee/services/Form.vue') },
       { path: '/services/list/selection', component: () => import('pages/employee/services/Selection.vue') },
       { path: '/services/pending', component: () => import('pages/employee/services/Pending.vue') },
+      { path: '/services/susuccessful', component: () => import('pages/employee/services/Success.vue') },
       { path: '/services/detail', component: () => import('pages/employee/services/Detail.vue') },
       { path: '/settings', component: () => import('pages/Setting.vue') },
       { path: '/notifications/client', component: () => import('src/pages/client/Notifications.vue') },
