@@ -59,7 +59,7 @@
                 dense
               />
             </section>
-            <div class="col-12 row">
+            <!-- <div class="col-12 row">
               <q-field
                 borderless
                 v-model="stateForm.name"
@@ -87,9 +87,22 @@
                   </div>
                 </template>
               </q-field>
-            </div>
+            </div> -->
           </div>
 
+        </div>
+
+        <div class="col-12 row">
+          <div class="col-12 q-pl-lg">Your Name<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
+          <q-input
+            v-model="stateForm.name"
+            placeholder="your name"
+            @blur="$v.stateForm.name.$touch()"
+            class="col-12 q-pb-md"
+            outlined
+            bg-color="white"
+            dense
+          />
         </div>
 
         <div class="col-12 row">
@@ -262,14 +275,14 @@
             </div>
             <div class="col-10 row justify-start items-center container-name-file-employee">
               <div class="q-pl-md" style="font-size: 16px;font-weight: 300;color: #B3B3B3">
-                {{ employeeFile ? subCadena(employeeFile.name, 19) : 'Attach your CV' }}
+                {{ emploFile ? subCadena(emploFile.name, 19) : 'Attach your CV' }}
               </div>
             </div>
             <q-file
-              ref="employeeFilePdf"
-              accept=".pdf"
+              ref="emploFilePDF"
+              accept="application/pdf"
               style="display: none;"
-              v-model="employeeFile"
+              v-model="emploFile"
             />
           </div>
         </section>
@@ -389,7 +402,7 @@ export default {
         { label: 'City 2', value: 2 },
         { label: 'City 3', value: 3 }
       ],
-      employeeFile: null,
+      emploFile: null,
       IDFile: null,
       isLoading: false
     }
@@ -404,10 +417,16 @@ export default {
       this.stateForm.birthdate = this.birthdate
       console.log(this.$v.stateForm)
       this.$v.stateForm.$touch()
-      if (this.$v.stateForm.$invalid) return
+      if (this.$v.stateForm.$invalid) {
+        this.$q.notify({
+          color: 'negative',
+          textColor: 'white',
+          message: 'Please fill all the required fields'
+        })
+      }
 
       this.stateForm.fileID = this.IDFile ? this.IDFile : null
-      this.stateForm.fileEmployee = this.employeeFile ? this.employeeFile : null
+      this.stateForm.fileEmployee = this.emploFile ? this.emploFile : null
 
       console.log(this.stateForm, 'stateForm', this.form, 'this form')
       delete this.form.name
@@ -453,7 +472,7 @@ export default {
       }
     },
     clickEmployeeFile () {
-      this.$refs.employeeFilePdf.$el.click()
+      this.$refs.emploFilePDF.$el.click()
     },
     clickIDFile () {
       this.$refs.IDFileRF.$el.click()
@@ -524,6 +543,7 @@ export default {
   cursor: pointer;
   border-radius: 8px;
   height: 60px;
+  position: relative;
 }
 .img-profile-container {
   width: 150px;
