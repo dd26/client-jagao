@@ -42,8 +42,9 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
-  props: ['progressValue'],
+  props: ['progressValue', 'form'],
   data () {
     return {
       progressVal: 0,
@@ -54,8 +55,25 @@ export default {
     this.progressVal = this.progressValue
   },
   methods: {
+    ...mapMutations('generals', ['login']),
     nextStep () {
-      this.$router.push('/login')
+      // this.$router.push('/login')
+      console.log(this.form, 'form')
+      this.logueo()
+    },
+    async logueo () {
+      this.$q.loading.show()
+      await this.$api.post('login_app', { email: this.form.email, password: this.form.password }).then(res => {
+        this.$q.loading.hide()
+        if (res) {
+          this.login(res)
+          if (res.role_id === 3) {
+            this.$router.push('/home')
+          } else {
+            this.$router.push('/home/employee')
+          }
+        }
+      })
     }
   }
 }

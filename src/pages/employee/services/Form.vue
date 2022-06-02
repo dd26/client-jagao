@@ -18,6 +18,16 @@
       <div class="text-primary" style="font-weight: 700; font-size: 25px;">New Service</div>
     </section>
     <section v-else style="position: relative; height: 175px; border-radius: 12px 12px 0 0; background-color: #97DDFD;overflow:hidden">
+      <q-btn
+        to="/profile/employee"
+        dense
+        flat
+        round
+        size="15px"
+        icon="arrow_back_ios"
+        color="white"
+        style="position: absolute; left: 16px; top: 16px;"
+      />
       <img
         :src="$api_url() + 'image/categories/' + form.category_id"
         alt="categori_img"
@@ -169,16 +179,7 @@ export default {
   watch: {
     'form.category_id' (newValue) {
       if (newValue) {
-        this.$api.get('subcategories_by_category_id/' + this.form.category_id)
-          .then(response => {
-            this.subcategories = response.map(itm => {
-              return {
-                ...itm,
-                select: false,
-                documentFile: null
-              }
-            })
-          })
+        this.getData()
       }
     }
   },
@@ -192,8 +193,48 @@ export default {
   },
   mounted () {
     this.getCategories()
+    if (this.$route.query.category_id) {
+      this.form.category_id = parseInt(this.$route.query.category_id)
+    }
   },
   methods: {
+    async getData () {
+      let resSub = []
+      await this.$api.get('subcategories_by_category_id/' + this.form.category_id)
+        .then(response => {
+          resSub = response.map(itm => {
+            return {
+              ...itm,
+              select: false,
+              documentFile: null
+            }
+          })
+        })
+      await this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {
+        console.log(this.subcategories, 'getData', resSub)
+        this.subcategories = resSub.map(itm => {
+          return {
+            ...itm,
+            select: res.some(itm2 => itm2.subcategory_id === itm.id)
+          }
+        })
+        console.log(this.subcategories, 'getData', resSub)
+      })
+    },
+    chekerUserSCategories (data) {
+      this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {
+        if (res) {
+          console.log(res, 'res cheker', this.subcategories, 'subcategories')
+          this.subcategories.forEach(itm => {
+            itm.select = res.some(item => item.subcategory_id === itm.id)
+          })
+          console.log(this.subcategories, 'subcategories')
+          /* console.log(data, 'data cheker')
+          this.subcategories = []
+          this.subcategories = data */
+        }
+      })
+    },
     async saveService () {
       console.log(this.$v.subcategoriesCheck, 'subcategoriesCheck')
       this.$v.subcategoriesCheck.$touch()

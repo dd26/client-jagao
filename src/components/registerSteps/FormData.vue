@@ -29,6 +29,7 @@
               v-if="!profile.file"
               class="img-profile-container row items-center justify-center"
               style="position: relative;"
+              :style="`${$v.stateForm.profileImg.$error ? 'border: 1px solid #C10015' : ''}`"
             >
               <div class="text-negative text-bold absolute-top-right" style="font-weight: 700; font-size: 20px;">*</div>
               <q-icon name="person" color="accent" size="110px" />
@@ -59,37 +60,11 @@
                 dense
               />
             </section>
-            <!-- <div class="col-12 row">
-              <q-field
-                borderless
-                v-model="stateForm.name"
-                class="col-12"
-              >
-                <template v-slot:control="{ id, value, emitValue }">
-                  <input
-                    :id="id"
-                    class="q-field__input text-center text-bold text-primary input-field-style"
-                    :value="value"
-                    @change="e => emitValue(e.target.value)"
-                    @focus="focusName = true"
-                    @blur="focusName = false"
-                  >
-                  <div style="position: absolute" class="row justify-center fit items-center" v-if="!focusName && !stateForm.name">
-                    <div class="col-12 justify-center items-center row">
-                      <div class="text-bold text-primary">Your Name</div>
-                    </div>
-                  </div>
-                  <div style="position: absolute" class="row justify-center fit items-center">
-                    <div class="col-7 justify-end items-start row q-pb-lg">
-                      <q-icon name="img:vectors/edit2.svg" />
-                      <div class="text-bold text-negative" style="font-size: 20px;">*</div>
-                    </div>
-                  </div>
-                </template>
-              </q-field>
-            </div> -->
           </div>
-
+          <div
+            class="text-center col-12 text-negative text-caption"
+            v-if="$v.stateForm.profileImg.$error"
+          >Profile picture is required!</div>
         </div>
 
         <div class="col-12 row">
@@ -97,11 +72,12 @@
           <q-input
             v-model="stateForm.name"
             placeholder="your name"
-            @blur="$v.stateForm.name.$touch()"
             class="col-12 q-pb-md"
             outlined
             bg-color="white"
             dense
+            @blur="$v.stateForm.name.$touch()"
+            :error="$v.stateForm.name.$error"
           />
         </div>
 
@@ -111,6 +87,7 @@
             v-model="stateForm.username"
             placeholder="yourusername01"
             @blur="$v.stateForm.username.$touch()"
+            :error="$v.stateForm.username.$error"
             class="col-12"
             outlined
             bg-color="white"
@@ -118,7 +95,7 @@
           />
         </div>
 
-        <div class="col-12 row q-pt-lg">
+        <div class="col-12 row q-pl-xs">
           <div class="col-12 q-pl-lg">Birth Date <b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
           <div class="col-12 row justify-left q-gutter-x-md">
             <q-input
@@ -129,6 +106,7 @@
               dense
               placeholder="00"
               @blur="formatDate"
+              :error="$v.birthdate.$error"
             >
               <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
                 <q-date v-model="birthdate">
@@ -146,6 +124,7 @@
               dense
               placeholder="00"
               @blur="formatDate"
+              :error="$v.birthdate.$error"
             >
               <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
                 <q-date v-model="birthdate">
@@ -163,6 +142,7 @@
               dense
               placeholder="00"
               @blur="formatDate"
+              :error="$v.birthdate.$error"
             >
               <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
                 <q-date v-model="birthdate">
@@ -175,12 +155,13 @@
           </div>
         </div>
 
-        <div class="col-12 row q-pt-lg">
+        <div class="col-12 row q-pt-sm">
           <div class="col-12 q-pl-lg">ID <b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
           <q-input
             v-model="stateForm.identification"
             placeholder="ID"
             @blur="$v.stateForm.identification.$touch()"
+            :error="$v.stateForm.identification.$error"
             class="col-12"
             outlined
             bg-color="white"
@@ -194,6 +175,7 @@
             v-model="stateForm.phone"
             placeholder="Phone"
             @blur="$v.stateForm.phone.$touch()"
+            :error="$v.stateForm.phone.$error"
             class="col-12"
             outlined
             bg-color="white"
@@ -206,6 +188,7 @@
           <q-select
             v-model="stateForm.country"
             @blur="$v.stateForm.country.$touch()"
+            :error="$v.stateForm.country.$error"
             class="col-12"
             outlined
             bg-color="white"
@@ -222,6 +205,7 @@
           <q-select
             v-model="stateForm.city"
             @blur="$v.stateForm.city.$touch()"
+            :error="$v.stateForm.city.$error"
             class="col-12"
             outlined
             bg-color="white"
@@ -238,12 +222,27 @@
           <q-input
             v-model="stateForm.address"
             @blur="$v.stateForm.address.$touch()"
+            :error="$v.stateForm.address.$error"
             class="col-12"
             outlined
             type="textarea"
             bg-color="white"
             dense
             placeholder="Your Adress #1-02"
+          />
+        </div>
+
+        <div class="col-12 row q-pt-lg">
+          <div class="col-12 q-pl-lg">ZIP Code<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
+          <q-input
+            v-model="stateForm.zip_code"
+            @blur="$v.stateForm.zip_code.$touch()"
+            :error="$v.stateForm.zip_code.$error"
+            class="col-12"
+            outlined
+            bg-color="white"
+            dense
+            placeholder="Your ZIP Code"
           />
         </div>
 
@@ -264,8 +263,11 @@
         </section>
 
         <section class="col-12 row q-px-md" v-if="form.isEmployee">
-          <div class="q-pt-md text-bold text-primary q-pb-md" style="font-size:20px; font-weight: 700;">Attach your CV here</div>
-
+          <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Attach your CV here</div>
+          <div
+            class="col-12 text-negative text-caption q-pb-md"
+            v-if="$v.stateForm.profileImg.$error"
+          >Your cv is required!</div>
           <div
             @click="clickEmployeeFile"
             class="col-12 container-upload-file-employee bg-primary row"
@@ -288,8 +290,11 @@
         </section>
 
         <section class="col-12 row q-px-md">
-          <div class="q-pt-md text-bold text-primary q-pb-md" style="font-size:20px; font-weight: 700;">Attach your ID here</div>
-
+          <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Attach your ID here</div>
+          <div
+            class="col-12 text-negative text-caption q-pb-md"
+            v-if="$v.stateForm.profileImg.$error"
+          >Your ID is required</div>
           <div
             @click="clickIDFile"
             class="col-12 container-upload-file-employee bg-primary row"
@@ -373,7 +378,7 @@ export default {
         birthdate: '',
         identification: '',
         phone: '',
-        country: '',
+        country: 1,
         city: '',
         address: '',
         discountCoupon: '',
@@ -393,14 +398,9 @@ export default {
         year: ''
       },
       countries: [
-        { label: 'Country 1', value: 1 },
-        { label: 'Country 2', value: 2 },
-        { label: 'Country 3', value: 3 }
+        { label: 'United States', value: 1 }
       ],
       cities: [
-        { label: 'City 1', value: 1 },
-        { label: 'City 2', value: 2 },
-        { label: 'City 3', value: 3 }
       ],
       emploFile: null,
       IDFile: null,
@@ -408,14 +408,26 @@ export default {
     }
   },
   mounted () {
-    this.$v.$touch()
+    // this.$v.$touch()
     // this.progressVal = this.progressValue
+    this.getCities()
   },
   methods: {
+    async getCities () {
+      await this.$api.get('cities').then(res => {
+        this.cities = res.map(city => {
+          return {
+            label: city.name,
+            value: city.id
+          }
+        })
+      })
+    },
     async nextStep () {
       this.stateForm.profileImg = this.profile.file
       this.stateForm.birthdate = this.birthdate
       console.log(this.$v.stateForm)
+      this.$v.$touch()
       this.$v.stateForm.$touch()
       if (this.$v.stateForm.$invalid) {
         this.$q.notify({
@@ -423,6 +435,7 @@ export default {
           textColor: 'white',
           message: 'Please fill all the required fields'
         })
+        return
       }
 
       this.stateForm.fileID = this.IDFile ? this.IDFile : null
@@ -447,6 +460,7 @@ export default {
       formData.append('country', form.country)
       formData.append('city', form.city)
       formData.append('address', form.address)
+      formData.append('zip_code', form.zip_code)
       formData.append('discountCoupon', form.discountCoupon)
       formData.append('isEmployee', form.isEmployee)
       formData.append('profileImg', form.profileImg)
@@ -496,6 +510,9 @@ export default {
   },
   validations () {
     return {
+      birthdate: {
+        required
+      },
       stateForm: {
         name: {
           required
@@ -522,6 +539,9 @@ export default {
           required
         },
         profileImg: {
+          required
+        },
+        zip_code: {
           required
         }
       }

@@ -23,7 +23,20 @@ export default {
   },
   methods: {
     redirectToLogin () {
-      this.$router.push('/login')
+      const getLs = localStorage.getItem('JAGAO_SESSION_INFO')
+      if (getLs) {
+        this.$api.post('verify_token', { api_token: JSON.parse(getLs).api_token }).then(res => {
+          if (res) {
+            if (res.role_id === 3) {
+              this.$router.push('/home')
+            } else {
+              this.$router.push('/home/employee')
+            }
+          }
+        })
+      } else {
+        this.$router.push('/login')
+      }
     }
   }
 }

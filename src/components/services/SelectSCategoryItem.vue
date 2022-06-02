@@ -68,9 +68,9 @@ export default {
 <style scoped lang="scss">
 
 .q-item {
-  background-color: #CEEFEA;
+  background-color: #E3F8F4;
   padding: 0;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   min-height: 130px;
   height: auto;

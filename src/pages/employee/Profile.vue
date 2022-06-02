@@ -99,8 +99,8 @@
       <div class="text-primary col-12" style="font-weight: 700; font-size: 20px;">My active services</div>
       <ItemServices
         v-for="itm in services"
-        :key="itm.id"
-        :itm="itm"
+        :key="itm[0].id"
+        v-bind="itm[0]"
         class="col-5"
       />
       <q-card
@@ -136,12 +136,7 @@ export default {
       ],
       state: 1,
       expanded: false,
-      services: [
-        { progress: '00/04', icon: 'img:vectors/cleaning1.svg', title: 'Cleaning', id: 1 },
-        { progress: '00/04', icon: 'img:vectors/can1.svg', title: 'House Service', id: 2 },
-        { progress: '00/04', icon: 'img:vectors/briefcase1.svg', title: 'Road Service', id: 3 },
-        { progress: '00/04', icon: 'img:vectors/wheel1.svg', title: 'Company Service', id: 4 }
-      ],
+      services: [],
       avatarUrl: 'vectors/avatar2.svg'
     }
   },
@@ -152,8 +147,15 @@ export default {
   },
   mounted () {
     this.getUserInfo()
+    this.getMyServices()
   },
   methods: {
+    async getMyServices () {
+      this.$q.loading.show()
+      const data = await this.$api.get('specialist_services')
+      this.$q.loading.hide()
+      this.services = data
+    },
     async getUserInfo () {
       const user = await this.$getUserInfo()
       if (user) {

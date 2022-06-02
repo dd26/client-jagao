@@ -1,7 +1,7 @@
 {
   "name": "org.jagao.app",
-  "displayName": "Quasar App",
-  "version": "1.0.0",
+  "displayName": "Jagao App",
+  "version": "1.0.1",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {

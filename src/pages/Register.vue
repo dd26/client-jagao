@@ -45,6 +45,7 @@
       <mail-step
         @nextStep="nextStep"
         :progressValue="100"
+        :form="form"
       />
     </q-tab-panel>
   </q-tab-panels>
