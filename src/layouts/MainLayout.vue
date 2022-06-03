@@ -28,7 +28,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-secondary"
+      content-class="bg-primary"
     >
       <section class="fit column text-white">
 

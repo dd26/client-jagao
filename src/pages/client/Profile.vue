@@ -25,7 +25,7 @@
           <img :src="avatarUrl" width="100%" height="100%">
         </q-avatar>
         <div class="absolute-bottom-right q-mr-sm verified-style">
-          <q-icon :name="!hasVerified ? 'img:vectors/verified1.svg' : 'img:vectors/verified2.svg'" size="lg">
+          <q-icon v-if="role_id !== 3" :name="!hasVerified ? 'img:vectors/verified1.svg' : 'img:vectors/verified2.svg'" size="lg">
             <q-popup-proxy>
               <q-card class="bg-primary text-white q-pa-md" style="border-radius: 12px;">
                 <div style="font-size: 14px;">
@@ -50,7 +50,10 @@
           </q-icon>
         </div>
       </div>
-      <div class="col-12 text-center q-pt-md text-primary" style="font-weight: 700; font-size: 20px;">{{ name }}</div>
+      <div
+        class="col-12 text-center q-pt-md text-primary"
+        style="font-weight: 700; font-size: 20px;"
+      >{{ name }}</div>
     </section>
 
     <section>
@@ -90,7 +93,7 @@ export default {
       this.role_id = user.role_id
       const folder = user.role_id === 3 ? 'customers' : 'specialists'
       this.role = user.role_id
-      this.avatarUrl = `${this.$api_url()}image/${folder}/${user.user_id}`
+      this.avatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
     }
   }
 }

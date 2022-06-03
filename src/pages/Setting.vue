@@ -48,13 +48,13 @@
 import { mapMutations } from 'vuex'
 const routeCustomer = {
   notification: '/notifications/client',
-  profile: '/profile/info',
+  profile: '/profile/info/',
   accounts: '/accounts'
 }
 
 const routeEmployee = {
   notification: '/notifications/employee',
-  profile: '/profile/info',
+  profile: '/profile/info/',
   accounts: '/accounts'
 }
 
@@ -63,9 +63,10 @@ export default {
     return {
       routes: {
         notification: '/notifications/client',
-        profile: '/profile/info',
+        profile: '/profile/info/',
         accounts: '/accounts'
-      }
+      },
+      profileRoute: ''
     }
   },
   computed: {
@@ -93,6 +94,10 @@ export default {
       const user = await this.$getUserInfo()
       user.role_id = user.user.role_id
       this.routes = user.role_id === 3 ? routeCustomer : routeEmployee
+      console.log(user, 'user info')
+      const routeCus = user.role_id === 3 ? 'customer_by_user_id' : 'specialist_by_user_id'
+      const folder = user.role_id === 3 ? 'customers' : 'specialists'
+      this.routes.profile = `/profile/info/${user.id}?route=${routeCus}&folder=${folder}&img_id=${user.id}`
     }
   }
 }
