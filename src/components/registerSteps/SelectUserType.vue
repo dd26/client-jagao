@@ -1,43 +1,30 @@
 <template>
   <section class="column fit">
 
-    <div class="col-10 column">
+    <div class="col-12 column">
 
-      <section class="column items-start q-px-lg q-pt-lg col-2">
-        <div class="row full-width">
-          <q-btn
-            @click="$emit('prevStep')"
-            icon="arrow_back_ios"
-            flat
-            rounded
-            dense
-            color="secondary"
-            class="col-1"
-          />
-          <div class="text-subtitle1 col-10 text-center">Service or Work</div>
-        </div>
-        <div class="text-bold text-primary text-subtitle1">What do you want?</div>
-      </section>
-
-      <section class="q-pt-xl q-pa-lg q-px-xl col-10 column justify-center">
-        <div class="row q-gutter-y-lg">
-          <q-card
+      <section class="q-px-lg col-12 column justify-center">
+        <div class="q-pb-sm q-pl-lg text-primary" style="font-size: 20px; font-weight: 700;">Choose your role</div>
+        <div class="row">
+          <div
             v-for="item in options"
             :key="item.value"
-            v-ripple
-            clickable
-            class="row q-pa-md col-12 bg-primary text-white justify-between"
-            style="border-radius: 12px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); height: 100px;"
-            @click="nextStep(item.value)"
+            style="height: 210px; position: relative"
+            class="col-12"
           >
-            <q-avatar style="background-color: #D9F2EE; clip-path: circle();" size="70px">
-              <q-icon :name="item.icon" size="lg" color="primary" />
-            </q-avatar>
-            <div class="column justify-center">
-              <div class="text-bold text-h6" style="line-height: 18px;">Jagao</div>
-              <div class="text-h6 text-right text-bold">{{ item.label }}</div>
-            </div>
-          </q-card>
+            <img
+              :src="item.icon"
+              style="object-fit: fill;"
+              width="100%"
+              height="210px"
+              class="col-12"
+              @click="nextStep(item.value)"
+            />
+            <div
+              class="text-white"
+              style="position: absolute; bottom: 30px; left: 30px; font-size: 20px; font-weight: 700;"
+            >{{item.label}}</div>
+          </div>
         </div>
       </section>
     </div>
@@ -50,8 +37,8 @@ export default {
     return {
       isLoading: false,
       options: [
-        { label: 'Work', value: 'work', icon: 'img:vectors/cleaning1.svg' },
-        { label: 'Clean', value: 'clean', icon: 'img:vectors/home2.svg' }
+        { label: 'Work with us', value: 'work', icon: 'illustrations/12.png' },
+        { label: 'Order a service', value: 'clean', icon: 'illustrations/13.png' }
       ]
     }
   },

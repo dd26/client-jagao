@@ -8,6 +8,40 @@
     </q-tab-panel>
 
     <q-tab-panel :name="2">
+      <mail-step
+        @nextStep="nextStep"
+        :progressValue="100"
+        :form="form"
+      />
+    </q-tab-panel>
+
+    <q-tab-panel :name="3">
+      <select-user-type
+        @nextStep="nextStep"
+        @prevStep="prevStep"
+        :progressValue="55"
+      />
+    </q-tab-panel>
+
+    <q-tab-panel :name="4">
+      <form-data
+        @nextStep="nextStep"
+        :progressValue="75"
+        @prevStep="prevStep"
+        :form="form"
+      />
+    </q-tab-panel>
+
+    <q-tab-panel :name="5">
+      <categories-select
+        @nextStep="nextStep"
+        :progressValue="75"
+        @prevStep="prevStep"
+        :form="form"
+      />
+    </q-tab-panel>
+
+    <!-- <q-tab-panel :name="2">
       <select-user-type
         @nextStep="nextStep"
         @prevStep="prevStep"
@@ -47,20 +81,24 @@
         :progressValue="100"
         :form="form"
       />
-    </q-tab-panel>
+    </q-tab-panel> -->
   </q-tab-panels>
 </template>
 
 <script>
 import StepOne from '../components/registerSteps/StepOne.vue'
-import FormData from '../components/registerSteps/FormData.vue'
+/* import FormData from '../components/registerSteps/FormData.vue'
 import StepFour from '../components/registerSteps/StepFour.vue'
 import SelectUserType from 'src/components/registerSteps/SelectUserType.vue'
 import IllustrationInfo from 'src/components/registerSteps/IllustrationInfo.vue'
+import MailStep from 'src/components/registerSteps/MailStep.vue' */
 import MailStep from 'src/components/registerSteps/MailStep.vue'
+import SelectUserType from 'src/components/registerSteps/SelectUserType.vue'
+import FormData from '../components/registerSteps/FormData.vue'
+import CategoriesSelect from '../components/registerSteps/CategoriesSelect.vue'
 
 export default {
-  components: { StepOne, FormData, StepFour, SelectUserType, IllustrationInfo, MailStep },
+  components: { StepOne, MailStep, SelectUserType, FormData, CategoriesSelect/* , FormData, StepFour, SelectUserType, IllustrationInfo, MailStep */ },
   data () {
     return {
       step: 1,

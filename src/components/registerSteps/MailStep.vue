@@ -59,7 +59,8 @@ export default {
     nextStep () {
       // this.$router.push('/login')
       console.log(this.form, 'form')
-      this.logueo()
+      this.$emit('nextStep')
+      // this.logueo()
     },
     async logueo () {
       this.$q.loading.show()

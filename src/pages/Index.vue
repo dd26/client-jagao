@@ -1,11 +1,30 @@
 <template>
-  <q-page class="q-pb-md">
-    <section class="bg-image-card row items-center justify-start q-px-xl">
-      <div class="row">
-        <div class="col-12" style="font-weight: 400; font-size: 16px;">Hello, {{user.name ? user.name : user.user.name}}! </div>
-        <div class="text-primary col-12" style="font-weight: 700; font-size: 20px;">Let’s start work! </div>
-      </div>
-    </section>
+  <q-page class="q-pb-md q-pt-lg">
+    <div class="row q-px-xl q-pb-md">
+      <div class="col-12 text-primary" style="font-weight: 700; font-size: 20px;">Hello, {{user.name ? user.name : user.user.name}}! </div>
+      <div class="col-12" style="font-weight: 400; font-size: 16px; color: #5C5C5C">Let’s start work! </div>
+    </div>
+
+    <div class="row q-px-lg">
+      <q-item class="col-12 bg-primary" style="border-radius: 12px;">
+        <q-item-section avatar>
+          <q-avatar class="bg-white">
+            <img src="vectors/gps2.svg" alt="asd" class="q-pa-sm">
+          </q-avatar>
+        </q-item-section>
+        <q-item-section>
+          <q-item-label style="color: #B1ECE3">Your location</q-item-label>
+          <q-item-label style="color: #FFF; font-size: 14px; font-weight: 700;">Royal Ln. Mesa, New Jersey</q-item-label>
+        </q-item-section>
+        <q-item-section side center>
+          <q-icon
+            name="expand_more"
+            color="white"
+            size="30px"
+          />
+        </q-item-section>
+      </q-item>
+    </div>
 
     <section class="q-pa-md q-px-lg">
       <q-input

@@ -169,7 +169,7 @@
           />
         </div>
 
-        <div class="col-12 row q-pt-lg">
+        <div class="col-12 row">
           <div class="col-12 q-pl-lg">Phone<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
           <q-input
             v-model="stateForm.phone"
@@ -183,7 +183,7 @@
           />
         </div>
 
-        <div class="col-12 row q-pt-lg">
+        <div class="col-12 row">
           <div class="col-12 q-pl-lg">Country<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
           <q-select
             v-model="stateForm.country"
@@ -200,7 +200,7 @@
           />
         </div>
 
-        <div class="col-12 row q-pt-lg">
+        <div class="col-12 row">
           <div class="col-12 q-pl-lg">City / Town<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
           <q-select
             v-model="stateForm.city"
@@ -217,7 +217,7 @@
           />
         </div>
 
-        <div class="col-12 row q-pt-lg">
+        <div class="col-12 row">
           <div class="col-12 q-pl-lg">Address<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
           <q-input
             v-model="stateForm.address"
@@ -232,7 +232,7 @@
           />
         </div>
 
-        <div class="col-12 row q-pt-lg">
+        <div class="col-12 row">
           <div class="col-12 q-pl-lg">ZIP Code<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
           <q-input
             v-model="stateForm.zip_code"
@@ -246,19 +246,7 @@
           />
         </div>
 
-        <div class="col-12 row q-pt-lg">
-          <div class="col-12 q-pl-lg">Discount coupon </div>
-          <q-input
-            v-model="stateForm.discountCoupon"
-            placeholder="A1B2C3"
-            class="col-12"
-            outlined
-            bg-color="white"
-            dense
-          />
-        </div>
-
-        <section class="col-12 q-px-md row">
+        <!-- <section class="col-12 q-px-md row">
           <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Important</div>
         </section>
 
@@ -321,7 +309,7 @@
         <div class="col-12 text-center q-pt-md text-primary" style="font-size: 16px; font-weight: 500; line-height: 20px">You will receive a notification when your profile is validated.</div>
 
         <div class="col-12 text-center q-pt-md" style="color: #A1A1A1; font-size: 12px; font-weight: 400;">Privacy Policy</div>
-
+-->
         <div class="btn-progress-container col-12 row justify-center items-center q-pt-xl">
           <q-btn
             @click="nextStep"
@@ -438,16 +426,18 @@ export default {
         return
       }
 
-      this.stateForm.fileID = this.IDFile ? this.IDFile : null
-      this.stateForm.fileEmployee = this.emploFile ? this.emploFile : null
+      /* this.stateForm.fileID = this.IDFile ? this.IDFile : null
+      this.stateForm.fileEmployee = this.emploFile ? this.emploFile : null */
 
       console.log(this.stateForm, 'stateForm', this.form, 'this form')
       delete this.form.name
-      const form = {
+      /* const form = {
         ...this.form,
         ...this.stateForm
-      }
-      console.log(form, 'form')
+      } */
+      this.$emit('nextStep', this.stateForm)
+      return false
+      /* console.log(form, 'form')
       this.isLoading = true
       const formData = new FormData()
       formData.append('name', form.name)
@@ -476,7 +466,7 @@ export default {
         if (res) {
           this.$emit('nextStep', this.stateForm)
         }
-      })
+      }) */
     },
     subCadena (cadena, longitud) {
       if (cadena.length > longitud) {
