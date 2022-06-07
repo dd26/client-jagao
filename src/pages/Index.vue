@@ -26,78 +26,35 @@
       </q-item>
     </div>
 
-    <section class="q-pa-md q-px-lg">
-      <q-input
-        v-model="search"
-        dense
-        borderless
-        placeholder="Find new services"
-        class="q-px-md"
-        style="background-color: #D9F2EE; border-radius: 100px"
-      >
-        <q-icon name="search" slot="prepend" color="primary" />
-      </q-input>
-    </section>
-
-    <section class="q-px-lg row">
-      <div class="col-12 text-left text-primary" style="font-size: 25px; font-weight: 700">Active Services</div>
-      <q-scroll-area
-        class="col-12"
-        style="height: 140px;"
-        horizontal
-      >
-        <div class="row no-wrap">
-          <q-card
-            v-for="n in 3"
-            :key="n"
-            style="width: 250px; height: 130px; border-radius: 12px;"
-            class="bg-primary q-my-xs q-ml-sm row no-shadow"
-          >
-            <div class="col-4 row items-center justify-center">
-              <q-icon
-                name="img:vectors/home1.svg"
-                size="40px"
-              />
-            </div>
-            <div class="col-8 q-pa-xs q-px-sm row items-center">
-              <div class="text-white" style="font-weight: 700; font-size: 16px;">Home Cleaning</div>
-              <div class="text-white text-caption">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </div>
-              <div class="row q-gutter-x-sm">
-                <q-icon name="bi-calendar-event" size="xs" color="white" />
-                <div class="text-caption text-white">20/03/2022</div>
-              </div>
-            </div>
-          </q-card>
-        </div>
-      </q-scroll-area>
+    <section class="row q-pt-md q-px-lg justify-center">
+      <img src="illustrations/12.svg" alt="" width="100%" height="100%">
     </section>
 
     <section class="row q-pt-xl">
-      <div class="col-12 text-center text-primary" style="font-size: 25px; font-weight: 700">Services</div>
+      <div class="col-12 text-primary q-px-lg" style="font-size: 25px; font-weight: 700">Find services</div>
 
-      <section class="row col-12 justify-around q-gutter-y-lg q-pt-lg">
-        <q-card
-          v-for="itm in services"
-          :key="itm.id"
-          class="card-style-items col-5 flex flex-center"
+      <section class="row col-12 q-pt-lg q-px-md">
+        <div
+          class="col-6 row q-px-sm q-py-md"
+          v-for="b in services"
+          :key="b.id"
         >
-          <div class="row justify-center">
-            <div class="col-6 style-icon row items-center justify-center">
-              <q-icon :name="itm.icon" size="44px" />
-            </div>
-            <div class="col-12 text-center q-pt-sm text-primary" style="font-size:20px; font-weight: 700; line-height: 18px;"> {{itm.title}} </div>
-          </div>
-        </q-card>
+          <card-item
+            class="col-12"
+            v-bind="b"
+            @selectCategory="selectCategory"
+          />
+        </div>
       </section>
     </section>
   </q-page>
 </template>
 
 <script>
+import CardItem from '../components/categories/CardItem.vue'
 export default {
   name: 'PageIndex',
+  components: { CardItem },
   data () {
     return {
       search: '',
@@ -114,10 +71,20 @@ export default {
   },
   mounted () {
     this.getUserInfo()
+    this.getCategories()
   },
   methods: {
     async getUserInfo () {
       this.user = await this.$getUserInfo()
+    },
+    async getCategories () {
+      this.$q.loading.show()
+      const res = await this.$api.get('categories')
+      this.$q.loading.hide()
+      this.services = res
+    },
+    selectCategory (category) {
+      console.log(category)
     }
   }
 }
