@@ -111,7 +111,10 @@
           <div class="col-6 style-icon row items-center justify-center">
             <q-icon name="add" size="44px" color="primary" />
           </div>
-          <div class="col-12 text-center q-pt-sm text-primary" style="font-size:20px; font-weight: 700; line-height: 18px;"> New Service </div>
+          <div
+            class="col-12 text-center q-pt-sm text-primary"
+            style="font-size:15px; font-weight: 700; line-height: 18px;"
+          > New <br> Service </div>
         </div>
       </q-card>
     </section>
@@ -199,14 +202,18 @@ export default {
 }
 
 .card-style-items {
-  background: #D9F2EE;
+  background: #ffffff;
   height: 180px;
-  border-radius: 16px
+  border-radius: 16px;
+  height: 170px;
+  box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.14);
+  border: 2px solid #9FD3CB;
 }
 .style-icon {
   border-radius: 50%;
-  background-color: #FFF;
-  padding: 15px;
+  background-color: #D9F2EE;
+  width: 80px;
+  height: 80px;
 }
 
 </style>

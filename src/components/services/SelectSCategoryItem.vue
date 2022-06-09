@@ -6,18 +6,19 @@
       clickable
       tag="label"
     >
-      <q-item-section thumbnail class="bg-red" style="width: 120px">
+      <q-item-section thumbnail style="width: 120px">
         <q-img
           :src="$api_url() + 'image/subcategories/' + id"
           class="q-ml-md"
           width="100%"
           height="100%"
+          style="object-fit: fill"
         />
       </q-item-section>
 
-      <q-item-section class="q-py-sm q-px-md">
+      <q-item-section class="q-py-xs q-px-md">
         <q-item-label class="text-primary" style="font-size: 20px; font-weight: 700;"> {{name}} </q-item-label>
-        <q-item-label style="font-size: 14px; font-weight: 400; color: #5C5C5C">{{description}}</q-item-label>
+        <q-item-label lines="3" style="font-size: 14px; font-weight: 400; color: #5C5C5C">{{description}}</q-item-label>
         <q-item-label class="text-primary text-bold q-pt-xs" style="font-size: 20px"> {{price}}$ </q-item-label>
       </q-item-section>
 
@@ -72,8 +73,8 @@ export default {
   padding: 0;
   border-radius: 10px;
   overflow: hidden;
-  min-height: 130px;
-  height: auto;
+  min-height: 100px;
+  height: 125px;
 }
 
 .check-style {

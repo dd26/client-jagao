@@ -33,6 +33,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.form.isEmployee) {
+      this.$emit('nextStep')
+    }
     this.getCategories()
   },
   methods: {

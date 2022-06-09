@@ -1,23 +1,17 @@
 <template>
   <div class="column" @click="$router.push('/services/form?category_id=' + category_id)">
     <q-card
-      class="card-style-items flex flex-center no-shadow"
+      class="col-12 card-style row items-center"
+      v-ripple
     >
-      <div class="row justify-center">
-        <div class="col-6 style-icon row items-center justify-center">
-          <img
-            :src="$api_url() + 'image/categories/' + category_id"
-            alt="icono_"
-            width="50px"
-            height="50px"
-            style="clip-path: circle(50%);"
-          >
+      <section class="col-12 q-gutter-y-sm">
+        <div class="col-12 row justify-center" style="position: relative">
+          <q-avatar size="90px">
+            <img :src="$api_url() + 'image/categories/' + category_id" width="100%" height="100%">
+          </q-avatar>
         </div>
-        <div
-          class="col-12 text-center q-pt-sm text-primary"
-          style="font-size:20px; font-weight: 700; line-height: 18px;"
-        > {{category_name}} </div>
-      </div>
+        <div class="text-center col-12 text-primary" style="font-size: 15px; font-weight: 700;">{{category_name}}</div>
+      </section>
     </q-card>
     <div class="text-center q-pt-xs"> 00/00 </div>
   </div>
@@ -31,15 +25,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-style-items {
-  background: #D9F2EE;
-  height: 180px;
-  border-radius: 16px
-}
-.style-icon {
-  border-radius: 50%;
-  background-color: #FFF;
-  padding: 15px;
+.card-style {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 2px solid #9FD3CB;
+  box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.14);
+  height: 170px;
 }
 
 </style>

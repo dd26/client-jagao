@@ -5,11 +5,11 @@
       <div class="q-pt-lg window-width row justify-center col-1">
         <div class="text-bold text-center col-12 text-primary q-pt-lg" style="font-weight: 700; font-size: 20px;">Success</div>
         <div class="col-12 text-center" style="font-weight: 400; font-size: 16px">Lorem Ipsum dolor sit amet</div>
-        <div class="col-12 text-center text-primary q-pt-md" style="font-weight: 700; font-size: 25px">Welcome to Jagao {{name}}!</div>
+        <div class="col-12 text-center text-primary q-pt-md" style="font-weight: 700; font-size: 25px">Welcome to Jagao {{form.name}}!</div>
 
         <div class="btn-progress-container row justify-center items-center col-12 q-pt-md">
           <q-btn
-            to="/login"
+            @click="nextStep"
             icon="arrow_forward"
             round
             class="btn-progress"
@@ -31,8 +31,9 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
-  props: ['name', 'progressValue', 'isEmployee'],
+  props: ['name', 'progressValue', 'isEmployee', 'form'],
   data () {
     return {
       progressVal: 0
@@ -40,14 +41,26 @@ export default {
   },
   mounted () {
     this.progressVal = this.progressValue
-    console.log(this.isEmployee, 'isEMployee')
-    if (this.isEmployee) {
-      this.$emit('nextStep')
-    }
   },
   methods: {
+    ...mapMutations('generals', ['login']),
     nextStep () {
       console.log('nextStep')
+      this.logueo()
+    },
+    async logueo () {
+      this.$q.loading.show()
+      await this.$api.post('login_app', { email: this.form.email, password: this.form.password }).then(res => {
+        this.$q.loading.hide()
+        if (res) {
+          this.login(res)
+          if (res.role_id === 3) {
+            this.$router.push('/home')
+          } else {
+            this.$router.push('/home/employee')
+          }
+        }
+      })
     }
   }
 }

@@ -431,13 +431,16 @@ export default {
 
       console.log(this.stateForm, 'stateForm', this.form, 'this form')
       delete this.form.name
-      /* const form = {
+      const form = {
         ...this.form,
         ...this.stateForm
-      } */
-      this.$emit('nextStep', this.stateForm)
-      return false
-      /* console.log(form, 'form')
+      }
+      // this.$emit('nextStep', this.stateForm)
+      if (this.form.isEmployee) {
+        this.$emit('nextStep', this.stateForm)
+        return
+      }
+      console.log(form, 'form')
       this.isLoading = true
       const formData = new FormData()
       formData.append('name', form.name)
@@ -454,8 +457,6 @@ export default {
       formData.append('discountCoupon', form.discountCoupon)
       formData.append('isEmployee', form.isEmployee)
       formData.append('profileImg', form.profileImg)
-      formData.append('fileID', form.fileID)
-      formData.append('fileEmployee', form.fileEmployee)
 
       await this.$api.post('users', formData, {
         headers: {
@@ -466,7 +467,7 @@ export default {
         if (res) {
           this.$emit('nextStep', this.stateForm)
         }
-      }) */
+      })
     },
     subCadena (cadena, longitud) {
       if (cadena.length > longitud) {

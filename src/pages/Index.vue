@@ -27,7 +27,7 @@
     </div>
 
     <section class="row q-pt-md q-px-lg justify-center">
-      <img src="illustrations/12.svg" alt="" width="100%" height="100%">
+      <img src="illustrations/14.svg" alt="" width="100%" height="100%">
     </section>
 
     <section class="row q-pt-xl">
@@ -85,6 +85,7 @@ export default {
     },
     selectCategory (category) {
       console.log(category)
+      this.$router.push('/services/customer/process/' + category)
     }
   }
 }

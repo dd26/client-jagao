@@ -50,6 +50,14 @@
       />
     </q-tab-panel>
 
+    <q-tab-panel :name="7">
+      <step-four
+        @nextStep="nextStep"
+        :progressValue="100"
+        :form="form"
+      />
+    </q-tab-panel>
+
     <!-- <q-tab-panel :name="2">
       <select-user-type
         @nextStep="nextStep"
@@ -106,9 +114,10 @@ import SelectUserType from 'src/components/registerSteps/SelectUserType.vue'
 import FormData from '../components/registerSteps/FormData.vue'
 import CategoriesSelect from '../components/registerSteps/CategoriesSelect.vue'
 import UploadDocument from '../components/registerSteps/uploadDocument.vue'
+import StepFour from '../components/registerSteps/StepFour.vue'
 
 export default {
-  components: { StepOne, MailStep, SelectUserType, FormData, CategoriesSelect, UploadDocument/* , FormData, StepFour, SelectUserType, IllustrationInfo, MailStep */ },
+  components: { StepOne, MailStep, SelectUserType, FormData, CategoriesSelect, UploadDocument, StepFour/* , FormData, StepFour, SelectUserType, IllustrationInfo, MailStep */ },
   data () {
     return {
       step: 1,

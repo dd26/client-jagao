@@ -17,7 +17,10 @@
       />
       <div class="text-primary" style="font-weight: 700; font-size: 25px;">New Service</div>
     </section>
-    <section v-else style="position: relative; height: 175px; border-radius: 12px 12px 0 0; background-color: #97DDFD;overflow:hidden">
+    <section
+      v-else
+      style="position: relative; height: 175px; border-radius: 12px 12px 0 0; background-color: #97DDFD;overflow:hidden"
+    >
       <q-btn
         to="/profile/employee"
         dense
