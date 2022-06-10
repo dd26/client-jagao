@@ -2,10 +2,11 @@
   <div class="footer row">
     <div class="col-6 row items-start">
       <div class="col-12 q-pt-md" style="font-weight: 700; font-size: 25px; line-height: 1px;">Amount</div>
-      <div class="col-12" style="font-weight: 700; font-size: 25px; line-height: 1px;">{{$formatPrice(amount)}}</div>
+      <div class="col-12" style="font-weight: 700; font-size: 25px; line-height: 1px;">{{$formatPrice(amount)}}$</div>
     </div>
     <div class="col-6 flex flex-center">
       <q-btn
+        v-if="isConfirm"
         color="white"
         text-color="primary"
         label="Confirm"
@@ -18,7 +19,7 @@
 
 <script>
 export default {
-  props: ['amount']
+  props: ['amount', 'isConfirm']
 }
 </script>
 

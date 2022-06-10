@@ -77,6 +77,7 @@
     <footer-s
       :amount="totalAmount"
       @nextStep="nextStep"
+      :isConfirm="servicesCheck.length > 0"
     />
   </section>
 </template>
@@ -121,7 +122,7 @@ export default {
   },
   methods: {
     nextStep () {
-      this.$emit('nextStep', 'alarms')
+      this.$emit('nextStep', 'confirm', { services: this.servicesCheck })
     },
     unselectService (id) {
       this.services.find(itm => itm.id === id).select = false

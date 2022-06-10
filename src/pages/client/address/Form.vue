@@ -132,15 +132,12 @@ export default {
       },
       route: 'addresses',
       formData: true,
-      cities: [
-        { name: 'New York', value: 'NY' },
-        { name: 'Rome', value: 'RM' },
-        { name: 'London', value: 'LDN' },
-        { name: 'Istanbul', value: 'IST' },
-        { name: 'Paris', value: 'PRS' }
-      ],
+      cities: [],
       addressImage: null
     }
+  },
+  mounted () {
+    this.getCities()
   },
   methods: {
     beforeValidate () {
@@ -150,6 +147,10 @@ export default {
     },
     afterSave () {
       this.$router.push('/success?message=You successfully added an address!')
+    },
+    async getCities () {
+      const res = await this.$api.get('cities')
+      this.cities = res
     }
   },
   validations: {

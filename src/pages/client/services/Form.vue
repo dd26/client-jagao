@@ -7,9 +7,13 @@
           />
         </q-tab-panel>
 
-        <q-tab-panel name="alarms">
-          <div class="text-h6">Alarms</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <q-tab-panel name="confirm">
+          <confirm-services
+            @nextStep="nextStep"
+            @previousStep="previousStep"
+            v-bind="form"
+            :form="form"
+          />
         </q-tab-panel>
 
         <q-tab-panel name="movies">
@@ -22,16 +26,28 @@
 
 <script>
 import SelectionServices from '../../../components/services/steps/Selection.vue'
+import ConfirmServices from '../../../components/services/steps/Confirm.vue'
 export default {
-  components: { SelectionServices },
+  components: { SelectionServices, ConfirmServices },
   data () {
     return {
-      panel: 'selection'
+      panel: 'selection',
+      form: {
+        services: []
+      }
     }
   },
   methods: {
-    nextStep (name) {
+    previousStep (name) {
       this.panel = name
+    },
+    nextStep (name, form) {
+      this.panel = name
+      console.log(form)
+      if (form) {
+        const data = { ...this.form, ...form }
+        this.form = data
+      }
     }
   }
 }

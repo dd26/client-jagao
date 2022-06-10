@@ -111,19 +111,19 @@
 import { mapMutations } from 'vuex'
 const menuItemsDataCustomer = [
   {
-    title: 'My services',
+    title: 'Home',
+    icon: 'img:vectors/home1.svg',
+    to: '/home'
+  },
+  {
+    title: 'Pending services',
     icon: 'img:vectors/icon7.svg',
-    to: '/home'
+    to: '/services/pending'
   },
   {
-    title: 'History',
-    icon: 'img:vectors/icon8.svg',
-    to: '/home'
-  },
-  {
-    title: 'Switch Account',
-    icon: 'img:vectors/icon6.svg',
-    to: '/home'
+    title: 'Successful services',
+    icon: 'img:vectors/icon7.svg',
+    to: '/services/susuccessful'
   },
   {
     title: 'Help',
@@ -133,6 +133,11 @@ const menuItemsDataCustomer = [
 ]
 
 const menuItemsDataEmployee = [
+  {
+    title: 'Home',
+    icon: 'img:vectors/home1.svg',
+    to: '/home/employee'
+  },
   {
     title: 'Pending services',
     icon: 'img:vectors/icon7.svg',
@@ -146,11 +151,6 @@ const menuItemsDataEmployee = [
   {
     title: 'Transactions',
     icon: 'img:vectors/transaction1.svg',
-    to: '/home/employee'
-  },
-  {
-    title: 'Switch Account',
-    icon: 'img:vectors/icon6.svg',
     to: '/home/employee'
   },
   {
