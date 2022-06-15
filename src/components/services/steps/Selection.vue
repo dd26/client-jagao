@@ -39,12 +39,24 @@
           class="col-12 q-gutter-y-md"
           v-if="render = render"
         >
-          <select-s-category-item
+          <div
             v-for="(item, index) in services"
             :key="index"
-            v-model="item.select"
-            v-bind="item"
-          />
+            class="row"
+          >
+            <select-s-category-item
+              v-model="item.select"
+              v-bind="item"
+              class="col-11"
+              @increment="increment"
+              @decrement="decrement"
+            />
+            <div
+              v-if="item.select"
+              class="col-1 flex flex-center text-bold text-primary"
+              style="font-size: 20px;"
+            > {{item.quantity}} </div>
+          </div>
         </q-list>
       </section>
 
@@ -61,8 +73,8 @@
             v-for="item in servicesCheck"
             :key="item.id"
           >
-            <div style="font-size: 20px">{{item.name}}</div>
-            <div class="text-primary" style="font-size: 20px; font-weight: 700;">{{item.price}}$</div>
+            <div style="font-size: 20px" class="col-5">{{item.quantity > 1 ? item.quantity : ''}} {{item.name}}</div>
+            <div class="text-primary col-5" style="font-size: 20px; font-weight: 700;">{{item.price * item.quantity}}$</div>
             <q-btn
               icon="img:vectors/icon_trash.svg"
               flat
@@ -99,7 +111,7 @@ export default {
     totalAmount () {
       return this.services.reduce((total, item) => {
         if (item.select) {
-          return total + parseFloat(item.price)
+          return total + (parseFloat(item.price) * parseInt(item.quantity))
         }
         return total
       }, 0)
@@ -121,6 +133,14 @@ export default {
     this.getCategory()
   },
   methods: {
+    increment (id) {
+      this.services.find(itm => itm.id === id).quantity++
+    },
+    decrement (id) {
+      if (this.services.find(itm => itm.id === id).quantity > 1) {
+        this.services.find(itm => itm.id === id).quantity--
+      }
+    },
     nextStep () {
       this.$emit('nextStep', 'confirm', { services: this.servicesCheck })
     },
@@ -136,7 +156,8 @@ export default {
         .then(response => {
           this.services = response.map(itm => {
             return {
-              ...itm
+              ...itm,
+              quantity: 1
             }
           })
         })

@@ -16,9 +16,31 @@
           />
         </q-tab-panel>
 
-        <q-tab-panel name="movies">
-          <div class="text-h6">Movies</div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <q-tab-panel name="pay">
+          <pay-services
+            @nextStep="nextStep"
+            @previousStep="previousStep"
+            v-bind="form"
+            :form="form"
+          />
+        </q-tab-panel>
+
+        <q-tab-panel name="finished">
+          <finished
+            @nextStep="nextStep"
+            @previousStep="previousStep"
+            v-bind="form"
+            :form="form"
+          />
+        </q-tab-panel>
+
+        <q-tab-panel name="error">
+          <error-component
+            @nextStep="nextStep"
+            @previousStep="previousStep"
+            v-bind="form"
+            :form="form"
+          />
         </q-tab-panel>
       </q-tab-panels>
   </q-page>
@@ -27,8 +49,11 @@
 <script>
 import SelectionServices from '../../../components/services/steps/Selection.vue'
 import ConfirmServices from '../../../components/services/steps/Confirm.vue'
+import PayServices from '../../../components/services/steps/Pay.vue'
+import Finished from '../../../components/services/steps/Finished.vue'
+import ErrorComponent from '../../../components/services/steps/Error.vue'
 export default {
-  components: { SelectionServices, ConfirmServices },
+  components: { SelectionServices, ConfirmServices, PayServices, Finished, ErrorComponent },
   data () {
     return {
       panel: 'selection',

@@ -59,8 +59,8 @@
           v-model="form.cardNumber"
           dense
           class="col-12"
-          maxlength="19"
           bg-color="grey-3"
+          maxlength="19"
           unmasked-value
           mask="#### #### #### ####"
           placeholder="1234 5678 9101 1112"
@@ -174,7 +174,6 @@ import { FormMixin } from '../../../mixins/Form'
 import { required } from 'vuelidate/lib/validators'
 
 const validateDateCV = (value) => {
-  console.log(value, 'value')
   if (!value) {
     return false
   }
@@ -184,8 +183,6 @@ const validateDateCV = (value) => {
   const currentDate = new Date()
   const currentMonth = currentDate.getMonth() + 1
   const currentYear = currentDate.getFullYear()
-  console.log(currentMonth, currentYear, 'currentMonth, currentYear', parseInt(month), parseInt(year2))
-  // devuelvo true si la fecha es mayor o igual a la actual, preguntando primero por el año
   return parseInt(year2) >= currentYear && (parseInt(year2) > currentYear || parseInt(month) >= currentMonth)
 }
 

@@ -2,7 +2,6 @@
   <section class="row">
     <q-item
       class="col-12"
-      v-ripple
       clickable
       tag="label"
     >
@@ -16,7 +15,7 @@
         />
       </q-item-section>
 
-      <q-item-section class="q-py-xs q-px-md">
+      <q-item-section class="q-py-xs q-px-md q-pr-xl">
         <q-item-label class="text-primary" style="font-size: 20px; font-weight: 700;"> {{name}} </q-item-label>
         <q-item-label lines="3" style="font-size: 14px; font-weight: 400; color: #5C5C5C">{{description}}</q-item-label>
         <q-item-label class="text-primary text-bold q-pt-xs" style="font-size: 20px"> {{price}}$ </q-item-label>
@@ -24,6 +23,33 @@
 
       <div class="check-style">
         <q-checkbox v-model="selection" keep-color color="secondary" />
+      </div>
+
+      <div class="operators-style column">
+        <div class="col-6 column q-pb-xs">
+          <q-btn
+            @click="$emit('increment', id)"
+            icon="add"
+            class="col-12"
+            dense
+            size="sm"
+            color="primary"
+            unelevated
+            style="width: 100%"
+          />
+        </div>
+        <div class="col-6 column q-pt-xs">
+          <q-btn
+            @click="$emit('decrement', id)"
+            label="-"
+            class="col-12"
+            dense
+            size="sm"
+            color="primary"
+            unelevated
+            style="width: 100%; font-size: 22px"
+          />
+        </div>
       </div>
     </q-item>
   </section>
@@ -79,8 +105,12 @@ export default {
 
 .check-style {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 0px;
+  right: 25px;
+}
+
+.operators-style {
+  width: 25px;
 }
 
 </style>
