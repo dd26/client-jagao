@@ -6,24 +6,7 @@
     </div>
 
     <div class="row q-px-lg">
-      <q-item class="col-12 bg-primary" style="border-radius: 12px;">
-        <q-item-section avatar>
-          <q-avatar class="bg-white">
-            <img src="vectors/gps2.svg" alt="asd" class="q-pa-sm">
-          </q-avatar>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label style="color: #B1ECE3">Your location</q-item-label>
-          <q-item-label style="color: #FFF; font-size: 14px; font-weight: 700;">Royal Ln. Mesa, New Jersey</q-item-label>
-        </q-item-section>
-        <q-item-section side center>
-          <q-icon
-            name="expand_more"
-            color="white"
-            size="30px"
-          />
-        </q-item-section>
-      </q-item>
+      <my-ubication :value="1" />
     </div>
 
     <section class="row q-pt-md q-px-lg justify-center">
@@ -52,9 +35,10 @@
 
 <script>
 import CardItem from '../components/categories/CardItem.vue'
+import MyUbication from '../components/MyUbication.vue'
 export default {
   name: 'PageIndex',
-  components: { CardItem },
+  components: { CardItem, MyUbication },
   data () {
     return {
       search: '',

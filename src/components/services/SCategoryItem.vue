@@ -1,16 +1,19 @@
 <template>
   <q-item class="q-py-lg">
     <q-item-section>
-      <q-item-label class="text-primary text-h6 text-bold">Cleaning</q-item-label>
+      <q-item-label class="text-primary text-h6 text-bold">{{category_name}}</q-item-label>
       <q-item-label class="q-pl-md" caption>
-        <li v-for="n in data" :key="n" class="q-pt-xs">
-          {{n}}
+        <li v-for="n in detail_request_service" :key="n.id" class="q-pt-xs">
+          {{n.service_name}}
         </li>
       </q-item-label>
     </q-item-section>
     <q-item-section avatar>
       <q-avatar rounded size="95px">
-        <img src="vectors/icon10.svg" alt="icono">
+        <img
+          :src="$api_url() + 'image/categories/' + category_id"
+          alt="icono"
+        >
       </q-avatar>
     </q-item-section>
   </q-item>
@@ -18,11 +21,7 @@
 
 <script>
 export default {
-  data () {
-    return {
-      data: ['Kitchen cleaning', 'Room cleaning', 'Garage cleaning', 'Window cleaning']
-    }
-  }
+  props: ['detail_request_service', 'category_name', 'category_id']
 }
 </script>
 

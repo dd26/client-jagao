@@ -9,12 +9,17 @@
         flat
         @click="$router.go(-1)"
       />
-      <div class="text-primary col-12" style="font-size: 20px; font-weight: 700;">Peding services</div>
+      <div class="text-primary col-12 text-center" style="font-size: 20px; font-weight: 700; margin-top: -20px">Peding services</div>
     </div>
 
     <section class="row q-px-lg q-pb-md">
       <q-list class="col-12 q-gutter-y-md">
-        <item v-for="n in 5" :key="n" />
+        <item
+          v-for="item in data"
+          :key="item.id"
+          v-bind="item"
+          @cancelService="cancelService"
+        />
       </q-list>
     </section>
   </q-page>
@@ -22,13 +27,25 @@
 
 <script>
 import Item from '../../../components/services/Item'
+import { GetDataMixin } from '../../../mixins/GetData'
 export default {
+  mixins: [GetDataMixin],
   components: {
     Item
   },
   data () {
     return {
-      data: []
+      route: 'master_request_services'
+    }
+  },
+  methods: {
+    async cancelService (id) {
+      this.$q.loading.show()
+      const res = await this.$api.delete(`${this.route}/${id}`)
+      this.$q.loading.hide()
+      if (res) {
+        this.getRecord()
+      }
     }
   }
 }

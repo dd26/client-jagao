@@ -49,9 +49,9 @@
           bg-color="grey-3"
           placeholder="1234 5678 9101 1112"
           outlined
-          map-options
-          option-value="value"
           option-label="name"
+          option-value="id"
+          map-options
           emit-value
           :error="$v.form.city_id.$error"
           @blur="$v.form.city_id.$touch()"
