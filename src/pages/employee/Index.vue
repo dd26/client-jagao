@@ -1,150 +1,104 @@
 <template>
-  <q-page class="q-pt-lg">
-    <section class="row q-pa-md">
-      <div class="col-12 text-primary text-bold q-pb-sm q-pt-lg"> Hi, {{ name }} </div>
-
-      <q-card class="col-12 card-style text-white q-px-md q-pt-sm" flat>
-        <div class="col-12 row">
-          <section class="col-12 row">
-            <div class="text-bold">My account</div>
-            <q-space />
-            <div class="row">
-              <q-icon name="img:logos/logo3.svg" size="lg" />
-            </div>
-          </section>
-
-          <section class="row col-12">
-            <div class="col-12" style="font-weight: 700; font-size: 37px;">$68,84</div>
-            <hr class="col-12 bg-white" style="border-top: 1px;" />
-          </section>
-
-          <section class="row col-12 justify-center q-pt-sm">
-
-            <div class="column items-center">
-              <q-icon name="img:vectors/arrow1.svg" size="sm" />
-              <div>Lorem</div>
-            </div>
-
-            <div class="column items-center q-pl-lg">
-              <q-icon name="img:vectors/help1.svg" size="sm" />
-              <div>Lorem</div>
-            </div>
-
-          </section>
-        </div>
-      </q-card>
-
-      <section class="col-12 row q-pt-lg">
-        <div class="col-12 text-primary" style="font-weight: 700; font-size: 18px;">Discover</div>
-        <section class="col-12 row q-pt-sm justify-around">
-          <div
-            v-for="itm in discovers"
-            :key="itm.value"
-            class="row justify-center"
-            :class="mod(itm.value)"
-            style="border-radius: 100%; position: relative; width: 70px; height: 70px;"
-            v-ripple
-            clickable
-          >
-            <div
-              class="q-pa-md"
-              style="width: 70px; height: 70px;"
-            >
-              <img :src="itm.icon" width="100%" height="100%" style="object-fit: contain;" />
-            </div>
-            <div class="q-pt-xs"> {{itm.title}} </div>
-          </div>
-
-        </section>
-      </section>
-
-      <section class="q-pa-md q-px-md col-12 q-pt-xl">
-        <q-input
-          v-model="search"
-          dense
-          borderless
-          placeholder="Find new services"
-          class="q-px-md"
-          style="background-color: #D9F2EE; border-radius: 100px"
-        >
-          <q-icon name="search" slot="prepend" color="primary" />
-        </q-input>
-      </section>
-
-      <section class="row col-12">
-        <div class="col-12 text-primary q-pb-sm" style="font-weight: 700; font-size: 18px;">Seggestion</div>
-        <q-scroll-area
+  <q-page class="q-pt-lg q-pb-lg">
+    <section class="row q-pa-md items-center q-px-lg">
+      <div class="col-6 row items-center">
+        <div class="col-12 text-primary text-bold" style="font-size: 20px"> Hello, {{ name }} </div>
+        <div class="col-12" style="font-size: 16px; color: #5C5C5C;">Let’s start work!</div>
+      </div>
+      <div class="col-6 row justify-end">
+        <wallet
           class="col-12"
-          style="height: 150px;"
-          horizontal
-        >
-          <div class="row no-wrap">
-            <q-card
-              v-for="n in 3"
-              :key="n"
-              style="width: 250px; height: 140px; border-radius: 12px; background: #D9F2EE;"
-              class="q-my-xs q-ml-sm row text-primary"
-            >
-              <div class="col-4 row items-center justify-center">
-                <q-icon
-                  name="img:vectors/home4.svg"
-                  size="60px"
-                />
-              </div>
-              <div class="col-8 q-pa-xs q-px-sm row items-center">
-                <div style="font-weight: 700; font-size: 16px;">Home Cleaning</div>
-                <div class="text-caption" style="color: #B3B3B3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                </div>
-                <div class="row q-gutter-x-sm">
-                  <q-icon name="img:vectors/location1.svg" size="xs" color="primary" />
-                  <div class="text-caption">20/03/2022</div>
-                </div>
-              </div>
-            </q-card>
-          </div>
-        </q-scroll-area>
-      </section>
-
-      <section
-        class="col-12 row text-primary q-pt-md q-pb-sm"
-      >
-        <q-icon
-          name="keyboard_double_arrow_right"
-          size="sm"
-          color="primary"
+          :amount="'68,79'"
         />
-        <div>see more</div>
-      </section>
+      </div>
+    </section>
 
+    <section class="row justify-center q-pt-lg q-px-lg">
+      <status-employee />
+    </section>
+
+    <section class="row q-px-xl q-pt-lg">
+      <div class="col-12 text-center q-pb-lg text-primary text-bold" style="font-size: 25px;">Available services</div>
+      <q-list class="col-12 q-gutter-y-md" v-if="services.length > 0">
+        <Item
+          v-for="itm in services"
+          :key="itm.id"
+          v-bind="itm"
+          :isCancel="false"
+          @clickItem="clickItem"
+        />
+      </q-list>
+      <section v-else class="col-12">
+        <img
+          src="vectors/card5.svg"
+          alt=""
+          width="100%"
+          height="110px"
+          style="object-fit: fill"
+        >
+      </section>
+    </section>
+
+    <section class="row q-px-xl q-pt-lg">
+      <div class="col-12 text-center q-pb-lg text-primary text-bold" style="font-size: 25px;">Pending services</div>
+      <q-list class="col-12 q-gutter-y-md" v-if="servicesPending.length > 0">
+        <Item
+          v-for="itm in servicesPending"
+          :key="itm.id"
+          v-bind="itm"
+          :isCancel="false"
+          @clickItem="clickItem"
+        />
+      </q-list>
+      <section v-else class="col-12">
+        <img
+          src="vectors/card5.svg"
+          alt=""
+          width="100%"
+          height="110px"
+          style="object-fit: fill"
+        >
+        <div class="col-12 text-center q-pt-md" style="color: #5C5C5C; font-size: 16px">Find jobs near you and start providing <br> your services!</div>
+      </section>
     </section>
   </q-page>
 </template>
 
 <script>
+import StatusEmployee from '../../components/status/StatusEmployee.vue'
+import Wallet from '../../components/wallet/Wallet.vue'
+import Item from 'src/components/services/Item.vue'
 export default {
+  components: {
+    Wallet,
+    StatusEmployee,
+    Item
+  },
   data () {
     return {
-      search: null,
       name: 'Elizabeth',
-      discovers: [
-        { title: 'Lorem', value: 1, icon: 'vectors/home3.svg' },
-        { title: 'Lorem', value: 2, icon: 'vectors/can2.svg' },
-        { title: 'Lorem', value: 3, icon: 'vectors/icon2.svg' },
-        { title: 'Lorem', value: 4, icon: 'vectors/icon3.svg' }
-      ]
+      services: [],
+      servicesPending: []
     }
   },
-  mounted () {
+  async mounted () {
     this.getUserInfo()
+    this.services = await this.getServices(0)
+    this.servicesPending = await this.getServices(1)
   },
   methods: {
-    mod (value) {
-      return value % 2 === 0 ? 'bg-secondary' : 'bg-primary'
-    },
     async getUserInfo () {
       const user = await this.$getUserInfo()
       this.name = user.user.name
+    },
+    async getServices (status) {
+      this.$q.loading.show()
+      const data = await this.$api.get('/master_request_services/status/' + status)
+      this.$q.loading.hide()
+      return data
+    },
+    clickItem (id) {
+      this.$router.push('/services/detail/' + id + '/employee')
     }
   }
 }

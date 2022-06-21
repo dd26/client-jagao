@@ -118,7 +118,7 @@ const menuItemsDataCustomer = [
   {
     title: 'Pending services',
     icon: 'img:vectors/icon7.svg',
-    to: '/services/pending'
+    to: '/services/pending/customer'
   },
   {
     title: 'Successful services',
@@ -128,7 +128,7 @@ const menuItemsDataCustomer = [
   {
     title: 'Help',
     icon: 'img:vectors/icon4.svg',
-    to: '/home'
+    to: '/help'
   }
 ]
 
@@ -141,7 +141,7 @@ const menuItemsDataEmployee = [
   {
     title: 'Pending services',
     icon: 'img:vectors/icon7.svg',
-    to: '/services/pending'
+    to: '/services/pending/employee'
   },
   {
     title: 'Successful services',
@@ -156,7 +156,7 @@ const menuItemsDataEmployee = [
   {
     title: 'Help',
     icon: 'img:vectors/icon4.svg',
-    to: '/home/employee'
+    to: '/help'
   }
 ]
 

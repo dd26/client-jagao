@@ -20,6 +20,7 @@
           v-bind="item"
           @cancelService="cancelService"
           @clickItem="clickItem"
+          :isCancel="true"
         />
       </q-list>
     </section>
@@ -49,7 +50,7 @@ export default {
       }
     },
     clickItem (id) {
-      this.$router.push('/services/detail/' + id + '/employee')
+      this.$router.push('/services/detail/' + id + '/customer')
     }
   }
 }

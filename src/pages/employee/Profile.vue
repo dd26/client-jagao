@@ -134,7 +134,7 @@ export default {
       name: 'Isabel Summerton',
       states: [
         { name: 'Available', id: 1, color: 'positive' },
-        { name: 'Occupied', id: 2, color: 'orange' },
+        { name: 'Ocupied', id: 2, color: 'orange' },
         { name: 'Not available', id: 3, color: 'negative' }
       ],
       state: 1,

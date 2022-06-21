@@ -94,13 +94,12 @@
       </section>
     </section>
 
-    <section class="row q-py-lg q-px-xl justify-center q-pt-xl" v-if="statuteValue == 0">
+    <section class="row q-py-lg q-px-xl justify-center q-pt-xl">
       <q-btn
-        label="Accept Service"
-        color="primary"
+        label="Cancel"
         class="q-py-sm q-px-xl q-mt-md"
-        style="border-radius: 8px; color: white;"
-        @click="acceptService"
+        style="border-radius: 8px; background-color: #E23D3D; color: white;"
+        @click="cancelService"
       />
     </section>
   </q-page>
@@ -169,27 +168,6 @@ export default {
     changeStatus (id) {
       this.statuteValue = id
       this.isOpenStatute = false
-    },
-    acceptService () {
-      this.$q.dialog({
-        title: 'Accept Service',
-        message: 'Are you sure you want to accept this service?',
-        cancel: true,
-        ok: {
-          label: 'Accept',
-          color: 'primary'
-        }
-      }).onOk(async () => {
-        this.$q.loading.show()
-        const res = await this.$api.put(`${this.route}/${this.form.id}/status/1`)
-        this.$q.loading.hide()
-        if (res) {
-          this.$q.notify({
-            color: 'positive',
-            message: 'Service accepted'
-          })
-        }
-      })
     }
   }
 }

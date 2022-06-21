@@ -3,7 +3,7 @@
     <q-item
       class="bg-color-item"
       clickable
-      @click="$router.push('/services/detail/' + id)"
+      @click="$emit('clickItem', id)"
     >
       <q-item-section top>
         <q-item-label class="text-primary text-bold">{{ category_name }}</q-item-label>
@@ -38,6 +38,7 @@
       </div>
     </q-item>
     <q-btn
+      v-if="isCancel"
       icon="more_vert"
       size="md"
       flat
@@ -72,7 +73,7 @@
 <script>
 import { date } from 'quasar'
 export default {
-  props: ['category_name', 'observations', 'id', 'address_name', 'address', 'right_now', 'date_request', 'total'],
+  props: ['category_name', 'observations', 'id', 'address_name', 'address', 'right_now', 'date_request', 'total', 'isCancel'],
   computed: {
     timeData () {
       return date.formatDate(new Date(this.date_request), 'HH:mm A')

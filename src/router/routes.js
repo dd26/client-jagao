@@ -31,9 +31,11 @@ const routes = [
       { path: '/address/form', component: () => import('pages/client/address/Form.vue') },
       { path: '/services/form', component: () => import('pages/employee/services/Form.vue') },
       { path: '/services/list/selection', component: () => import('pages/employee/services/Selection.vue') },
-      { path: '/services/pending', component: () => import('pages/employee/services/Pending.vue') },
+      { path: '/services/pending/employee', component: () => import('pages/employee/services/Pending.vue') },
+      { path: '/services/pending/customer', component: () => import('pages/client/services/Pending.vue') },
       { path: '/services/susuccessful', component: () => import('pages/employee/services/Success.vue') },
-      { path: '/services/detail/:id', component: () => import('pages/employee/services/Detail.vue') },
+      { path: '/services/detail/:id/customer', component: () => import('pages/client/services/Detail.vue') },
+      { path: '/services/detail/:id/employee', component: () => import('pages/employee/services/Detail.vue') },
       { path: '/services/customer/process/:category_id', component: () => import('pages/client/services/Form.vue') },
       { path: '/settings', component: () => import('pages/Setting.vue') },
       { path: '/notifications/client', component: () => import('src/pages/client/Notifications.vue') },
@@ -41,7 +43,8 @@ const routes = [
       { path: '/notifications/other', component: () => import('src/pages/Notifications.vue') },
       { path: '/accounts', component: () => import('pages/account/List.vue') },
       { path: '/accounts/form', component: () => import('pages/account/Form.vue') },
-      { path: '/search', component: () => import('pages/employee/Search.vue') }
+      { path: '/search', component: () => import('pages/employee/Search.vue') },
+      { path: '/help', component: () => import('pages/Help.vue') }
     ]
   },
   {
