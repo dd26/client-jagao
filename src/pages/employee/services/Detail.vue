@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pb-xl">
     <div class="col-12 row q-pa-md q-pt-xl q-px-lg">
       <q-btn
         icon="arrow_back_ios"
@@ -29,38 +29,52 @@
         <section
           v-for="item in states"
           :key="item.id"
+          class="row col-12 justify-center items-center"
+        >
+          <section
+            v-if="item.id !== statuteObj.id"
+            class="row col-11 text-center status-style justify-around text-bold items-center"
+            style="font-size: 20px;"
+            @click="changeStatus(item.id)"
+          >
+            <div class="col-12 text-center">{{item.name}}</div>
+            <div class="badge-style" :style="`background-color:${item.color}`"></div>
+          </section>
+        </section>
+        <section
           class="row col-11 text-center status-style justify-around text-bold items-center"
           style="font-size: 20px;"
-          @click="changeStatus(item.id)"
+          @click="acceptServiceDlg = true"
+          v-if="statuteObj.id === 0"
         >
-          <div class="col-12 text-center">{{item.name}}</div>
-          <div class="badge-style" :style="`background-color:${item.color}`"></div>
+          <div class="col-12 text-center">Accept Service</div>
+          <div class="badge-style" :style="`background-color: #97DDFD`"></div>
         </section>
       </section>
     </section>
 
-    <section class="row q-px-lg q-pt-lg" v-if="form && form.employee">
+    <section class="row q-px-lg q-pt-lg" v-if="form && form.user">
       <section class="col-3">
         <q-avatar size="85px">
-          <img :src="$api_url() + 'image/specialists/1'" alt="employee_img" />
+          <img :src="$api_url() + 'image/customers/' + form.customer.id" alt="employee_img" />
         </q-avatar>
       </section>
       <section class="col-8 row q-pl-md">
 
         <section class="col-12 row">
-          <div class="col-12 text-bold text-primary" style="font-size: 16px">Jacob Summerton</div>
-          <div style="color: #5C5C5C; font-size: 14px; font-weight: 500;">Employee</div>
+          <div class="col-12 text-bold text-primary" style="font-size: 16px"> {{ form.user.name }} </div>
+          <div style="color: #5C5C5C; font-size: 14px; font-weight: 500;">Customer</div>
           <section class="row col-12 items-center q-pt-xs">
             <q-icon
               name="img:vectors/location2.svg"
             />
-            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">Lorem insup dolor</div>
+            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">{{ form.address_name }}</div>
           </section>
           <section class="row col-12 items-center q-pt-xs">
             <q-icon
               name="img:vectors/phone1.svg"
             />
-            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">041245689789</div>
+            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">{{ form.customer.phone }}</div>
           </section>
         </section>
 
@@ -68,7 +82,7 @@
     </section>
 
     <section class="row q-px-lg" v-if="form">
-      <div class="text-bold text-primary q-py-md q-pt-xl text-h6">Requeriments</div>
+      <div class="text-bold text-primary q-py-md q-pt-lg text-h6">Requeriments</div>
       <s-category-item
         class="col-12"
         v-bind="form"
@@ -82,7 +96,7 @@
       </section>
     </section>
 
-    <section class="row q-px-lg q-mt-xl q-py-md" style="background-color: #D9F2EE" v-if="form">
+    <section class="row q-px-lg q-mt-xl q-mx-lg q-py-md" style="background-color: #D9F2EE; border-radius: 8px" v-if="form">
       <section class="col-12 row justify-between items-center" v-if="form.discount">
         <div style="color: #5C5C5C; font-weight: 700; font-size: 16px">Amount <br>(- Comision)</div>
         <div class="text-primary" style="color: #5C5C5C; font-weight: 700; font-size: 32px">110$ - 10$</div>
@@ -94,15 +108,33 @@
       </section>
     </section>
 
-    <section class="row q-py-lg q-px-xl justify-center q-pt-xl" v-if="statuteValue == 0">
-      <q-btn
-        label="Accept Service"
-        color="primary"
-        class="q-py-sm q-px-xl q-mt-md"
-        style="border-radius: 8px; color: white;"
-        @click="acceptService"
-      />
-    </section>
+    <q-dialog v-model="acceptServiceDlg" full-width>
+      <q-card style="border-radius: 12px">
+        <q-card-section>
+          <div class="text-bold text-primary q-py-md text-h6">Accept Service</div>
+          <p>Estimated Time of Arrival?</p>
+
+          <section class="row q-gutter-x-sm q-gutter-y-sm justify-around">
+            <q-btn
+              @click="acceptService(item.value)"
+              v-for="item in times"
+              :key="item.value"
+              :label="item.label"
+              color="primary"
+              no-caps
+              style="border-radius: 5px;"
+            />
+            <q-btn
+              label="Cancel"
+              color="negative"
+              no-caps
+              style="border-radius: 5px;"
+              v-close-popup
+            />
+          </section>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -122,9 +154,17 @@ const states = [
   },
   {
     id: 2,
-    name: 'Finish',
+    name: 'Finished',
     color: '#00A78E'
   }
+]
+
+const timeEstimates = [
+  { label: '15 Min', value: 15 },
+  { label: '30 Min', value: 30 },
+  { label: '60 Min', value: 60 },
+  { label: '90 Min', value: 90 },
+  { label: '120 Min', value: 120 }
 ]
 
 export default {
@@ -135,7 +175,9 @@ export default {
       states,
       isOpenStatute: false,
       statuteValue: 0,
-      form: null
+      form: null,
+      acceptServiceDlg: false,
+      times: timeEstimates
     }
   },
   mounted () {
@@ -170,26 +212,18 @@ export default {
       this.statuteValue = id
       this.isOpenStatute = false
     },
-    acceptService () {
-      this.$q.dialog({
-        title: 'Accept Service',
-        message: 'Are you sure you want to accept this service?',
-        cancel: true,
-        ok: {
-          label: 'Accept',
-          color: 'primary'
-        }
-      }).onOk(async () => {
-        this.$q.loading.show()
-        const res = await this.$api.put(`${this.route}/${this.form.id}/status/1`)
-        this.$q.loading.hide()
-        if (res) {
-          this.$q.notify({
-            color: 'positive',
-            message: 'Service accepted'
-          })
-        }
-      })
+    async acceptService (estimateTime) {
+      const time = estimateTime + ' minutes'
+      this.$q.loading.show()
+      const res = await this.$api.put(`${this.route}/${this.form.id}/status/1`, { time })
+      this.$q.loading.hide()
+      if (res) {
+        this.$q.notify({
+          color: 'positive',
+          message: 'Service accepted'
+        })
+        this.getData()
+      }
     }
   }
 }

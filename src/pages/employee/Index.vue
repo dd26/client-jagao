@@ -38,29 +38,6 @@
         >
       </section>
     </section>
-
-    <section class="row q-px-xl q-pt-lg">
-      <div class="col-12 text-center q-pb-lg text-primary text-bold" style="font-size: 25px;">Pending services</div>
-      <q-list class="col-12 q-gutter-y-md" v-if="servicesPending.length > 0">
-        <Item
-          v-for="itm in servicesPending"
-          :key="itm.id"
-          v-bind="itm"
-          :isCancel="false"
-          @clickItem="clickItem"
-        />
-      </q-list>
-      <section v-else class="col-12">
-        <img
-          src="vectors/card5.svg"
-          alt=""
-          width="100%"
-          height="110px"
-          style="object-fit: fill"
-        >
-        <div class="col-12 text-center q-pt-md" style="color: #5C5C5C; font-size: 16px">Find jobs near you and start providing <br> your services!</div>
-      </section>
-    </section>
   </q-page>
 </template>
 

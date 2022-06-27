@@ -29,12 +29,17 @@
         <section
           v-for="item in states"
           :key="item.id"
-          class="row col-11 text-center status-style justify-around text-bold items-center"
-          style="font-size: 20px;"
-          @click="changeStatus(item.id)"
+          class="row col-12 justify-center items-center"
         >
-          <div class="col-12 text-center">{{item.name}}</div>
-          <div class="badge-style" :style="`background-color:${item.color}`"></div>
+          <section
+            v-if="item.id !== statuteObj.id"
+            class="row col-11 text-center status-style justify-around text-bold items-center"
+            style="font-size: 20px;"
+            @click="changeStatus(item.id)"
+          >
+            <div class="col-12 text-center">{{item.name}}</div>
+            <div class="badge-style" :style="`background-color:${item.color}`"></div>
+          </section>
         </section>
       </section>
     </section>
@@ -82,7 +87,11 @@
       </section>
     </section>
 
-    <section class="row q-px-lg q-mt-xl q-py-md" style="background-color: #D9F2EE" v-if="form">
+    <section
+      class="row q-px-lg q-mt-xl q-mx-lg q-py-md"
+      style="background-color: #D9F2EE; border-radius: 8px"
+      v-if="form"
+    >
       <section class="col-12 row justify-between items-center" v-if="form.discount">
         <div style="color: #5C5C5C; font-weight: 700; font-size: 16px">Amount <br>(- Comision)</div>
         <div class="text-primary" style="color: #5C5C5C; font-weight: 700; font-size: 32px">110$ - 10$</div>
@@ -121,7 +130,7 @@ const states = [
   },
   {
     id: 2,
-    name: 'Finish',
+    name: 'Finished',
     color: '#00A78E'
   }
 ]

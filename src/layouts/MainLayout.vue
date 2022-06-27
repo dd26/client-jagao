@@ -169,7 +169,7 @@ const routeEmployee = {
 const routeCustomer = {
   home: '/home',
   search: '/search',
-  notifications: '/notifications'
+  notifications: '/notifications/client'
 }
 
 export default {

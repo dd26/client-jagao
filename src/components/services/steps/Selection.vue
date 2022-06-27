@@ -137,7 +137,7 @@ export default {
       this.services.find(itm => itm.id === id).quantity++
     },
     decrement (id) {
-      if (this.services.find(itm => itm.id === id).quantity > 1) {
+      if (this.services.find(itm => itm.id === id).quantity > 0) {
         this.services.find(itm => itm.id === id).quantity--
       }
     },
@@ -157,7 +157,7 @@ export default {
           this.services = response.map(itm => {
             return {
               ...itm,
-              quantity: 1
+              quantity: 0
             }
           })
         })

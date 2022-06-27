@@ -2,8 +2,6 @@
   <section class="row">
     <q-item
       class="col-12"
-      clickable
-      tag="label"
     >
       <q-item-section thumbnail style="width: 120px">
         <q-img
@@ -77,6 +75,10 @@ export default {
     id: {
       type: Number,
       default: null
+    },
+    quantity: {
+      type: Number,
+      default: 0
     }
   },
   data () {
@@ -87,6 +89,11 @@ export default {
   watch: {
     selection (newValue) {
       this.$emit('input', newValue)
+    },
+    quantity () {
+      if (this.quantity > 0) {
+        this.selection = true
+      }
     }
   }
 }
@@ -107,6 +114,7 @@ export default {
   position: absolute;
   bottom: 0px;
   right: 25px;
+  display: none;
 }
 
 .operators-style {
