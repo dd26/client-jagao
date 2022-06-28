@@ -44,28 +44,28 @@
       </section>
     </section>
 
-    <section class="row q-px-lg q-pt-lg" v-if="form && form.employee">
+    <section class="row q-px-lg q-pt-lg" v-if="form && form.specialist">
       <section class="col-3">
         <q-avatar size="85px">
-          <img :src="$api_url() + 'image/specialists/1'" alt="employee_img" />
+          <img :src="$api_url() + 'image/specialists/' + form.specialist.id" alt="employee_img" />
         </q-avatar>
       </section>
       <section class="col-8 row q-pl-md">
 
         <section class="col-12 row">
-          <div class="col-12 text-bold text-primary" style="font-size: 16px">Jacob Summerton</div>
+          <div class="col-12 text-bold text-primary" style="font-size: 16px">{{form.specialist.user.name}}</div>
           <div style="color: #5C5C5C; font-size: 14px; font-weight: 500;">Employee</div>
-          <section class="row col-12 items-center q-pt-xs">
+          <!-- <section class="row col-12 items-center q-pt-xs">
             <q-icon
               name="img:vectors/location2.svg"
             />
             <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">Lorem insup dolor</div>
-          </section>
+          </section> -->
           <section class="row col-12 items-center q-pt-xs">
             <q-icon
               name="img:vectors/phone1.svg"
             />
-            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">041245689789</div>
+            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">{{form.specialist.phone}}</div>
           </section>
         </section>
 

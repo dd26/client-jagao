@@ -39,7 +39,7 @@ export default {
   },
   data () {
     return {
-      route: '/master_request_services/status/2/specialist'
+      route: '/master_request_services/status/1/customer'
     }
   },
   methods: {
@@ -52,7 +52,7 @@ export default {
       }
     },
     clickItem (id) {
-      this.$router.push('/services/detail/' + id + '/employee')
+      this.$router.push('/services/detail/' + id + '/customer')
     }
   }
 }

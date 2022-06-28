@@ -208,8 +208,17 @@ export default {
     openChangeStatus () {
       this.isOpenStatute = !this.isOpenStatute
     },
-    changeStatus (id) {
+    async changeStatus (id) {
       this.statuteValue = id
+      if (id === 2) {
+        this.$q.loading.show()
+        const res = await this.$api.put(`${this.route}/${this.form.id}/status/${id}`)
+        this.$q.loading.hide()
+        this.getData()
+        console.log({
+          res
+        })
+      }
       this.isOpenStatute = false
     },
     async acceptService (estimateTime) {
@@ -223,6 +232,7 @@ export default {
           message: 'Service accepted'
         })
         this.getData()
+        this.acceptServiceDlg = false
       }
     }
   }

@@ -121,6 +121,11 @@ const menuItemsDataCustomer = [
     to: '/services/pending/customer'
   },
   {
+    title: 'Working services',
+    icon: 'img:vectors/icon7.svg',
+    to: '/services/working/customer'
+  },
+  {
     title: 'Successful services',
     icon: 'img:vectors/icon7.svg',
     to: '/services/susuccessful'
@@ -142,6 +147,11 @@ const menuItemsDataEmployee = [
     title: 'Pending services',
     icon: 'img:vectors/icon7.svg',
     to: '/services/pending/employee'
+  },
+  {
+    title: 'Working services',
+    icon: 'img:vectors/icon7.svg',
+    to: '/services/working/employee'
   },
   {
     title: 'Successful services',
