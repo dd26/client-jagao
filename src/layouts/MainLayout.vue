@@ -128,7 +128,7 @@ const menuItemsDataCustomer = [
   {
     title: 'Successful services',
     icon: 'img:vectors/icon7.svg',
-    to: '/services/susuccessful'
+    to: '/services/susuccessful/customer'
   },
   {
     title: 'Help',
@@ -156,7 +156,7 @@ const menuItemsDataEmployee = [
   {
     title: 'Successful services',
     icon: 'img:vectors/icon7.svg',
-    to: '/services/susuccessful'
+    to: '/services/susuccessful/employee'
   },
   {
     title: 'Transactions',

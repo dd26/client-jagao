@@ -8,7 +8,7 @@
       <div class="col-6 row justify-end">
         <wallet
           class="col-12"
-          :amount="'68,79'"
+          :amount="amount"
         />
       </div>
     </section>
@@ -55,11 +55,13 @@ export default {
     return {
       name: 'Elizabeth',
       services: [],
-      servicesPending: []
+      servicesPending: [],
+      amount: '68,79'
     }
   },
   async mounted () {
     this.getUserInfo()
+    this.getAmount()
     this.services = await this.getServices(0)
     this.servicesPending = await this.getServices(1)
   },
@@ -76,6 +78,14 @@ export default {
     },
     clickItem (id) {
       this.$router.push('/services/detail/' + id + '/employee')
+    },
+    async getAmount () {
+      this.$q.loading.show()
+      const res = await this.$api.get('/specialists/amount/total')
+      this.$q.loading.hide()
+      if (res) {
+        this.amount = res
+      }
     }
   }
 }

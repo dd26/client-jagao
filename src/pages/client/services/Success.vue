@@ -39,7 +39,7 @@ export default {
   },
   data () {
     return {
-      route: '/master_request_services/status/2/specialist'
+      route: '/master_request_services/status/2/customer'
     }
   },
   methods: {
