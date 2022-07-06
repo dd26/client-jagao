@@ -99,12 +99,12 @@
     <section class="row q-px-lg q-mt-xl q-mx-lg q-py-md" style="background-color: #D9F2EE; border-radius: 8px" v-if="form">
       <section class="col-12 row justify-between items-center" v-if="form.discount">
         <div style="color: #5C5C5C; font-weight: 700; font-size: 16px">Amount <br>(- Comision)</div>
-        <div class="text-primary" style="color: #5C5C5C; font-weight: 700; font-size: 32px">110$ - 10$</div>
+        <div class="text-primary" style="color: #5C5C5C; font-weight: 700; font-size: 25px">{{form.total}}$ - {{form.discount_amount}}$</div>
       </section>
 
       <section class="col-12 row justify-between items-center">
         <div style="color: #5C5C5C; font-weight: 700; font-size: 16px">Total</div>
-        <div class="text-primary" style="color: #5C5C5C; font-weight: 700; font-size: 32px">{{form.total}}$</div>
+        <div class="text-primary" style="color: #5C5C5C; font-weight: 700; font-size: 32px">{{totalAmount}}$</div>
       </section>
     </section>
 
@@ -186,6 +186,12 @@ export default {
   computed: {
     statuteObj () {
       return this.states.find(item => item.id === this.statuteValue)
+    },
+    totalAmount () {
+      if (this.form.discount) {
+        return this.form.total - this.form.discount_amount
+      }
+      return this.form.total
     }
   },
   methods: {
@@ -204,12 +210,14 @@ export default {
       this.$q.loading.hide()
       this.form = res
       this.statuteValue = res.state
+      if (this.statuteValue === 2) {
+        this.$router.push('/services/detail/' + this.$route.params.id + '/employee/calification')
+      }
     },
     openChangeStatus () {
       this.isOpenStatute = !this.isOpenStatute
     },
     async changeStatus (id) {
-      this.statuteValue = id
       if (id === 2) {
         this.$q.loading.show()
         const res = await this.$api.put(`${this.route}/${this.form.id}/status/${id}`)

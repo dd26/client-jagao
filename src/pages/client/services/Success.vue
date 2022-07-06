@@ -52,7 +52,7 @@ export default {
       }
     },
     clickItem (id) {
-      this.$router.push('/services/detail/' + id + '/employee')
+      this.$router.push('/services/detail/' + id + '/customer')
     }
   }
 }

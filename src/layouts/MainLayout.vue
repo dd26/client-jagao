@@ -95,7 +95,9 @@
       <q-tabs v-model="tab">
         <q-tab :name="1" icon="img:vectors/home1.svg" @click="$router.push(routeFooter.home)" />
         <q-tab :name="2" icon="img:vectors/search1.svg" @click="$router.push(routeFooter.search)" />
-        <q-tab :name="3" icon="img:vectors/notify1.svg" @click="$router.push(routeFooter.notifications)" />
+        <q-tab :name="3" icon="img:vectors/notify1.svg" @click="$router.push(routeFooter.notifications)">
+          <div v-if="hasNotifications" class="badge-style" />
+        </q-tab>
       </q-tabs>
     </q-footer>
 
@@ -195,11 +197,14 @@ export default {
         home: '/home',
         search: '/search',
         notifications: '/notifications/employee'
-      }
+      },
+      notifications: [],
+      hasNotifications: false
     }
   },
   mounted () {
     this.getUserInfo()
+    this.getNotifications()
   },
   methods: {
     ...mapMutations('generals', ['logout']),
@@ -215,6 +220,14 @@ export default {
       this.userAvatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
       this.routeFooter = user.role_id === 3 ? routeCustomer : routeEmployee
       this.menuItems = user.role_id === 3 ? menuItemsDataCustomer : menuItemsDataEmployee
+    },
+    getNotifications () {
+      this.$getNotifications().then(res => {
+        this.notifications = res
+        if (res.length > 0) {
+          this.hasNotifications = true
+        }
+      })
     }
   }
 }
@@ -231,4 +244,14 @@ export default {
   color: #FFF;
 }
 
+.badge-style {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #EB5757;
+  border: 2px solid #ffffff;
+  position: absolute;
+  top: 35%;
+  right: -5px;
+}
 </style>

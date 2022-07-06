@@ -14,3 +14,8 @@ Vue.prototype.$formatPrice = function (value) {
   const val = (value / 1).toFixed(2).replace('.', ',')
   return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }
+
+Vue.prototype.$getNotifications = async function () {
+  const res = await this.$api.get('notifications')
+  return res
+}

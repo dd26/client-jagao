@@ -79,14 +79,22 @@
           class="col-7 style-input"
           borderless
         />
-        <q-btn
-          dense
-          label="Redeem"
-          unelevated
-          no-caps
-          color="primary"
-          class="col-4 q-ml-sm style-btn"
-        />
+        <div class="row col-5 justify-center">
+          <q-btn
+            dense
+            label="Redeem"
+            unelevated
+            no-caps
+            color="primary"
+            :class="!hasDiscount ? 'style-btn' : 'style-btn-disabled'"
+            class="col-12 q-ml-sm"
+            @click="verifyCoupon"
+          />
+          <div
+            class="col-12 text-center text-primary q-pt-xs"
+            style="font-weight: 600; font-size: 14px"
+          > {{discountObj.label}} </div>
+        </div>
       </section>
     </section>
 
@@ -98,7 +106,7 @@
         style="border-radius: 12px;"
         separator
       >
-        <q-item tag="label" :disable="hasDiscount">
+        <q-item tag="label" :disable="!hasDiscount">
           <q-item-section avatar>
             <q-radio v-model="isDiscount" :val="0" :disable="!hasDiscount" />
           </q-item-section>
@@ -106,7 +114,7 @@
             <q-item-label :class="hasDiscount ? 'text-primary' : 'text-grey'" style="font-size: 20px;">With discount</q-item-label>
           </q-item-section>
           <q-item-section side center>
-            <q-item-label class="text-bold" :class="hasDiscount ? 'text-primary' : 'text-grey'" style="font-size: 20px;">0$</q-item-label>
+            <q-item-label class="text-bold" :class="hasDiscount ? 'text-primary' : 'text-grey'" style="font-size: 20px;">{{$formatPrice(discountObj.totalAmount)}}$</q-item-label>
           </q-item-section>
         </q-item>
         <q-item tag="label">
@@ -235,7 +243,11 @@ export default {
       modeAddCard: false,
       isConfirm: false,
       route: 'master_request_services',
-      totalDiscount: 10
+      totalDiscount: 10,
+      discountObj: {
+        label: '',
+        totalAmount: 0
+      }
     }
   },
   mounted () {
@@ -247,6 +259,28 @@ export default {
     }
   },
   methods: {
+    async verifyCoupon () {
+      this.$q.loading.show()
+      await this.$api.get('/coupons/check/code/' + this.formPay.coupon).then(res => {
+        this.$q.loading.hide()
+        if (res) {
+          console.log(res)
+          this.hasDiscount = true
+          this.discountObj = res
+          this.discountObj.label = res.type === 2 ? `$${res.value} of dicount!` : `${res.value}% of dicount!`
+          this.discountObj.withDiscountValue = res.type === 2 ? res.value : (this.totalAmount * res.value) / 100
+          this.discountObj.totalAmount = this.totalAmount - this.discountObj.withDiscountValue
+          this.isDiscount = 0
+        } else {
+          this.$q.notify({
+            color: 'negative',
+            message: 'Invalid coupon'
+          })
+          this.hasDiscount = false
+          this.isDiscount = 1
+        }
+      })
+    },
     confirmClick () {
       this.$v.formPay.card_id.$touch()
       if (this.$v.formPay.card_id.$invalid) {
@@ -256,16 +290,21 @@ export default {
     },
     async pay () {
       this.formPay.category_id = this.$route.params.category_id
-      this.formPay.discount = this.hasDiscount
-      this.formPay.discountAmount = !this.hasDiscount ? 0 : this.totalAmount - this.totalDiscount
+      this.formPay.discount = this.isDiscount
       this.$q.loading.show()
       await this.$api.post(`${this.route}`, this.formPay).then(res => {
         this.$q.loading.hide()
         console.log(res, 'res no error')
-        if (res) {
+        if (res && !res.error) {
           this.$emit('nextStep', 'finished', this.formPay)
         } else {
           this.$emit('nextStep', 'error')
+          if (res.error && res.message) {
+            this.$q.notify({
+              color: 'negative',
+              message: res.message
+            })
+          }
         }
       })
     },
@@ -339,6 +378,14 @@ export default {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.34);
   border-radius: 8px;
   height: 40px;
+}
+
+.style-btn-disabled {
+  background: #00A78E;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.34);
+  border-radius: 8px;
+  height: 40px;
+  opacity: 0.5;
 }
 
 .style-btn-continue {

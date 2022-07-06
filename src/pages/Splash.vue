@@ -27,12 +27,14 @@ export default {
       if (getLs) {
         this.$api.post('verify_token', { api_token: JSON.parse(getLs).api_token }).then(res => {
           console.log(res, 'VERIFY TOKEN')
-          if (res) {
+          if (!res.status === 'error') {
             if (res.user.role_id === 3) {
               this.$router.push('/home')
             } else {
               this.$router.push('/home/employee')
             }
+          } else {
+            this.$router.push('/login')
           }
         })
       } else {
