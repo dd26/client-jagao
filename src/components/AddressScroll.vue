@@ -21,17 +21,43 @@
             v-for="(n, index) in data"
             :key="index"
             class="style-card-item row items-center"
+            :style="n.id && n.status === 0 ? 'background-color: rgb(239, 239, 239);' : ''"
           >
             <q-btn
               v-if="n.id"
-              icon="img:vectors/close1.svg"
               flat
-              size="xs"
+              size="sm"
               color="primary"
               round
               style="position: absolute; right: 10px; top: 10px;"
-              @click="deleteAddressConfirm(n.id)"
-            />
+              icon="more_horiz"
+            >
+            <q-menu>
+              <q-list>
+                <q-item
+                  @click="deleteAddressConfirm(n.id)"
+                  v-ripple
+                  clickable
+                  v-close-popup
+                >
+                  <q-item-section>
+                    <q-item-label>Delete</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  v-ripple
+                  clickable
+                  v-close-popup
+                  @click="editAddress(n.id, n.status)"
+                >
+                  <q-item-section>
+                    <q-item-label>{{ n.status === 1 ? 'Disable' : 'Enable' }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+
+            </q-btn>
             <div class="row col-12 items-center">
               <div class="col-4">
                 <q-icon
@@ -97,13 +123,24 @@ export default {
       data: [],
       route: 'addresses',
       id: null,
-      deleteItemDlg: false
+      deleteItemDlg: false,
+      disableAddressDlg: false,
+      status: null
     }
   },
   mounted () {
     this.getAddresses()
   },
   methods: {
+    async editAddress (id, status) {
+      this.$q.loading.show()
+      await this.$api.put(`${this.route}/${id}/status/${status}`).then(res => {
+        this.$q.loading.hide()
+        if (res) {
+          this.getAddresses()
+        }
+      })
+    },
     async getAddresses () {
       this.$q.loading.show()
       await this.$api.get(this.route).then(res => {

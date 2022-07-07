@@ -6,7 +6,7 @@
     </div>
 
     <div class="row q-px-lg">
-      <my-ubication :value="1" />
+      <my-ubication />
     </div>
 
     <section class="row q-pt-md q-px-lg justify-center">

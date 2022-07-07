@@ -23,7 +23,7 @@
         <q-checkbox v-model="selection" keep-color color="secondary" />
       </div>
 
-      <div class="operators-style column">
+      <div class="operators-style column" v-if="hasOperatorBtn">
         <div class="col-6 column q-pb-xs">
           <q-btn
             @click="$emit('increment', id)"
@@ -79,6 +79,10 @@ export default {
     quantity: {
       type: Number,
       default: 0
+    },
+    hasOperatorBtn: {
+      type: Boolean,
+      default: true
     }
   },
   data () {

@@ -62,7 +62,7 @@
       </div>
 
       <div class="col-12 text-primary text-bold" style="font-size: 25px; font-weight: 700;">Subcategory</div>
-      <div class="col-12" style="font-size: 16px;color: #5C5C5C">Select category</div>
+      <!-- <div class="col-12" style="font-size: 16px;color: #5C5C5C">Select category</div> -->
 
       <section
         v-if="form.category_id"
@@ -74,10 +74,11 @@
             :key="index"
             v-model="item.select"
             v-bind="item"
+            :hasOperatorBtn="false"
           />
         </q-list>
       </section>
-      <section
+      <!-- <section
         v-if="hasDocumentSCategories"
         class="col-12 row q-px-md"
         style="position: relative"
@@ -131,7 +132,7 @@
             It will take a few minutes for the system to validate that your documents are in order. <b class="text-primary" style="font-weight: 400;"> We will notify you when it has been approved.</b>
           </p>
         </section>
-      </section>
+      </section> -->
 
       <div
         v-if="!subcategories || subcategories.length == 0"
@@ -212,8 +213,9 @@ export default {
               documentFile: null
             }
           })
+          this.subcategories = resSub
         })
-      await this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {
+      /* await this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {
         console.log(this.subcategories, 'getData', resSub)
         this.subcategories = resSub.map(itm => {
           return {
@@ -222,7 +224,7 @@ export default {
           }
         })
         console.log(this.subcategories, 'getData', resSub)
-      })
+      }) */
     },
     chekerUserSCategories (data) {
       this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {

@@ -69,8 +69,11 @@ export default {
   },
   methods: {
     async getAddress () {
-      const response = await this.$api.get('addresses')
+      const response = await this.$api.get('addresses/status/1')
       this.addresses = response
+      if (this.addresses.length > 0 && !this.value) {
+        this.changeAddress(this.addresses[0].id)
+      }
     },
     selectAddress (address) {
       this.label = address.name + ' ' + address.address
@@ -79,8 +82,14 @@ export default {
     },
     changeAddress (id) {
       const address = this.addresses.find(a => a.id === id)
-      this.label = address.name + ' ' + address.address
-      this.valueSelect = address.id
+      if (address) {
+        this.label = address.name + ' ' + address.address
+        this.valueSelect = address.id
+      } else {
+        if (this.addresses.length > 0) {
+          this.changeAddress(this.addresses[0].id)
+        }
+      }
     }
   }
 }
