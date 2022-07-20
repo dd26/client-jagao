@@ -6,7 +6,7 @@
         class="text-center col-12 text-primary"
       > {{title}} </div>
       <q-btn
-        label="NO"
+        :label="cancelLabel"
         rounded
         v-close-popup
         color="white"
@@ -15,11 +15,12 @@
         style="border: 3px solid #00A58D; font-weight: 900;"
       />
       <q-btn
-        label="DELETE"
+        :label="confirmLabel"
         class="col-7 q-mt-md"
         text-color="white"
         style="font-weight: 900; color: #FFF !important; background-color: #00A58D;"
         rounded
+        @click="$emit('confirm')"
       />
     </q-card-section>
   </q-card>
@@ -27,7 +28,7 @@
 
 <script>
 export default {
-  props: ['title', 'content'],
+  props: ['title', 'content', 'confirmLabel', 'cancelLabel'],
   methods: {
   }
 

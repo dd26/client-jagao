@@ -40,21 +40,6 @@
                 dense
               />
             </section>
-            <!-- <section v-else style="position: relative;">
-              <q-avatar size="150px">
-                <img :src="profile.img" width="100%" height="100%" />
-              </q-avatar>
-              <q-btn
-                @click="clickProfileImg"
-                class="absolute-bottom-right"
-                flat
-                color="primary"
-                icon="img:vectors/edit1.svg"
-                size="lg"
-                round
-                dense
-              />
-            </section> -->
           <div class="col-12 row">
             <q-field
               borderless

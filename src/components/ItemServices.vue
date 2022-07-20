@@ -1,5 +1,8 @@
 <template>
-  <div class="column" @click="$router.push('/services/form?category_id=' + category_id)">
+  <div
+    class="column"
+    @click="$emit('click', category_id)"
+  >
     <q-card
       class="col-12 card-style row items-center"
       v-ripple
@@ -13,7 +16,6 @@
         <div class="text-center col-12 text-primary" style="font-size: 15px; font-weight: 700;">{{category_name}}</div>
       </section>
     </q-card>
-    <div class="text-center q-pt-xs"> 00/00 </div>
   </div>
 </template>
 

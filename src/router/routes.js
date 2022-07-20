@@ -39,6 +39,7 @@ const routes = [
       { path: '/services/susuccessful/customer', component: () => import('pages/client/services/Success.vue') },
       { path: '/services/detail/:id/customer', component: () => import('pages/client/services/Detail.vue') },
       { path: '/services/detail/:id/customer/calification', component: () => import('pages/client/services/Calification.vue') },
+      { path: '/services/detail/:id/customer/deleted', component: () => import('pages/client/services/Deleted.vue') },
       { path: '/services/detail/:id/employee/calification', component: () => import('pages/employee/services/Calification.vue') },
       { path: '/services/detail/:id/employee', component: () => import('pages/employee/services/Detail.vue') },
       { path: '/services/customer/process/:category_id', component: () => import('pages/client/services/Form.vue') },

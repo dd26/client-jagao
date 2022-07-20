@@ -28,7 +28,7 @@
       <div style="background-color: #D9F2EE; border-radius: 5px;" class="col-12 column">
         <div class="col-9 row">
           <div class="col-12 column q-pa-md q-px-lg">
-            <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">Bank of America</div>
+            <!-- <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">Bank of America</div> -->
             <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">{{ item.full_name }}</div>
           </div>
         </div>
@@ -66,15 +66,13 @@ export default {
   },
   methods: {
     afterMounted () {
-      const data = !this.data.length > 0
-        ? [1, 2]
-        : this.data.map(item => {
-          return {
-            ...item,
-            lastDigitsAccountNumber: item.account_number.slice(-4),
-            lastDigitsRouteNumber: item.route_number.slice(-4)
-          }
-        })
+      const data = this.data.map(item => {
+        return {
+          ...item,
+          lastDigitsAccountNumber: item.account_number.slice(-4),
+          lastDigitsRouteNumber: item.route_number.slice(-4)
+        }
+      })
       this.data = data
     }
   }

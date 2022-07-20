@@ -63,6 +63,7 @@
           color="primary"
           icon="star_border"
           icon-selected="star"
+          :readonly="isCalifiqued"
         />
       </section>
 
@@ -77,6 +78,7 @@
           borderless
           class="text-input-area col-12"
           input-style="padding: 15px 15px; color: #00A58D"
+          :readonly="isCalifiqued"
         />
       </section>
 
@@ -91,12 +93,26 @@
           no-caps
         />
       </section>
+
+      <section v-if="isCalifiqued">
+        <section class="row" v-if="form">
+          <div class="text-bold text-primary q-py-md q-pt-lg text-h6">Description Service</div>
+          <s-category-item
+            class="col-12"
+            v-bind="form"
+          />
+        </section>
+      </section>
     </section>
   </q-page>
 </template>
 
 <script>
+import SCategoryItem from '../../../components/services/SCategoryItem'
 export default {
+  components: {
+    SCategoryItem
+  },
   data () {
     return {
       form: null,

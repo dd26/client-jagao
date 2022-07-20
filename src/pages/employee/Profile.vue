@@ -99,9 +99,10 @@
       <div class="text-primary col-12" style="font-weight: 700; font-size: 20px;">My active services</div>
       <ItemServices
         v-for="itm in services"
-        :key="itm[0].id"
-        v-bind="itm[0]"
+        :key="itm.id"
+        v-bind="itm"
         class="col-5"
+        @click="clickService"
       />
       <q-card
         class="card-style-items flex flex-center col-5"
@@ -119,14 +120,27 @@
       </q-card>
     </section>
 
+    <q-dialog
+      v-model="cancelServiceDlg"
+      persistent
+      full-width
+    >
+      <cancel-service
+        :categoryId="categoryId"
+        @cancelService="cancelServiceFn"
+        @clickCancelDlg="cancelServiceDlg = false, categoryId = null"
+      />
+    </q-dialog>
+
   </q-page>
 </template>
 
 <script>
 import ItemServices from '../../components/ItemServices.vue'
+import CancelService from '../../components/services/CancelService'
 export default {
   components: {
-    ItemServices
+    ItemServices, CancelService
   },
   data () {
     return {
@@ -140,7 +154,9 @@ export default {
       state: 1,
       expanded: false,
       services: [],
-      avatarUrl: 'vectors/avatar2.svg'
+      avatarUrl: 'vectors/avatar2.svg',
+      cancelServiceDlg: false,
+      categoryId: null
     }
   },
   computed: {
@@ -153,6 +169,19 @@ export default {
     this.getMyServices()
   },
   methods: {
+    async cancelServiceFn () {
+      this.$q.loading.show()
+      await this.$api.delete('specialist_services/category/' + this.categoryId).then(res => {
+        this.$q.loading.hide()
+        this.getMyServices()
+        this.cancelServiceDlg = false
+        this.categoryId = null
+      })
+    },
+    clickService (categoryId) {
+      this.categoryId = categoryId
+      this.cancelServiceDlg = true
+    },
     async getMyServices () {
       this.$q.loading.show()
       const data = await this.$api.get('specialist_services')

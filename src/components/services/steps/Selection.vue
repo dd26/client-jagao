@@ -128,11 +128,28 @@ export default {
       return this.services.filter(itm => itm.select)
     }
   },
-  mounted () {
-    this.getServices()
-    this.getCategory()
+  async mounted () {
+    await this.getServices()
+    await this.getCategory()
+    console.log({ route: this.$route })
+    if (this.$route.query.services) {
+      this.requestAgain()
+    }
   },
   methods: {
+    requestAgain () {
+      const servicesAgainJsonParse = JSON.parse(this.$route.query.services)
+      console.log({ servicesAgainJsonParse, services: this.services })
+      const services = this.services.map(itm => {
+        const service = servicesAgainJsonParse.find(itm2 => itm2.service_id === itm.id)
+        if (service) {
+          itm.select = true
+          itm.quantity = service.quantity
+        }
+        return itm
+      })
+      this.services = services
+    },
     increment (id) {
       this.services.find(itm => itm.id === id).quantity++
     },

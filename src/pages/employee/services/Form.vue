@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <section
+    <!-- <section
       v-if="!form.category_id"
       class="flex flex-center"
       style="background: #97DDFD; position: relative; height: 175px; border-radius: 12px 12px 0 0"
@@ -15,10 +15,9 @@
         color="white"
         style="position: absolute; left: 16px; top: 16px;"
       />
-      <div class="text-primary" style="font-weight: 700; font-size: 25px;">New Service</div>
-    </section>
+      <div class="text-white" style="font-weight: 700; font-size: 25px;">New Service</div>
+    </section> -->
     <section
-      v-else
       style="position: relative; height: 175px; border-radius: 12px 12px 0 0; background-color: #97DDFD;overflow:hidden"
     >
       <q-btn
@@ -32,12 +31,26 @@
         style="position: absolute; left: 16px; top: 16px;"
       />
       <img
+        v-if="form.category_id"
         :src="$api_url() + 'image/categories/' + form.category_id"
         alt="categori_img"
         width="100%"
         height="100%"
         style="object-fit: fill"
       >
+      <img
+        v-else
+        src="illustrations/14.png"
+        alt="categori_img"
+        width="100%"
+        height="100%"
+        style="object-fit: fill"
+      >
+      <div
+        v-if="!form.category_id"
+        class="text-primary"
+        style="font-weight: 700; font-size: 25px;position: absolute; left: 16px; top: 35%;"
+      >New Service</div>
     </section>
 
     <section class="row q-pa-md q-gutter-y-lg">
@@ -61,7 +74,7 @@
         </q-select>
       </div>
 
-      <div class="col-12 text-primary text-bold" style="font-size: 25px; font-weight: 700;">Subcategory</div>
+      <div v-if="form.category_id" class="col-12 text-primary text-bold" style="font-size: 25px; font-weight: 700;">Subcategory</div>
       <!-- <div class="col-12" style="font-size: 16px;color: #5C5C5C">Select category</div> -->
 
       <section
@@ -135,24 +148,24 @@
       </section> -->
 
       <div
-        v-if="!subcategories || subcategories.length == 0"
+        v-if="form.category_id && (!subcategories || subcategories.length == 0)"
         class="col-12 row justify-center"
       >
         <img src="illustrations/6.svg" alt="ilus1">
       </div>
 
-      <div
+      <!-- <div
         v-if="subcategoriesCheck.length > 0"
         class="col-12 row justify-center q-pt-lg"
       >
-        <!-- <q-btn
+        <q-btn
           to="/success?message=You successfully added a service!"
           color="primary"
           style="background-color: #EDEDED;"
           icon="add"
           round
           size="20px"
-        /> -->
+        />
         <q-btn
           @click="saveService"
           color="primary"
@@ -160,6 +173,17 @@
           icon="add"
           round
           size="20px"
+        />
+      </div> -->
+
+      <div class="col-12 row justify-center q-pt-lg" v-if="form.category_id">
+        <q-btn
+          @click="saveService"
+          label="Work"
+          color="primary"
+          unelevated
+          class="col-12 style-btn"
+          no-caps
         />
       </div>
     </section>
@@ -203,17 +227,17 @@ export default {
   },
   methods: {
     async getData () {
-      let resSub = []
+      // let resSub = []
       await this.$api.get('subcategories_by_category_id/' + this.form.category_id)
         .then(response => {
-          resSub = response.map(itm => {
+          /* resSub = response.map(itm => {
             return {
               ...itm,
               select: false,
               documentFile: null
             }
-          })
-          this.subcategories = resSub
+          }) */
+          this.subcategories = response
         })
       /* await this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {
         console.log(this.subcategories, 'getData', resSub)
@@ -241,7 +265,7 @@ export default {
       })
     },
     async saveService () {
-      console.log(this.$v.subcategoriesCheck, 'subcategoriesCheck')
+      /* console.log(this.$v.subcategoriesCheck, 'subcategoriesCheck')
       this.$v.subcategoriesCheck.$touch()
       if (this.$v.subcategoriesCheck.$invalid) {
         return null
@@ -271,7 +295,14 @@ export default {
           if (res) {
             this.$router.push('/success?message=You successfully added a service!')
           }
-        })
+        }) */
+      this.$q.loading.show()
+      await this.$api.post('specialist_services/category/' + this.form.category_id).then(res => {
+        this.$q.loading.hide()
+        if (res) {
+          this.$router.go(-1)
+        }
+      })
     },
     clickFileSCategory (refName) {
       console.log(refName, this.$refs[refName][0], 'refs')
@@ -279,7 +310,7 @@ export default {
     },
     async getCategories () {
       this.$q.loading.show()
-      const response = await this.$api.get('categories')
+      const response = await this.$api.get('categories/specialist/not_worked')
       this.$q.loading.hide()
       if (response) {
         this.categories = response
@@ -306,6 +337,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.style-btn {
+  background-color: $primary;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  height: 40px;
+  font-weight: 700;
+  font-size: 16px;
+}
 
 .style-input-document {
   cursor: pointer;

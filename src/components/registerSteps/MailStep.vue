@@ -33,7 +33,7 @@
       <div class="text-center q-pt-sm" style="font-weight: 400; font-size: 12px">Skip, I’ll confirm later</div>
       <section class="text-center q-pt-lg items-start row">
         <div class="col-12 row justify-center" style="font-size: 12px;">
-          Did not receive the email?  Chek your spam filter, or <b class="text-primary" style="font-size: 12px;"> try to send the mail again </b>
+          Did not receive the email?  Chek your spam filter, or <br> <b class="text-primary" style="font-size: 12px;"> try to send the mail again </b>
         </div>
       </section>
     </div>

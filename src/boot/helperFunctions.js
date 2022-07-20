@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { date } from 'quasar'
 import env from '../env'
 
 Vue.prototype.$getUserInfo = async function () {
@@ -18,4 +19,9 @@ Vue.prototype.$formatPrice = function (value) {
 Vue.prototype.$getNotifications = async function () {
   const res = await this.$api.get('notifications')
   return res
+}
+
+Vue.prototype.$formatDate = function (dateFormat, format) {
+  const formattedString = date.formatDate(dateFormat, format)
+  return formattedString
 }

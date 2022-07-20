@@ -4,7 +4,6 @@
     <div class="col-6 column">
       <div class="q-pt-lg window-width row justify-center col-1">
         <div class="text-bold text-center col-12 text-primary q-pt-lg" style="font-weight: 700; font-size: 20px;">Success</div>
-        <div class="col-12 text-center" style="font-weight: 400; font-size: 16px">Lorem Ipsum dolor sit amet</div>
         <div class="col-12 text-center text-primary q-pt-md" style="font-weight: 700; font-size: 25px">Welcome to Jagao {{form.name}}!</div>
 
         <div class="btn-progress-container row justify-center items-center col-12 q-pt-md">

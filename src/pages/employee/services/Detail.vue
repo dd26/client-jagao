@@ -89,6 +89,13 @@
       />
     </section>
 
+    <section class="col-12 row q-px-lg q-pt-md" v-if="form">
+      <div class="text-bold text-primary q-pb-md text-h6 col-12">Date and time</div>
+      <section class="col-12 row q-pa-md items-center" style="background-color: #D9F2EE; border-radius: 11px;color: #5C5C5C">
+        <div>{{ form.right_now ? 'Right now' : formatDate }}</div>
+      </section>
+    </section>
+
     <section class="row q-px-lg" v-if="form && form.observations">
       <div class="text-bold text-primary q-py-md text-h6">Observations</div>
       <section class="col-12 row q-pa-md" style="background-color: #D9F2EE; border-radius: 11px">
@@ -109,12 +116,12 @@
     </section>
 
     <q-dialog v-model="acceptServiceDlg" full-width>
-      <q-card style="border-radius: 12px">
+      <q-card style="border-radius: 12px" class="my-font q-pb-sm">
         <q-card-section>
-          <div class="text-bold text-primary q-py-md text-h6">Accept Service</div>
+          <div class="text-bold text-primary text-h6">Accept Service</div>
           <p>Estimated Time of Arrival?</p>
 
-          <section class="row q-gutter-x-sm q-gutter-y-sm justify-around">
+          <section class="row q-gutter-x-sm q-gutter-y-sm justify-between">
             <q-btn
               @click="acceptService(item.value)"
               v-for="item in times"
@@ -122,13 +129,13 @@
               :label="item.label"
               color="primary"
               no-caps
-              style="border-radius: 5px;"
+              style="border-radius: 5px; width: 80px"
             />
             <q-btn
               label="Cancel"
               color="negative"
               no-caps
-              style="border-radius: 5px;"
+              style="border-radius: 5px;width: 80px"
               v-close-popup
             />
           </section>
@@ -192,6 +199,9 @@ export default {
         return this.form.total - this.form.discount_amount
       }
       return this.form.total
+    },
+    formatDate () {
+      return this.$formatDate(this.form.date_request, 'D/M/YYYY HH:mm A')
     }
   },
   methods: {

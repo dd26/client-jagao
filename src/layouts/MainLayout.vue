@@ -145,11 +145,11 @@ const menuItemsDataEmployee = [
     icon: 'img:vectors/home1.svg',
     to: '/home/employee'
   },
-  {
+  /* {
     title: 'Pending services',
     icon: 'img:vectors/icon7.svg',
     to: '/services/pending/employee'
-  },
+  }, */
   {
     title: 'Working services',
     icon: 'img:vectors/icon7.svg',

@@ -19,35 +19,16 @@
       <section
         class="row col-11 text-center status-style justify-around text-bold items-center"
         style="font-size: 20px;"
-        @click="openChangeStatus"
       >
-        <div class="col-12 text-center">{{statuteObj.name}}</div>
-        <div class="badge-style" :style="`background-color: ${statuteObj.color}`"></div>
-      </section>
-
-      <section v-if="isOpenStatute" class="col-12 row justify-center">
-        <section
-          v-for="item in states"
-          :key="item.id"
-          class="row col-12 justify-center items-center"
-        >
-          <section
-            v-if="item.id !== statuteObj.id"
-            class="row col-11 text-center status-style justify-around text-bold items-center"
-            style="font-size: 20px;"
-            @click="changeStatus(item.id)"
-          >
-            <div class="col-12 text-center">{{item.name}}</div>
-            <div class="badge-style" :style="`background-color:${item.color}`"></div>
-          </section>
-        </section>
+        <div class="col-12 text-center">Canceled</div>
+        <div class="badge-style" :style="`background-color: rgb(0, 167, 142)`"></div>
       </section>
     </section>
 
-    <section class="row q-px-lg q-pt-lg" v-if="form && form.specialist">
+    <section class="row q-px-lg q-pt-lg" v-if="form && form.customer">
       <section class="col-3">
         <q-avatar size="85px">
-          <img :src="$api_url() + 'image/specialists/' + form.specialist.id" alt="employee_img" />
+          <img :src="$api_url() + 'image/customers/' + form.customer.id" alt="employee_img" />
         </q-avatar>
       </section>
       <section class="col-8 row q-pl-md">
@@ -127,66 +108,23 @@
         @click="cancelServiceDlg = true"
       />
     </section>
-
-    <q-dialog v-model="changeDateDlg">
-      <service-date
-        @save="changeRequestDate"
-      />
-    </q-dialog>
-
-    <q-dialog v-model="cancelServiceDlg">
-      <dialogs-component
-        title="are you sure to cancel the service?"
-        confirmLabel="Yes"
-        cancelLabel="No"
-        @confirm="cancelService"
-      />
-    </q-dialog>
   </q-page>
 </template>
 
 <script>
-import DialogsComponent from '../../../components/Dialogs'
 import SCategoryItem from '../../../components/services/SCategoryItem'
-import ServiceDate from '../../../components/services/ServiceDate.vue'
-const states = [
-  {
-    id: 1,
-    name: 'Working',
-    color: '#97DDFD'
-  },
-  {
-    id: 0,
-    name: 'Pending',
-    color: '#EEA414'
-  },
-  {
-    id: 2,
-    name: 'Finished',
-    color: '#00A78E'
-  }
-]
-
 export default {
-  components: { SCategoryItem, ServiceDate, DialogsComponent },
+  components: { SCategoryItem },
   data () {
     return {
       route: 'master_request_services',
-      states,
-      isOpenStatute: false,
-      statuteValue: 0,
-      form: null,
-      changeDateDlg: false,
-      cancelServiceDlg: false
+      form: null
     }
   },
   mounted () {
     this.getData()
   },
   computed: {
-    statuteObj () {
-      return this.states.find(item => item.id === this.statuteValue)
-    },
     totalAmount () {
       if (this.form.discount) {
         return this.form.total - this.form.discount_amount
@@ -198,29 +136,6 @@ export default {
     }
   },
   methods: {
-    openChangeRequestDate () {
-      this.dateRequest = null
-      this.changeDateDlg = true
-    },
-    async changeRequestDate (data) {
-      await this.$api.put(`${this.route}/${this.form.id}/date/change`, data).then(res => {
-        this.changeDateDlg = false
-        this.getData()
-      })
-    },
-    async cancelService () {
-      const { id } = this.$route.params
-      this.$q.loading.show()
-      const res = await this.$api.delete(`${this.route}/${id}`)
-      this.$q.loading.hide()
-      if (res) {
-        this.$router.push('/home')
-        this.$q.notify({
-          color: 'positive',
-          message: 'Service canceled'
-        })
-      }
-    },
     async getData () {
       this.$q.loading.show()
       const res = await this.$api.get(`${this.route}/${this.$route.params.id}`)
@@ -230,13 +145,6 @@ export default {
       if (this.statuteValue === 2) {
         this.$router.push('/services/detail/' + this.$route.params.id + '/customer/calification')
       }
-    },
-    openChangeStatus () {
-      this.isOpenStatute = !this.isOpenStatute
-    },
-    changeStatus (id) {
-      this.statuteValue = id
-      this.isOpenStatute = false
     }
   }
 }

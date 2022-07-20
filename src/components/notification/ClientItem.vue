@@ -1,7 +1,7 @@
 <template>
   <section
     class="row"
-    @click="$router.push('/services/detail/' + master_request_service_id + '/customer')"
+    @click="goRoute"
   >
     <div class="col-12" style="font-size: 12px; font-weight: 400; color: #B3B3B3">{{date}}</div>
     <div class="row items-center q-col-gutter-x-md">
@@ -11,7 +11,7 @@
       </div>
       <div class="col-3">
         <q-avatar>
-          <img :src="$api_url() + 'image/customers/' + employee.id" />
+          <img :src="$api_url() + 'image/specialists/' + employee.id" />
         </q-avatar>
       </div>
     </div>
@@ -22,10 +22,22 @@
 <script>
 import { date } from 'quasar'
 export default {
-  props: ['title', 'content', 'created_at', 'user', 'master_request_service_id', 'employee'],
+  props: [
+    'title', 'content', 'created_at', 'user', 'master_request_service_id', 'employee',
+    'master_request_service'
+  ],
   computed: {
     date () {
       return date.formatDate(this.created_at, 'MMM DD, YYYY')
+    }
+  },
+  methods: {
+    goRoute () {
+      if (this.master_request_service.state !== 404) {
+        this.$router.push('/services/detail/' + this.master_request_service_id + '/customer')
+      } else {
+        this.$router.push('/services/detail/' + this.master_request_service_id + '/customer/deleted')
+      }
     }
   }
 }
