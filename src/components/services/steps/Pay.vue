@@ -299,10 +299,10 @@ export default {
           this.$emit('nextStep', 'finished', this.formPay)
         } else {
           this.$emit('nextStep', 'error')
-          if (res.error && res.message) {
+          if ((res.error && res.message) || res.error) {
             this.$q.notify({
               color: 'negative',
-              message: res.message
+              message: res.message ? res.message : res.error
             })
           }
         }
