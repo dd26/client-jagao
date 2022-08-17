@@ -91,61 +91,6 @@
           />
         </q-list>
       </section>
-      <!-- <section
-        v-if="hasDocumentSCategories"
-        class="col-12 row q-px-md"
-        style="position: relative"
-      >
-        <q-separator class="col-12" style="position:absolute; top: 0; left: 0; border-top: 0.1em solid #737373" />
-        <div class="text-primary col-12 text-bold text-h6 q-pt-md">Documentation</div>
-        <div class="col-12" style="line-height: 18px; color: #5C5C5C; font-size: 16px">Add the necessary documentation or licenses to verify that you are eligible to perform this service.</div>
-
-        <div
-          v-for="(item, index) in subcategoriesCheck"
-          :key="index"
-          class="q-pt-md col-12"
-        >
-          <section
-            v-if="item.has_document === 1"
-            class="col-12 row"
-            style="color: #5C5C5C; font-size: 16px"
-          >
-            <div class="text-primary text-bold col-12" style="font-size: 20px">{{item.name}}</div>
-            <div
-              v-if="$v.subcategoriesCheck.$each[index].documentFile.$error"
-              class="text-negative col-12 text-caption q-pl-xs"
-            > Document is required! </div>
-            <div
-              @click="clickFileSCategory('IDFileRF_' + index)"
-              class="col-12 row style-input-document"
-            >
-              <section class="col-12 row">
-                <div class="col-2 row items-center justify-center">
-                  <q-icon name="img:vectors/attach1.svg" size="20px" />
-                </div>
-                <div class="col-10 row justify-start items-center container-name-file">
-                  <div class="q-pl-md" style="font-size: 16px;font-weight: 300;color: #B3B3B3">
-                    {{ item.documentFile ? subCadena(item.documentFile.name, 19) : 'Attach your ID' }}
-                  </div>
-                </div>
-              </section>
-              <q-file
-                :ref="'IDFileRF_' + index"
-                accept=".jpg, image/*"
-                style="display: none;"
-                v-model="item.documentFile"
-              />
-            </div>
-          </section>
-        </div>
-
-        <section class="row items-start q-pt-lg">
-          <q-icon name="img:vectors/icon11.svg" class="col-1 q-pt-xs" />
-          <p class="col-11 q-px-xs">
-            It will take a few minutes for the system to validate that your documents are in order. <b class="text-primary" style="font-weight: 400;"> We will notify you when it has been approved.</b>
-          </p>
-        </section>
-      </section> -->
 
       <div
         v-if="form.category_id && (!subcategories || subcategories.length == 0)"
@@ -153,28 +98,6 @@
       >
         <img src="illustrations/6.svg" alt="ilus1">
       </div>
-
-      <!-- <div
-        v-if="subcategoriesCheck.length > 0"
-        class="col-12 row justify-center q-pt-lg"
-      >
-        <q-btn
-          to="/success?message=You successfully added a service!"
-          color="primary"
-          style="background-color: #EDEDED;"
-          icon="add"
-          round
-          size="20px"
-        />
-        <q-btn
-          @click="saveService"
-          color="primary"
-          style="background-color: #EDEDED;"
-          icon="add"
-          round
-          size="20px"
-        />
-      </div> -->
 
       <div class="col-12 row justify-center q-pt-lg" v-if="form.category_id">
         <q-btn
@@ -227,28 +150,10 @@ export default {
   },
   methods: {
     async getData () {
-      // let resSub = []
       await this.$api.get('subcategories_by_category_id/' + this.form.category_id)
         .then(response => {
-          /* resSub = response.map(itm => {
-            return {
-              ...itm,
-              select: false,
-              documentFile: null
-            }
-          }) */
           this.subcategories = response
         })
-      /* await this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {
-        console.log(this.subcategories, 'getData', resSub)
-        this.subcategories = resSub.map(itm => {
-          return {
-            ...itm,
-            select: res.some(itm2 => itm2.subcategory_id === itm.id)
-          }
-        })
-        console.log(this.subcategories, 'getData', resSub)
-      }) */
     },
     chekerUserSCategories (data) {
       this.$api.get('/specialist_services/category/' + this.form.category_id).then(res => {
@@ -258,44 +163,10 @@ export default {
             itm.select = res.some(item => item.subcategory_id === itm.id)
           })
           console.log(this.subcategories, 'subcategories')
-          /* console.log(data, 'data cheker')
-          this.subcategories = []
-          this.subcategories = data */
         }
       })
     },
     async saveService () {
-      /* console.log(this.$v.subcategoriesCheck, 'subcategoriesCheck')
-      this.$v.subcategoriesCheck.$touch()
-      if (this.$v.subcategoriesCheck.$invalid) {
-        return null
-      }
-      const formData = new FormData()
-      formData.append('category_id', this.form.category_id)
-      this.subcategoriesCheck.forEach((item, index) => {
-        if (item.documentFile) {
-          formData.append('documentFile' + item.id, item.documentFile)
-        }
-      })
-      formData.append('subcategories', JSON.stringify(this.subcategoriesCheck.map(itm => {
-        return {
-          id: itm.id,
-          has_document: itm.has_document,
-          price: itm.price
-        }
-      })))
-      this.$q.loading.show()
-      await this.$api.post('specialist_services', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-        .then(res => {
-          this.$q.loading.hide()
-          if (res) {
-            this.$router.push('/success?message=You successfully added a service!')
-          }
-        }) */
       this.$q.loading.show()
       await this.$api.post('specialist_services/category/' + this.form.category_id).then(res => {
         this.$q.loading.hide()

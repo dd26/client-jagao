@@ -63,7 +63,7 @@ export default {
     },
     async getCategories () {
       this.$q.loading.show()
-      const res = await this.$api.get('categories')
+      const res = await this.$api.get('categories_actives')
       this.$q.loading.hide()
       this.services = res
     },

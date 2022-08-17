@@ -19,15 +19,18 @@
 
     <section class="row q-px-xl q-pt-lg">
       <div class="col-12 text-center q-pb-lg text-primary text-bold" style="font-size: 25px;">Available services</div>
-      <q-list class="col-12 q-gutter-y-md" v-if="services.length > 0">
+      <q-list class="col-12 q-gutter-y-md" v-if="servicesFilters && !servicesFilters.message && servicesFilters.length > 0">
         <Item
-          v-for="itm in services"
+          v-for="itm in servicesFilters"
           :key="itm.id"
           v-bind="itm"
           :isCancel="false"
           @clickItem="clickItem"
         />
       </q-list>
+      <section v-else-if="servicesFilters && servicesFilters.message">
+        <div class="col-12 text-center text-primary text-bold">{{ servicesFilters.message }}</div>
+      </section>
       <section v-else class="col-12">
         <img
           src="vectors/card5.svg"
@@ -56,19 +59,34 @@ export default {
       name: 'Elizabeth',
       services: [],
       servicesPending: [],
-      amount: '68,79'
+      amount: '0,00',
+      user: {}
+    }
+  },
+  computed: {
+    servicesFilters () {
+      if (this.user.user.verified) {
+        const userCategories = this.user.specialistServices.map(item => item.category_id)
+        console.log({
+          userCategories,
+          filtro: this.services.filter(item => userCategories.includes(item.category_id))
+        })
+        return this.services.filter(item => userCategories.includes(item.category_id))
+      } else {
+        return { message: 'you cannot take services because you are not yet verified' }
+      }
     }
   },
   async mounted () {
     this.getUserInfo()
     this.getAmount()
     this.services = await this.getServices(0)
-    this.servicesPending = await this.getServices(1)
   },
   methods: {
     async getUserInfo () {
       const user = await this.$getUserInfo()
       this.name = user.user.name
+      this.user = user
     },
     async getServices (status) {
       this.$q.loading.show()
