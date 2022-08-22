@@ -30,7 +30,6 @@
 </template>
 
 <script>
-// importar vuelidate
 import { required } from 'vuelidate/lib/validators'
 export default {
   data () {
@@ -38,6 +37,11 @@ export default {
       form: {
         email: ''
       }
+    }
+  },
+  methods: {
+    async submit () {
+      await this.$api.post('')
     }
   },
   validations () {
