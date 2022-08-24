@@ -73,7 +73,7 @@
 
       <div class="col-12 row q-px-md q-pt-xl">
         <q-btn
-          to="/login"
+          @click="resetPassword"
           color="primary"
           label="Reset Password"
           class="col-12"
@@ -87,6 +87,7 @@
 <script>
 import { required, sameAs, minLength } from 'vuelidate/lib/validators'
 export default {
+  props: ['value'],
   data () {
     return {
       form: {
@@ -97,7 +98,38 @@ export default {
         { name: 'check_circle', color: 'positive', value: 'p' },
         { name: 'cancel', color: 'negative', value: 'n' }
       ],
-      isPwd: false
+      isPwd: false,
+      code: this.value
+    }
+  },
+  methods: {
+    async resetPassword () {
+      this.$v.$touch()
+      if (this.$v.form.$invalid) {
+        return
+      }
+      const form = {
+        password: this.form.newPassword,
+        code: this.code
+      }
+      this.$q.loading.show({
+        message: 'Resetting password...'
+      })
+      await this.$api.post('change_password', form).then(res => {
+        this.$q.loading.hide()
+        if (res && !res.error) {
+          this.$q.notify({
+            color: 'positive',
+            message: 'Password reset successfully'
+          })
+          this.$router.push('/login')
+        } else {
+          this.$q.notify({
+            color: 'negative',
+            message: res.error
+          })
+        }
+      })
     }
   },
   validations () {

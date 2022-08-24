@@ -3,10 +3,12 @@ import VueRouter from 'vue-router'
 import Vuelidate from 'vuelidate'
 import routes from './routes'
 import money from 'v-money'
-Vue.use(money, { precision: 2 })
+import OtpInput from '@bachdgvn/vue-otp-input'
 
+Vue.use(money, { precision: 2 })
 Vue.use(VueRouter)
 Vue.use(Vuelidate)
+Vue.component('v-otp-input', OtpInput)
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;

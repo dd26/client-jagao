@@ -2,6 +2,7 @@
   <q-tab-panels v-model="step" animated class="absolute-full">
     <q-tab-panel :name="1">
       <step-one
+        v-model="code"
         @nextStep="nextStep"
       />
     </q-tab-panel>
@@ -9,6 +10,7 @@
     <q-tab-panel :name="2">
       <step-two
         @nextStep="nextStep"
+        v-model="code"
       />
     </q-tab-panel>
   </q-tab-panels>
@@ -23,7 +25,8 @@ export default {
   },
   data () {
     return {
-      step: 1
+      step: 1,
+      code: ''
     }
   },
   methods: {
