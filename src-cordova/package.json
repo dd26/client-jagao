@@ -1,7 +1,7 @@
 {
   "name": "org.jagao.app",
   "displayName": "Jagao",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "devDependencies": {
-    "cordova-android": "^9.1.0",
+    "cordova-android": "^11.0.0",
     "cordova-plugin-whitelist": "^1.3.5"
   },
   "cordova": {
