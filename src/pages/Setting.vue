@@ -31,6 +31,22 @@
             </q-item-label>
           </q-item-section>
         </q-item>
+        <q-item
+          @click="deleteAccount"
+          v-ripple
+          clickable
+        >
+          <q-item-section>
+            <q-item-label class="q-pl-xl row items-center">
+              <q-icon
+                name="close"
+                size="20px"
+                color="negative"
+              />
+              <div class="q-pl-md text-negative"> Delete Account </div>
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </section>
 
@@ -73,9 +89,9 @@ export default {
     configs () {
       const data = [
         { icon: 'img:vectors/edit3.svg', title: 'Edit Profile', to: this.routes.profile },
-        { icon: 'settings', title: 'Skilss' },
+        /* { icon: 'settings', title: 'Skilss' }, */
         { icon: 'img:vectors/bank1.svg', title: 'Bank info', to: this.routes.accounts },
-        { icon: 'lock', title: 'Password & Security', to: '/' },
+        /* { icon: 'lock', title: 'Password & Security', to: '/' }, */
         { icon: 'img:vectors/notification1.svg', title: 'Notifications', to: this.routes.notification }
       ]
       return data
@@ -98,6 +114,33 @@ export default {
       const routeCus = user.role_id === 3 ? 'customer_by_user_id' : 'specialist_by_user_id'
       const folder = user.role_id === 3 ? 'customers' : 'specialists'
       this.routes.profile = `/profile/info/${user.id}?route=${routeCus}&folder=${folder}&img_id=${user.id}`
+    },
+    deleteAccount () {
+      this.$q.dialog({
+        title: 'Delete Account',
+        message: 'Are you sure you want to delete your account?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.$q.loading.show()
+        this.$api.put('/users/logged/status/deleted').then((res) => {
+          this.$q.loading.hide()
+          this.$q.notify({
+            message: 'Account deleted successfully',
+            color: 'positive',
+            icon: 'check_circle'
+          })
+          this.logout()
+          this.$router.push('/login')
+        }).catch(() => {
+          this.$q.loading.hide()
+          this.$q.notify({
+            message: 'Something went wrong',
+            color: 'negative',
+            icon: 'warning'
+          })
+        })
+      })
     }
   }
 }

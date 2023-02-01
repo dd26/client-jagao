@@ -27,8 +27,16 @@
                     color="primary"
                     rounded
                     unelevated
-                    class="q-mt-xl col-12"
+                    class="q-mt-xl col-12 text-bold"
                     to="/register"
+                  />
+                  <q-btn
+                    @click="continueWithoutLogin"
+                    class="col-12 relative-position q-mt-sm text-bold"
+                    label="Continue Without Registration"
+                    rounded
+                    color="primary"
+                    unelevated
                   />
 
                   <div class="text-center text-subtitle1 col-12 q-pt-sm" style="font-size:16px">
@@ -165,6 +173,9 @@ export default {
           }
         }
       })
+    },
+    continueWithoutLogin () {
+      this.$router.push('/home/no-login')
     }
   }
 }

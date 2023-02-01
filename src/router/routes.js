@@ -57,6 +57,9 @@ const routes = [
     path: '/success', component: () => import('pages/Success.vue')
   },
   {
+    path: '/home/no-login', component: () => import('pages/no-login/Home.vue')
+  },
+  {
     path: '/',
     redirect: '/splash'
   },
