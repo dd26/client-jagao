@@ -1,6 +1,6 @@
 import axios from 'axios'
 import env from '../env'
-import { Notify } from 'quasar'
+import { Notify, Loading } from 'quasar'
 
 const axiosInstance = axios.create({
   baseURL: env.apiUrl
@@ -48,6 +48,7 @@ export default async ({ store, Vue }) => {
     }
     return config
   }, function (error) {
+    Loading.hide()
     return Promise.reject(error)
   })
 }
