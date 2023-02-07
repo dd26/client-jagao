@@ -20,8 +20,6 @@
               <div>
                 <div class="col-12 row q-pt-xl q-px-lg">
                   <div class="text-primary text-bold text-h5 col-12 text-center">WELCOME TO JAGAO</div>
-                  <div class="col-12 text-caption text-center q-pt-sm"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </div>
-
                   <q-btn
                     label="get started"
                     color="primary"
