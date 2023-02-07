@@ -6,6 +6,7 @@
           icon="arrow_back_ios"
           flat
           rounded
+          to="/home"
           dense
           color="secondary"
         />
@@ -34,10 +35,11 @@
       </section>
       <section v-else class="row col-12 q-pt-lg q-pa-lg q-gutter-y-lg">
         <q-card
-          v-for="n in servicesFilter"
-          :key="n"
+          v-for="(n, idx) in servicesFilter"
+          :key="idx"
           class="col-12 text-primary q-pa-sm"
           style="background-color: #D9F2EE; border-radius: 12px; height: 130px"
+          @click="$router.push(`/services/customer/process/${n.id}`)"
         >
           <section class="row fit">
             <div class="col-4 row items-center justify-center">
@@ -46,14 +48,15 @@
                 size="60px"
               />
             </div>
-            <div class="col-8 q-pa-xs q-px-sm row items-center">
-              <div style="font-weight: 700; font-size: 16px;">Home Cleaning</div>
-              <div class="text-caption" style="color: #B3B3B3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            <div class="col-8 row q-pt-md q-pa-xs q-px-sm d-flex flex-center">
+              <div class="col-12 text-center">
+                <p style="font-weight: 700; font-size: 16px;">{{ n.name }}</p>
               </div>
-              <div class="row q-gutter-x-sm">
-                <q-icon name="img:vectors/location1.svg" size="xs" color="primary" />
-                <div class="text-caption">20/03/2022</div>
+              <div class="col-12 text-center" style="margin-top: -40px">
+                <p>
+                  <q-icon name="img:vectors/location1.svg" size="xs" color="primary" />
+                {{ n.created_at.substr(0, 10) }}
+                </p>
               </div>
             </div>
           </section>
@@ -69,17 +72,27 @@ export default {
     return {
       search: null,
       services: [
-        'Service 1', 'Service 2', 'Service 3', 'Service 4', 'Service 5'
       ]
     }
   },
   computed: {
     servicesFilter () {
       if (this.search) {
-        return this.services.filter(service => service.toLowerCase().includes(this.search.toLowerCase()))
+        return this.services.filter(service => service.name.toLowerCase().includes(this.search.toLowerCase()))
       }
       return this.services
     }
+  },
+  methods: {
+    async loadCategories () {
+      this.$q.loading.show()
+      const res = await this.$api.get('categories_actives')
+      this.$q.loading.hide()
+      this.services = res
+    }
+  },
+  async created () {
+    await this.loadCategories()
   }
 }
 </script>

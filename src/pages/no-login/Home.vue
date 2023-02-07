@@ -22,7 +22,7 @@
         <card-item
           class="col-12"
           v-bind="b"
-          @selectCategory="isDlg = true"
+          @selectCategory="showServices(b.id)"
         />
       </div>
     </section>
@@ -85,6 +85,9 @@ export default {
       const res = await this.$api.get('categories_actives')
       this.$q.loading.hide()
       this.services = res
+    },
+    async showServices (id) {
+      this.$router.push(`/services/customer/process/${id}`)
     }
   }
 }

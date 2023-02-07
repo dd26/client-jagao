@@ -68,7 +68,6 @@ export default {
       this.services = res
     },
     selectCategory (category) {
-      console.log(category)
       this.$router.push('/services/customer/process/' + category)
     }
   }
