@@ -62,7 +62,10 @@ export default {
     }
   },
   async mounted () {
-    await this.getAddress()
+    const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
+    if (token) {
+      await this.getAddress()
+    }
     if (this.value) {
       this.changeAddress(this.value)
     }

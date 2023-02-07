@@ -16,6 +16,7 @@
           flat
           round
           dense
+          v-if="user.id"
           :to="role === 2 ? '/profile/employee' : '/profile/client'"
         >
           <q-avatar size="26px">
@@ -91,7 +92,7 @@
       </section>
     </q-drawer>
 
-    <q-footer>
+    <q-footer v-if="user.id">
       <q-tabs v-model="tab">
         <q-tab :name="1" icon="img:vectors/home1.svg" @click="$router.push(routeFooter.home)" />
         <q-tab :name="2" icon="img:vectors/search1.svg" @click="$router.push(routeFooter.search)" />
@@ -199,12 +200,19 @@ export default {
         notifications: '/notifications/employee'
       },
       notifications: [],
-      hasNotifications: false
+      hasNotifications: false,
+      user: {}
     }
   },
-  mounted () {
-    this.getUserInfo()
-    this.getNotifications()
+  async mounted () {
+    const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
+    if (token) {
+      const user = await this.$getUserInfo()
+      this.getUserInfo()
+      if (user) {
+        this.getNotifications()
+      }
+    }
   },
   methods: {
     ...mapMutations('generals', ['logout']),
@@ -214,12 +222,15 @@ export default {
     },
     async getUserInfo () {
       const user = await this.$getUserInfo()
-      user.role_id = user.user.role_id
-      const folder = user.role_id === 3 ? 'customers' : 'specialists'
-      this.role = user.role_id
-      this.userAvatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
-      this.routeFooter = user.role_id === 3 ? routeCustomer : routeEmployee
-      this.menuItems = user.role_id === 3 ? menuItemsDataCustomer : menuItemsDataEmployee
+      this.user = user
+      if (user) {
+        user.role_id = user.user.role_id
+        const folder = user.role_id === 3 ? 'customers' : 'specialists'
+        this.role = user.role_id
+        this.userAvatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
+        this.routeFooter = user.role_id === 3 ? routeCustomer : routeEmployee
+        this.menuItems = user.role_id === 3 ? menuItemsDataCustomer : menuItemsDataEmployee
+      }
     },
     getNotifications () {
       this.$getNotifications().then(res => {

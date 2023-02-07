@@ -189,7 +189,7 @@
         no-caps
         flat
         color="primary"
-        @click="modeAddCard = true"
+        @click="openCardFormSection"
       />
     </section>
 
@@ -219,7 +219,36 @@
         @pay="pay"
       />
     </section>
-
+    <q-dialog
+      v-model="isDlg"
+      persistent
+    >
+      <q-card class="full-width q-py-md q-pa-md" style="border-radius: 10px">
+        <q-card-section>
+          <div class="text-h5 text-primary">Sign up</div>
+          <p class="text-subtitle1 q-pt-md" style="line-height: 20px;">
+            Don't miss the chance to choose from the various services we offer in our application! Register to access this feature and enjoy all the benefits we offer. Don't wait any longer!
+          </p>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn
+            label="Cancel"
+            color="primary"
+            flat
+            no-caps
+            @click="isDlg = false"
+          />
+          <q-btn
+            to="/register"
+            color="primary"
+            label="Sign up"
+            no-caps
+            class="q-px-md"
+            rounded
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </section>
 </template>
 
@@ -247,11 +276,17 @@ export default {
       discountObj: {
         label: '',
         totalAmount: 0
-      }
+      },
+      token: null,
+      isDlg: false
     }
   },
   mounted () {
-    this.getCards()
+    const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
+    if (token) {
+      this.token = token
+      this.getCards()
+    }
   },
   computed: {
     totalAmount () {
@@ -260,6 +295,10 @@ export default {
   },
   methods: {
     async verifyCoupon () {
+      if (!this.token) {
+        this.isDlg = true
+        return false
+      }
       this.$q.loading.show()
       await this.$api.get('/coupons/check/code/' + this.formPay.coupon).then(res => {
         this.$q.loading.hide()
@@ -282,6 +321,10 @@ export default {
       })
     },
     confirmClick () {
+      if (!this.token) {
+        this.isDlg = true
+        return false
+      }
       this.$v.formPay.card_id.$touch()
       if (this.$v.formPay.card_id.$invalid) {
         return
@@ -349,6 +392,13 @@ export default {
     },
     getLastNumbers (str) {
       return str.substring(str.length - 4)
+    },
+    openCardFormSection () {
+      if (!this.token) {
+        this.isDlg = true
+        return false
+      }
+      this.modeAddCard = true
     }
   },
   validations: {

@@ -97,6 +97,7 @@
 <script>
 import FooterS from '../../../components/services/Footer.vue'
 import SelectSCategoryItem from '../../../components/services/SelectSCategoryItem.vue'
+
 export default {
   components: { SelectSCategoryItem, FooterS },
   data () {
@@ -129,17 +130,21 @@ export default {
     }
   },
   async mounted () {
-    await this.getServices()
-    await this.getCategory()
-    console.log({ route: this.$route })
-    if (this.$route.query.services) {
-      this.requestAgain()
+    const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
+    if (token) {
+      const user = await this.$getUserInfo()
+      if (user) {
+        await this.getCategory()
+        if (this.$route.query.services) {
+          this.requestAgain()
+        }
+      }
     }
+    await this.getServices()
   },
   methods: {
     requestAgain () {
       const servicesAgainJsonParse = JSON.parse(this.$route.query.services)
-      console.log({ servicesAgainJsonParse, services: this.services })
       const services = this.services.map(itm => {
         const service = servicesAgainJsonParse.find(itm2 => itm2.service_id === itm.id)
         if (service) {
