@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="window-height">
     <q-tab-panels v-model="panel" animated>
         <q-tab-panel name="selection">
           <selection-services

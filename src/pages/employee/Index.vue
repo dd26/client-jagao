@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pt-lg q-pb-lg">
+  <q-page class="q-pt-lg q-pb-lg window-height">
     <section class="row q-pa-md items-center q-px-lg">
       <div class="col-6 row items-center">
         <div class="col-12 text-primary text-bold" style="font-size: 20px"> Hello, {{ name }} </div>

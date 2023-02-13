@@ -1,5 +1,5 @@
 <template>
-  <q-card class="row no-shadow">
+  <q-card class="row no-shadow window-height">
     <section class="col-12 bg-primary" style="height:150px; position: relative">
       <q-btn
         to="/home"
@@ -54,10 +54,10 @@ export default {
       ],
       serviceSelect: false,
       services: [
-        { title: 'Kitchen cleaning', subtitle: 'Lorem Ipsum dolor', select: false },
-        { title: 'Room cleaning', subtitle: 'Lorem Ipsum dolor', select: false },
-        { title: 'Bathroom cleaning', subtitle: 'Lorem Ipsum dolor', select: false },
-        { title: 'Garage Cleaning', subtitle: 'Lorem Ipsum dolor', select: false }
+        { title: 'Kitchen cleaning', subtitle: '', select: false },
+        { title: 'Room cleaning', subtitle: '', select: false },
+        { title: 'Bathroom cleaning', subtitle: '', select: false },
+        { title: 'Garage Cleaning', subtitle: '', select: false }
       ]
     }
   },

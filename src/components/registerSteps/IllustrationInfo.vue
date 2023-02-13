@@ -13,9 +13,9 @@
       </div>
       <section class="row q-pt-md q-px-xl">
         <div class="col-12 text-center text-primary text-bold text-h5 text-uppercase">Jagao from work</div>
-        <div class="col-12 text-center"> Lorem ipsum dolor sit amet </div>
-        <div class="col-12 text-center q-pt-lg" style="line-height: 17px; color: #838383; font-size: 13px"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita laudantium dolore aperiam, nisi odit magnam cupiditate tempore, suscipit itaque sunt nesciunt asperiores </div>
-        <div class="q-pt-lg text-primary col-12 text-center text-subtitle1">Learn more</div>
+        <div class="col-12 text-center"></div>
+        <div class="col-12 text-center q-pt-lg" style="line-height: 17px; color: #838383; font-size: 13px">-</div>
+        <div class="q-pt-lg text-primary col-12 text-center text-subtitle1">-</div>
       </section>
 
       <div class="btn-progress-container col-12 row justify-center items-center q-pt-xl">
@@ -48,9 +48,9 @@
       </div>
       <section class="row q-pt-md q-px-xl">
         <div class="col-12 text-center text-primary text-bold text-h5 text-uppercase">Jagao services</div>
-        <div class="col-12 text-center"> Lorem ipsum dolor sit amet </div>
-        <div class="col-12 text-center q-pt-lg" style="line-height: 17px; color: #838383; font-size: 13px"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita laudantium dolore aperiam, nisi odit magnam cupiditate tempore, suscipit itaque sunt nesciunt asperiores </div>
-        <div class="q-pt-lg text-primary col-12 text-center text-subtitle1">Learn more</div>
+        <div class="col-12 text-center">-</div>
+        <div class="col-12 text-center q-pt-lg" style="line-height: 17px; color: #838383; font-size: 13px"></div>
+        <div class="q-pt-lg text-primary col-12 text-center text-subtitle1"></div>
       </section>
 
       <div class="btn-progress-container col-12 row justify-center items-center q-pt-xl">

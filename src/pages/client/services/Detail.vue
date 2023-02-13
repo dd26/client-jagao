@@ -59,7 +59,7 @@
             <q-icon
               name="img:vectors/location2.svg"
             />
-            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">Lorem insup dolor</div>
+            <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;"></div>
           </section> -->
           <section class="row col-12 items-center q-pt-xs">
             <q-icon

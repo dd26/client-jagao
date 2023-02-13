@@ -25,7 +25,7 @@
               style="display: none;"
               v-model="profile.file"
             />
-            <section
+            <!--section
               v-if="!profile.file"
               class="img-profile-container row items-center justify-center"
               style="position: relative;"
@@ -59,12 +59,8 @@
                 round
                 dense
               />
-            </section>
+            </section>-->
           </div>
-          <div
-            class="text-center col-12 text-negative text-caption"
-            v-if="$v.stateForm.profileImg.$error"
-          >Profile picture is required!</div>
         </div>
 
         <div class="col-12 row">
@@ -527,9 +523,6 @@ export default {
           required
         },
         address: {
-          required
-        },
-        profileImg: {
           required
         },
         zip_code: {

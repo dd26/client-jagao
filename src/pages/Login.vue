@@ -1,5 +1,5 @@
 <template>
-  <q-tab-panels v-model="panel" animated class="absolute-full">
+  <q-tab-panels v-model="panel" animated class="absolute-full window-height">
     <q-tab-panel
       :name="1"
       style="padding: 0 !important"

@@ -6,6 +6,7 @@
           flat
           dense
           round
+          v-if="user.id"
           size="10px"
           icon="img:vectors/menu1.svg"
           aria-label="Menu"
@@ -28,6 +29,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
+      v-if="user.id"
       bordered
       content-class="bg-primary"
     >
@@ -85,7 +87,6 @@
 
             <section class="row col-12 q-pa-md">
               <div class="text-subtitle1 text-bold col-12">Jagao 2022</div>
-              <div class="text-caption col-12">Privacy Policy</div>
             </section>
           </div>
         </section>
@@ -132,12 +133,12 @@ const menuItemsDataCustomer = [
     title: 'Successful services',
     icon: 'img:vectors/icon7.svg',
     to: '/services/susuccessful/customer'
-  },
-  {
-    title: 'Help',
-    icon: 'img:vectors/icon4.svg',
-    to: '/help'
   }
+  // {
+  //   title: 'Help',
+  //   icon: 'img:vectors/icon4.svg',
+  //   to: '/help'
+  // }
 ]
 
 const menuItemsDataEmployee = [
@@ -160,16 +161,6 @@ const menuItemsDataEmployee = [
     title: 'Successful services',
     icon: 'img:vectors/icon7.svg',
     to: '/services/susuccessful/employee'
-  },
-  {
-    title: 'Transactions',
-    icon: 'img:vectors/transaction1.svg',
-    to: '/home/employee'
-  },
-  {
-    title: 'Help',
-    icon: 'img:vectors/icon4.svg',
-    to: '/help'
   }
 ]
 

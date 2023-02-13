@@ -3,7 +3,7 @@
 
     <div class="col-9">
 
-      <section class="column items-start q-px-lg q-pt-lg">
+      <section class="column items-start q-px-lg q-pt-lg q-mt-lg">
         <q-btn
           icon="arrow_back_ios"
           to="/login"

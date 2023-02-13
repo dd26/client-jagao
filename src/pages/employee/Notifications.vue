@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-lg">
+  <q-page class="q-pa-lg window-height">
     <div class="text-primary q-pb-lg" style="font-size: 20px; font-weight: 700;">Notifications</div>
     <div class="q-px-sm row q-gutter-y-lg">
       <EmployeeItem

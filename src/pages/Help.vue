@@ -27,16 +27,9 @@
         >
           <q-card>
             <q-card-section style="font-size: 14px; font-weight: 400; color: #5C5C5C">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-              commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-              eveniet doloribus ullam aliquid.
               <br><br>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt consequatur magnam quo nesciunt voluptates sunt. Quos, sapiente doloribus minus facere, rerum saepe doloremque ipsum quo vitae blanditiis hic aperiam magni.
               <br><br>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt consequatur magnam quo nesciunt voluptates sunt. Quos, sapiente doloribus minus facere, rerum saepe doloremque ipsum quo vitae blanditiis hic aperiam magni.
               <br><br>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt consequatur magnam quo nesciunt voluptates sunt. Quos, sapiente doloribus minus facere, rerum saepe doloremque ipsum quo vitae blanditiis hic aperiam magni.
-
             </q-card-section>
           </q-card>
         </q-expansion-item>

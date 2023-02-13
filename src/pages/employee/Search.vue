@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pt-lg">
+  <q-page class="q-pt-lg window-height">
     <section class="row">
       <div class="col-12 q-px-lg">
         <q-btn

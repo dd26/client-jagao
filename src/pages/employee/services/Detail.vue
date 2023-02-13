@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pb-xl">
+  <q-page class="q-pb-xl window-height">
     <div class="col-12 row q-pa-md q-pt-xl q-px-lg">
       <q-btn
         icon="arrow_back_ios"

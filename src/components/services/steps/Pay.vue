@@ -1,5 +1,5 @@
 <template>
-  <section class="row q-pb-xl">
+  <section class="row q-pb-xl window-height">
     <section class="row col-12 q-pa-md">
       <q-btn
         @click="$emit('previousStep','confirm')"
