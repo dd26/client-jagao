@@ -34,7 +34,7 @@ export default {
   data () {
     return {
       form: {
-        email: 'denilsson.d.sousa@gmail.com'
+        email: ''
       }
     }
   },

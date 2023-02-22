@@ -29,7 +29,6 @@
               v-if="!profile.file"
               class="img-profile-container row items-center justify-center"
               style="position: relative;"
-              :style="`${$v.stateForm.profileImg.$error ? 'border: 1px solid #C10015' : ''}`"
             >
               <div class="text-negative text-bold absolute-top-right" style="font-weight: 700; font-size: 20px;">*</div>
               <q-icon name="person" color="accent" size="110px" />
@@ -61,10 +60,6 @@
               />
             </section>
           </div>
-          <div
-            class="text-center col-12 text-negative text-caption"
-            v-if="$v.stateForm.profileImg.$error"
-          >Profile picture is required!</div>
         </div>
 
         <div class="col-12 row">
@@ -456,7 +451,10 @@ export default {
       formData.append('zip_code', form.zip_code)
       formData.append('discountCoupon', form.discountCoupon)
       formData.append('isEmployee', form.isEmployee)
-      formData.append('profileImg', form.profileImg)
+      // verificar si tiene foto
+      if (form.profileImg) {
+        formData.append('profileImg', form.profileImg)
+      }
 
       await this.$api.post('users', formData, {
         headers: {
@@ -527,9 +525,6 @@ export default {
           required
         },
         address: {
-          required
-        },
-        profileImg: {
           required
         },
         zip_code: {
