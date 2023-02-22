@@ -167,7 +167,6 @@ export default {
       this.isLoading = true
       await this.$api.post('mail_verify', this.stateForm).then(res => {
         this.isLoading = false
-        console.log(res, 'res')
         if (res.status === 'error') {
           this.$q.notify({
             color: 'negative',
@@ -175,8 +174,15 @@ export default {
             message: res.message
           })
         } else if (res.status === 'success') {
+          this.sendMail()
           this.$emit('nextStep', this.stateForm)
         }
+      })
+    },
+    // enviar mail de bienvenida
+    async sendMail () {
+      await this.$api.post('send_mail_welcome', {
+        email: this.stateForm.email
       })
     }
   },
