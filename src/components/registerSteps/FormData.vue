@@ -452,7 +452,7 @@ export default {
       formData.append('zip_code', form.zip_code)
       formData.append('discountCoupon', form.discountCoupon)
       formData.append('isEmployee', form.isEmployee)
-      formData.append('profileImg', form.profileImg)
+      // formData.append('profileImg', form.profileImg)
 
       await this.$api.post('users', formData, {
         headers: {
