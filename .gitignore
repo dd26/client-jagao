@@ -37,3 +37,5 @@ yarn-error.log*
 
 src/env.js
 ./src/env.js
+
+/src/env.js
