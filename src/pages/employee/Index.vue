@@ -13,12 +13,18 @@
       </div>
     </section>
 
-    <section class="row justify-center q-pt-lg q-px-lg">
+    <section
+      class="row justify-center q-pt-lg q-px-lg"
+    >
       <status-employee />
     </section>
 
     <section class="row q-px-xl q-pt-lg">
-      <div class="col-12 text-center q-pb-lg text-primary text-bold" style="font-size: 25px;">Available services</div>
+      <div
+        v-if="!servicesFilters && !servicesFilters.message"
+        class="col-12 text-center q-pb-lg text-primary text-bold"
+        style="font-size: 25px;"
+      >Available services</div>
       <q-list class="col-12 q-gutter-y-md" v-if="servicesFilters && !servicesFilters.message && servicesFilters.length > 0">
         <Item
           v-for="itm in servicesFilters"
@@ -28,8 +34,17 @@
           @clickItem="clickItem"
         />
       </q-list>
-      <section v-else-if="servicesFilters && servicesFilters.message">
+      <section
+        class="row q-pa-xl justify-center items-center q-py-xl"
+        style="background-color: #D9F2EE; border-radius: 12px;"
+        v-else-if="servicesFilters && servicesFilters.message"
+      >
         <div class="col-12 text-center text-primary text-bold">{{ servicesFilters.message }}</div>
+        <img
+          src="illustrations/18.png"
+          alt="illustration_18"
+          width="100%"
+        >
       </section>
       <section v-else class="col-12">
         <img
@@ -73,7 +88,7 @@ export default {
         })
         return this.services.filter(item => userCategories.includes(item.category_id))
       } else {
-        return { message: 'you cannot take services because you are not yet verified' }
+        return { message: 'We are reviewing your information, you will receive a notification soon' }
       }
     }
   },
