@@ -116,7 +116,7 @@
       </section>
 
       <section class="col-12 row q-pt-lg">
-        <div class="text-primary" style="font-size: 20px">Observations</div>
+        <div class="text-primary" style="font-size: 20px">Remarks and input code</div>
         <q-input
           v-model="form.observations"
           class="col-12 style-input q-mt-md"
