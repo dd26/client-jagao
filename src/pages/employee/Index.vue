@@ -3,7 +3,7 @@
     <section class="row q-pa-md items-center q-px-lg">
       <div class="col-6 row items-center">
         <div class="col-12 text-primary text-bold" style="font-size: 20px"> Hello, {{ name }} </div>
-        <div class="col-12" style="font-size: 16px; color: #5C5C5C;">Let’s start work!</div>
+        <div class="col-12" style="font-size: 16px; color: #5C5C5C;">Let’s start working!</div>
       </div>
       <div class="col-6 row justify-end">
         <wallet
