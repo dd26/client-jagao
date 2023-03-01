@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pb-md q-pt-lg window-height">
+  <q-page class="q-pb-xl q-pt-lg">
     <div class="row q-px-xl q-pb-md">
       <div class="col-12 text-primary" style="font-weight: 700; font-size: 20px;">Hello, {{user.name ? user.name : user.user.name}}! </div>
       <div class="col-12" style="font-weight: 400; font-size: 16px; color: #5C5C5C">Let’s start work! </div>
