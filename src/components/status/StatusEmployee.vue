@@ -39,7 +39,6 @@ export default {
     return {
       states: [
         { name: 'Available', id: 1, color: '#7DBA47' },
-        { name: 'Ocupied', id: 2, color: '#F2994A' },
         { name: 'Not available', id: 3, color: '#EB5757' }
       ],
       state: 1,
