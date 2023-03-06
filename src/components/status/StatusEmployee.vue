@@ -30,11 +30,22 @@
         <q-badge rounded :style="`background-color: ${itm.color}`" />
       </q-item-section>
     </q-item>
+
+    <q-dialog
+      v-model="dlgReminder"
+      persistent
+    >
+      <Reminder />
+    </q-dialog>
   </q-expansion-item>
 </template>
 
 <script>
+import Reminder from 'src/components/reminder/Reminder.vue'
 export default {
+  components: {
+    Reminder
+  },
   data () {
     return {
       states: [
@@ -42,7 +53,8 @@ export default {
         { name: 'Not available', id: 3, color: '#EB5757' }
       ],
       state: 1,
-      expanded: false
+      expanded: false,
+      dlgReminder: false
     }
   },
   mounted () {
@@ -51,6 +63,15 @@ export default {
   computed: {
     stateObj () {
       return this.states.find(state => state.id === this.state)
+    }
+  },
+  watch: {
+    state (newValue, oldValue) {
+      // cuando cambia de inactivo a activo entonces muestro el dialogo de recordatorio
+      // si el nuevo valor es 1 y el anterior es 3
+      if (newValue === 1 && oldValue === 3) {
+        this.dlgReminder = true
+      }
     }
   },
   methods: {
