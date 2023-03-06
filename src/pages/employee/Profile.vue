@@ -65,7 +65,12 @@
     </section>
 
     <section class="col-12 q-pa-lg row justify-between q-gutter-y-lg">
-      <div class="text-primary col-12" style="font-weight: 700; font-size: 20px;">My active services</div>
+      <div class="col-12 row">
+        <div class="text-primary col-12" style="font-weight: 700; font-size: 20px;">My active services</div>
+        <p class="text-center text-bold text-primary">
+          press on the service to cancel it if you wish.
+        </p>
+      </div>
       <ItemServices
         v-for="itm in services"
         :key="itm.id"
