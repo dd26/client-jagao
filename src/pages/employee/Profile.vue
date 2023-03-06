@@ -60,39 +60,8 @@
       <div class="col-12 text-center q-pt-md text-primary" style="font-weight: 700; font-size: 20px;">{{ name }}</div>
     </section>
 
-    <section class="col-12 row q-px-xl q-pt-md">
-      <q-expansion-item
-        v-model="expanded"
-        class="style-expansion-item col-12 text-primary"
-        style="font-size: 20px; font-weight: 700;"
-      >
-        <template v-slot:header>
-
-          <q-item-section>
-            {{ stateObj.name }}
-          </q-item-section>
-
-          <q-item-section side>
-            <q-badge rounded :color="stateObj.color" />
-          </q-item-section>
-        </template>
-
-        <q-item
-          v-for="itm in states"
-          :key="itm.id"
-          @click="changeState(itm.id)"
-          clickable
-        >
-          <q-item-section>
-            <q-item-label>
-              {{ itm.name }}
-            </q-item-label>
-          </q-item-section>
-          <q-item-section side>
-            <q-badge rounded :color="itm.color" />
-          </q-item-section>
-        </q-item>
-      </q-expansion-item>
+    <section class="col-12 row justify-center q-px-xl q-pt-md">
+      <status-employee />
     </section>
 
     <section class="col-12 q-pa-lg row justify-between q-gutter-y-lg">
@@ -138,19 +107,15 @@
 <script>
 import ItemServices from '../../components/ItemServices.vue'
 import CancelService from '../../components/services/CancelService'
+import StatusEmployee from '../../components/status/StatusEmployee.vue'
 export default {
   components: {
-    ItemServices, CancelService
+    ItemServices, CancelService, StatusEmployee
   },
   data () {
     return {
       hasVerified: false,
       name: 'Isabel Summerton',
-      states: [
-        { name: 'Available', id: 1, color: 'positive' },
-        { name: 'Not available', id: 3, color: 'negative' }
-      ],
-      state: 1,
       expanded: false,
       services: [],
       avatarUrl: 'vectors/avatar2.svg',
@@ -197,21 +162,6 @@ export default {
         this.hasVerified = user.user.verified
         this.state = user.user.status
       }
-    },
-    async changeState (id) {
-      this.state = id
-      this.$q.loading.show()
-      await this.$api.put('/users/change_status', { status: id }).then(res => {
-        this.$q.loading.hide()
-        if (res) {
-          this.$q.notify({
-            color: 'positive',
-            textColor: 'white',
-            message: 'Your status has been changed!'
-          })
-        }
-      })
-      this.expanded = false
     }
   }
 }
