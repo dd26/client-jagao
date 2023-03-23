@@ -35,6 +35,17 @@ export default async ({ store, Vue }) => {
       })
       localStorage.removeItem('JAGAO_SESSION_INFO')
     }
+
+    // cuando es codigo 403
+    if (error.response.status === 403) {
+      // verifico si viene el mensaje de error
+      if (error.response.data.message) {
+        Notify.create({
+          message: error.response.data.message,
+          color: 'warning'
+        })
+      }
+    }
   })
 
   axiosInstance.interceptors.request.use(async function (config) {
