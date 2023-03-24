@@ -32,6 +32,7 @@
           v-bind="itm"
           :isCancel="false"
           @clickItem="clickItem"
+          @clickItemDecline="clickItemDecline"
         />
       </q-list>
       <section
@@ -56,6 +57,36 @@
         >
       </section>
     </section>
+
+    <q-dialog
+      v-model="isDeclineDlg"
+      persistent
+    >
+      <q-card class="q-pa-md">
+        <q-card-section class="row items-center">
+          <div class="col-12 text-center text-primary text-bold">Are you sure you want to decline this service?</div>
+        </q-card-section>
+        <q-card-actions align="center">
+          <q-btn
+            color="primary"
+            label="Yes"
+            no-caps
+            dense
+            class="text-bold"
+            @click="declineServiceFn"
+          />
+          <q-btn
+            @click="isDeclineDlg = false"
+            label="Cancel"
+            color="negative"
+            dense
+            class="text-bold"
+            no-caps
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -75,7 +106,9 @@ export default {
       services: [],
       servicesPending: [],
       amount: '0,00',
-      user: {}
+      user: {},
+      isDeclineDlg: false,
+      idService: null
     }
   },
   computed: {
@@ -107,10 +140,18 @@ export default {
       this.$q.loading.show()
       const data = await this.$api.get('/master_request_services/status/' + status)
       this.$q.loading.hide()
-      return data
+
+      // se obtienen los servicios que el usuario declino para no mostrarlos en la lista
+      const servicesPending = JSON.parse(localStorage.getItem('declinedServices')) || []
+      const services = data.filter(item => !servicesPending.includes(item.id))
+      return services
     },
     clickItem (id) {
       this.$router.push('/services/detail/' + id + '/employee')
+    },
+    clickItemDecline (id) {
+      this.idService = id
+      this.isDeclineDlg = true
     },
     async getAmount () {
       this.$q.loading.show()
@@ -119,6 +160,24 @@ export default {
       if (res) {
         this.amount = res
       }
+    },
+    async declineServiceFn () {
+      // se guarda localmente el id del servicio en un array de id de servicios,
+      // para que no se vuelva a mostrar en la lista de servicios
+      const servicesPending = JSON.parse(localStorage.getItem('declinedServices')) || []
+      servicesPending.push(this.idService)
+      localStorage.setItem('declinedServices', JSON.stringify(servicesPending))
+      this.isDeclineDlg = false
+      this.idService = null
+
+      // se obtienen los servicios que el usuario declino para no mostrarlos en la lista
+      const services = await this.getServices(0)
+      this.services = services
+    },
+    // get declined services
+    getDeclinedServices () {
+      const servicesPending = JSON.parse(localStorage.getItem('declinedServices')) || []
+      return servicesPending
     }
   }
 }
