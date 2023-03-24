@@ -3,7 +3,6 @@
     <q-item
       class="bg-color-item"
       clickable
-      @click="$emit('clickItem', id)"
     >
       <q-item-section top>
         <q-item-label class="text-primary text-bold">{{ category_name }}</q-item-label>
@@ -29,8 +28,45 @@
           </div>
         </q-item-label>
       </q-item-section>
-      <q-item-section side top class="q-mr-md">
-        <q-item-label>#{{id}}</q-item-label>
+      <q-item-section side top>
+        <section
+          class="row items-end"
+          style="position: relative; right: -10px"
+        >
+          <div
+            style="position: relative; bottom: 4px"
+          >
+            #{{ id }}
+          </div>
+          <q-btn
+            icon="more_vert"
+            size="md"
+            flat
+            dense
+            round
+            color="primary"
+          >
+            <q-menu>
+              <section class="row" style="min-width: 90px; border-radius: 19px;">
+                <div
+                  @click="$emit('clickItem', id)"
+                  class="col-12 bg-primary text-white text-center row justify-left q-pa-sm q-pl-md"
+                >
+                  <q-icon name="remove_red_eye" size="xs" />
+                  <div class="q-pl-xs" style="font-size: 10px; font-weight: 700">View</div>
+                </div>
+                <div
+                  @click="$emit('clickItemDecline', id)"
+                  class="col-12 bg-negative text-white text-center row justify-left q-pa-sm q-pl-md"
+                >
+                  <q-icon name="close" size="xs" />
+                  <div class="q-pl-xs" style="font-size: 10px; font-weight: 700">Decline</div>
+                </div>
+
+              </section>
+            </q-menu>
+          </q-btn>
+        </section>
       </q-item-section>
 
       <div class="total-price-style text-primary text-bold">
@@ -80,6 +116,11 @@ export default {
     },
     dateData () {
       return date.formatDate(new Date(this.date_request), 'DD/MM/YYYY')
+    }
+  },
+  methods: {
+    handleClick (id) {
+      this.$emit('clickItem', id)
     }
   }
 }
