@@ -27,6 +27,8 @@ const routes = [
       { path: '/profile/other', component: () => import('pages/Profile.vue') },
       { path: '/profile/info', component: () => import('pages/profile/Info.vue') },
       { path: '/profile/info/:id', component: () => import('pages/profile/Form.vue') },
+      { path: '/profile/change-role', component: () => import('pages/client/changeRole/ChangeRolePage.vue') },
+      { path: '/profile/change-role/form', component: () => import('pages/client/changeRole/FormChangeRole.vue') },
       { path: '/cards/form', component: () => import('pages/client/card/Form.vue') },
       { path: '/address/form', component: () => import('pages/client/address/Form.vue') },
       { path: '/services/form', component: () => import('pages/employee/services/Form.vue') },
@@ -55,6 +57,9 @@ const routes = [
   },
   {
     path: '/success', component: () => import('pages/Success.vue')
+  },
+  {
+    path: '/dynamic_success', component: () => import('pages/DynamicSuccessPage.vue')
   },
   {
     path: '/home/no-login', component: () => import('pages/no-login/Home.vue')

@@ -113,12 +113,8 @@ export default {
   },
   computed: {
     servicesFilters () {
-      if (this.user.user.verified) {
+      if (this.user && this.user.user && this.user.user.verified) {
         const userCategories = this.user.specialistServices.map(item => item.category_id)
-        console.log({
-          userCategories,
-          filtro: this.services.filter(item => userCategories.includes(item.category_id))
-        })
         return this.services.filter(item => userCategories.includes(item.category_id))
       } else {
         return { message: 'We are reviewing your information, you will receive a notification soon' }

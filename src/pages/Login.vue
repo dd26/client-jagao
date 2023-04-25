@@ -162,8 +162,18 @@ export default {
       this.$q.loading.show()
       await this.$api.post('login_app', this.form).then(res => {
         this.$q.loading.hide()
+        console.log(res, 'res LOGIN')
         if (res) {
           this.login(res)
+
+          if (res.active_role === 'specialist') {
+            this.$router.push('/home/employee')
+          }
+
+          if (res.active_role === 'customer') {
+            this.$router.push('/home')
+          }
+
           if (res.role_id === 3) {
             this.$router.push('/home')
           } else {

@@ -5,10 +5,27 @@ import routes from './routes'
 import money from 'v-money'
 import OtpInput from '@bachdgvn/vue-otp-input'
 
+import env from '../env'
+const apiKeyGoogle = env.googleApiKey
+
+import * as VueGoogleMaps from 'vue2-google-maps'
+
 Vue.use(money, { precision: 2 })
 Vue.use(VueRouter)
 Vue.use(Vuelidate)
 Vue.component('v-otp-input', OtpInput)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: apiKeyGoogle,
+    // libraries: 'places' // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    libraries: 'places,drawing,visualization'
+    // (as you require)
+
+    // If you want to set the version, you can do so:
+    // v: '3.26',
+  }
+})
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;

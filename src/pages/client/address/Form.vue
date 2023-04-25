@@ -102,6 +102,31 @@
         />
       </div>
 
+      <q-btn
+        label="Show Map"
+        @click="showMapDlg = true"
+        color="negative"
+      />
+
+      <q-dialog
+        v-model="showMapDlg"
+        persistent
+        maximized
+        full-screen
+      >
+        <q-card
+          class="bg-white"
+        >
+          <q-btn
+            style="position: absolute; top: 10px; right: 10px; z-index: 9999;"
+            @click="showMapDlg = false"
+            color="negative"
+            icon="close"
+          />
+          <GoogleMapView/>
+        </q-card>
+      </q-dialog>
+
       <div class="col-12 row justify-center q-pt-lg">
         <q-btn
           @click="save"
@@ -120,8 +145,13 @@
 <script>
 import { FormMixin } from '../../../mixins/Form'
 import { required } from 'vuelidate/lib/validators'
+import GoogleMapView from 'src/components/googleMaps/GoogleMapView.vue'
+
 export default {
   mixins: [FormMixin],
+  components: {
+    GoogleMapView
+  },
   data () {
     return {
       form: {
@@ -133,11 +163,13 @@ export default {
       route: 'addresses',
       formData: true,
       cities: [],
-      addressImage: null
+      addressImage: null,
+      showMapDlg: false
     }
   },
   mounted () {
     this.getCities()
+    console.log(this.$googleApiKey())
   },
   methods: {
     beforeValidate () {
