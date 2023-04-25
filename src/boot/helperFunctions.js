@@ -25,3 +25,7 @@ Vue.prototype.$formatDate = function (dateFormat, format) {
   const formattedString = date.formatDate(dateFormat, format)
   return formattedString
 }
+
+Vue.prototype.$googleApiKey = function () {
+  return env.googleApiKey
+}

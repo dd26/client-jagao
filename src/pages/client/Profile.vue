@@ -64,20 +64,56 @@
       <CardScroll />
     </section>
 
+    <btn-change-request-role-to-specialist
+      v-if="isShowSentRequest"
+      class="row col-12 q-mt-lg q-px-lg"
+    />
+    <section
+      v-else-if="lastRequestData && lastRequestData.status === 'en espera'"
+      class="row col-12 q-mt-lg q-pa-sm q-pt-md q-mx-lg items-center justify-center"
+      style="background-color: #D9F2EE; border-radius: 12px;"
+    >
+      <q-avatar
+        size="70px"
+      >
+        <img
+          src="vectors/avatar-profile-work.png"
+          width="100%"
+          height="100%"
+          style="border: 3px solid #FFF"
+        >
+      </q-avatar>
+      <div class="col q-px-sm q-pt-md">
+        <!-- Mensaje de que la solicitud esta en espera -->
+        <p v-if="lastRequestData.status === 'en espera'" class="column q-gutter-y-sm">
+          <span
+            class="text-h6 text-primary text-bold"
+            style="line-height: 20px;"
+          >Your request is pending!</span>
+
+          <span class="text-primary text-bold">We will contact you soon.</span>
+        </p>
+      </div>
+    </section>
+
   </q-page>
 </template>
 
 <script>
 import AddressScroll from '../../components/AddressScroll.vue'
 import CardScroll from '../../components/CardScroll.vue'
+import BtnChangeRequestRoleToSpecialist from '../../components/BtnChangeRequestRoleToSpecialist.vue'
+
 export default {
-  components: { AddressScroll, CardScroll },
+  components: { AddressScroll, CardScroll, BtnChangeRequestRoleToSpecialist },
   data () {
     return {
       hasVerified: false,
       name: 'Isabel Summerton',
       avatarUrl: 'vectors/avatar2.svg',
-      role_id: null
+      role_id: null,
+      isShowSentRequest: false,
+      lastRequestData: {}
     }
   },
   mounted () {
@@ -88,12 +124,19 @@ export default {
       const user = await this.$getUserInfo()
       this.hasVerified = user.verified
       this.name = user.name ? user.user.name : this.name
-      console.log(user)
       user.role_id = user.user.role_id
       this.role_id = user.role_id
       const folder = user.role_id === 3 ? 'customers' : 'specialists'
       this.role = user.role_id
       this.avatarUrl = `${this.$api_url()}image/${folder}/${user.id}`
+
+      if (user.lastRequest) {
+        this.lastRequestData = user.lastRequest
+      }
+
+      if (user.lastRequest.status === 'rechazado' || !user.lastRequest) {
+        this.isShowSentRequest = true
+      }
     }
   }
 }

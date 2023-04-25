@@ -1,3 +1,4 @@
 export default {
-  a: 'b'
+  JAGAO_SESSION_INFO: null,
+  user: null
 }

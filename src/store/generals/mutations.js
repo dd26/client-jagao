@@ -11,7 +11,8 @@ export function updateAccessToken (state, JAGAO_SESSION_INFO) {
 export function login (state, data) {
   localStorage.setItem('JAGAO_SESSION_INFO', JSON.stringify(data))
   state.JAGAO_SESSION_INFO = data.JAGAO_SESSION_INFO
-  state.user = data.user
+  state.user = data.JAGAO_SESSION_INFO
+  console.log(data)
 }
 
 export function dataUser (state, data) {
