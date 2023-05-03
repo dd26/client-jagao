@@ -102,11 +102,18 @@
         />
       </div>
 
-      <q-btn
-        label="Show Map"
-        @click="showMapDlg = true"
-        color="negative"
-      />
+      <div class="col-12 q-pt-md">
+        <p>
+          <span class="text-primary">Note:</span> You must select your address on the map
+        </p>
+        <q-btn
+          icon="place"
+          :label="coordinates ? 'Change Location' : 'Select Location'"
+          @click="showMapDlg = true"
+          color="primary"
+          :outline="coordinates !== null"
+        />
+      </div>
 
       <q-dialog
         v-model="showMapDlg"
@@ -119,11 +126,20 @@
         >
           <q-btn
             style="position: absolute; top: 10px; right: 10px; z-index: 9999;"
-            @click="showMapDlg = false"
+            @click="showMapDlg = false, coordinates = null"
             color="negative"
             icon="close"
           />
-          <GoogleMapView/>
+          <GoogleMapView
+            v-model="coordinates"
+          />
+          <q-btn
+            style="position: absolute; bottom: 25px; right: 10px; z-index: 9999;"
+            @click="showMapDlg = false"
+            color="primary"
+            icon="check"
+            label="Confirm Location"
+          />
         </q-card>
       </q-dialog>
 
@@ -158,23 +174,27 @@ export default {
         name: null,
         city_id: null,
         address: null,
-        postalCode: null
+        postalCode: null,
+        latitude: null,
+        longitude: null
       },
       route: 'addresses',
       formData: true,
       cities: [],
       addressImage: null,
-      showMapDlg: false
+      showMapDlg: false,
+      coordinates: null
     }
   },
   mounted () {
     this.getCities()
-    console.log(this.$googleApiKey())
   },
   methods: {
     beforeValidate () {
       if (this.addressImage) {
         this.form.image = this.addressImage
+        this.form.latitude = this.coordinates.lat
+        this.form.longitude = this.coordinates.lng
       }
     },
     afterSave () {
@@ -190,8 +210,11 @@ export default {
       name: { required },
       city_id: { required },
       address: { required },
-      postalCode: { required }
-    }
+      postalCode: { required },
+      latitude: { required },
+      longitude: { required }
+    },
+    coordinates: { required }
   }
 }
 </script>

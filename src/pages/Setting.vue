@@ -43,7 +43,7 @@
                 size="20px"
                 color="negative"
               />
-              <div class="q-pl-md text-negative"> Delete Account </div>
+              <div class="q-pl-md text-negative"> Disable Account </div>
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -117,8 +117,8 @@ export default {
     },
     deleteAccount () {
       this.$q.dialog({
-        title: 'Delete Account',
-        message: 'Are you sure you want to delete your account?',
+        title: 'Disable Account',
+        message: 'Are you sure you want to disable your account?',
         cancel: true,
         persistent: true
       }).onOk(() => {

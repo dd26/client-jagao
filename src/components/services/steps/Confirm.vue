@@ -14,8 +14,16 @@
     </section>
 
     <section class="row col-12 q-px-lg q-pt-md">
+      <div
+        v-if="$v.form.address_id.$error"
+        class="text-negative"
+        style="font-size: 15px;"
+      >Select your location</div>
       <my-ubication
         v-model="form.address_id"
+        validate-coords
+        @error-coords="errorCoords()"
+        @success-coords="successCoords()"
       />
     </section>
 
@@ -143,7 +151,7 @@
 
 <script>
 import MyUbication from '../../MyUbication.vue'
-import { requiredIf } from 'vuelidate/lib/validators'
+import { requiredIf, required } from 'vuelidate/lib/validators'
 export default {
   props: ['services'],
   components: {
@@ -152,11 +160,12 @@ export default {
   data () {
     return {
       form: {
-        address_id: 1,
+        address_id: null,
         services: this.services,
         right_now: false
       },
-      modeEdit: false
+      modeEdit: false,
+      isErrorCoords: false
     }
   },
   computed: {
@@ -168,6 +177,15 @@ export default {
   },
   methods: {
     continueStep () {
+      // validar coordenadas
+      if (this.isErrorCoords) {
+        this.$q.notify({
+          color: 'negative',
+          message: 'Please select other location'
+        })
+        return
+      }
+
       this.$v.form.$touch()
       if (this.$v.form.$invalid) {
         this.$q.notify({
@@ -181,6 +199,19 @@ export default {
     deleteService (id) {
       this.form.services = this.form.services.filter(item => item.id !== id)
       this.modeEdit = false
+    },
+    errorCoords () {
+      console.log('error confirmar ubicacion')
+      this.isErrorCoords = true
+      this.$q.notify({
+        color: 'negative',
+        // mensaje que indica que no se pudo obtener la ubicacion, por lo que se debe seleccionar una que si se pueda
+        message: 'We could not get your location, please select other location'
+      })
+    },
+    successCoords () {
+      console.log('success confirmar ubicacion')
+      this.isErrorCoords = false
     }
   },
   validations: {
@@ -190,6 +221,9 @@ export default {
       },
       date: {
         requiredIf: requiredIf(v => !v.right_now)
+      },
+      address_id: {
+        required
       }
     }
   }

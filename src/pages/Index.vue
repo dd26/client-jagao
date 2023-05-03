@@ -6,7 +6,9 @@
     </div>
 
     <div class="row q-px-lg">
-      <my-ubication />
+      <my-ubication
+        isShowFirstLocated
+      />
     </div>
 
     <section class="row q-pt-md q-px-lg justify-center">

@@ -25,11 +25,18 @@
       style="height: 160px"
       class="column q-pa-md"
     >
-      <div style="background-color: #D9F2EE; border-radius: 5px;" class="col-12 column">
+      <div
+        style="background-color: #D9F2EE; border-radius: 5px; position: relative"
+        class="col-12 column"
+        v-ripple
+        clickable
+        @click="$router.push('/accounts/form/' + item.id)"
+      >
         <div class="col-9 row">
           <div class="col-12 column q-pa-md q-px-lg">
-            <!-- <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">Bank of America</div> -->
+            <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">Bank of America</div>
             <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">{{ item.full_name }}</div>
+            <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">{{ returnAccounTypeName(item.account_type) }}</div>
           </div>
         </div>
         <div class="col-3 row q-px-lg lines-card" style="font-weight: 400; font-size: 10px;">
@@ -74,6 +81,13 @@ export default {
         }
       })
       this.data = data
+    },
+    returnAccounTypeName (accountType) {
+      if (accountType === 'check') {
+        return 'Checks'
+      } else if (accountType === 'saving') {
+        return 'Saving'
+      }
     }
   }
 }

@@ -38,7 +38,7 @@
           class="col-12 text-caption text-negative"
         >Select account type</div>
         <q-radio
-          v-model="form.accountType"
+          v-model="accountType"
           val="check"
           label="Checks"
           class="col-12"
@@ -46,7 +46,7 @@
           color="primary"
         />
         <q-radio
-          v-model="form.accountType"
+          v-model="accountType"
           val="saving"
           label="Saving"
           class="col-12"
@@ -108,7 +108,9 @@
         <div
           class="col-12 text-center text-primary q-pt-sm"
           style="font-size: 20px; font-weight: 700;"
-        >Add</div>
+        >
+          {{ id ? 'Update' : 'Add' }}
+        </div>
       </div>
     </section>
   </q-page>
@@ -123,11 +125,12 @@ export default {
     return {
       form: {
         bank: 0,
-        accountType: null,
+        accountType: 'check',
         routeNumber: null,
         accountNumber: null,
         fullName: null
       },
+      accountType: 'check',
       banks: [
         { label: 'Select a bank', value: 0 },
         { label: 'Bank 1', value: 1 },
@@ -137,13 +140,29 @@ export default {
         { label: 'Bank 5', value: 5 },
         { label: 'Bank 6', value: 6 }
       ],
-      route: 'banks'
+      route: 'banks',
+      id: this.$route.params.id
     }
   },
   methods: {
     afterSave () {
-      console.log('afterSave')
+      if (this.id) {
+        this.$router.push('/success?message=You successfully updated a bank account!')
+        return
+      }
       this.$router.push('/success?message=You successfully added a bank account!')
+    },
+    afterGetRecord (data) {
+      this.form.bank = data.exterior_bank_id
+      this.form.accountType = data.account_type
+      this.form.routeNumber = data.route_number
+      this.form.accountNumber = data.account_number
+      this.form.fullName = data.full_name
+
+      this.accountType = data.account_type
+    },
+    beforeValidate () {
+      this.form.accountType = this.accountType
     }
   },
   validations: {

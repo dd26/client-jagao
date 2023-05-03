@@ -51,6 +51,7 @@ const routes = [
       { path: '/notifications/other', component: () => import('src/pages/Notifications.vue') },
       { path: '/accounts', component: () => import('pages/account/List.vue') },
       { path: '/accounts/form', component: () => import('pages/account/Form.vue') },
+      { path: '/accounts/form/:id', component: () => import('pages/account/Form.vue') },
       { path: '/search', component: () => import('pages/employee/Search.vue') },
       { path: '/help', component: () => import('pages/Help.vue') }
     ]

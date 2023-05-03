@@ -18,10 +18,10 @@
     <section class="row q-px-lg q-pt-lg">
       <q-list class="col-12">
         <q-expansion-item
-          v-for="n in 8"
+          v-for="n in 5"
           :key="n"
-          expand-separator
           :label="'Question help support ' + n"
+          expand-separator
           style="font-size: 20px;"
           expand-icon-class="text-secondary"
         >
@@ -53,7 +53,7 @@ export default {
   methods: {
     openWp () {
       // abrir whatsapp
-      window.open('https://api.whatsapp.com/send?phone=584127622766&text=Hello%20Jagao%20!', '_blank')
+      window.open('https://api.whatsapp.com/send?phone=+14074096923&text=Hello%20Jagao%20!', '_blank')
     }
   }
 }
