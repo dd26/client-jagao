@@ -34,7 +34,9 @@
       >
         <div class="col-9 row">
           <div class="col-12 column q-pa-md q-px-lg">
-            <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">Bank of America</div>
+            <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">
+              {{ returnAccountName(item.exterior_bank_id) }}
+            </div>
             <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">{{ item.full_name }}</div>
             <div class="col-5 text-primary lines-card-bottom" style="font-size: 8px; font-weight: 700;">{{ returnAccounTypeName(item.account_type) }}</div>
           </div>
@@ -47,6 +49,15 @@
             ****    ****    ****    {{ item.lastDigitsRouteNumber }}
           </div>
         </div>
+        <q-icon
+          :name="'img:' + returnAccountImg(item.exterior_bank_id)"
+          size="50px"
+          :style="{
+            position: 'absolute',
+            top: '38px',
+            right: '10px'
+          }"
+        />
       </div>
     </div>
 
@@ -68,7 +79,19 @@ export default {
   mixins: [GetDataMixin],
   data () {
     return {
-      route: 'banks'
+      route: 'banks',
+      dataBank: [
+        { label: 'Bank of America', value: 1, img: 'banks/bankofamerica.jpg' },
+        { label: 'Wells Fargo', value: 2, img: 'banks/wellsfargo.jpg' },
+        { label: 'JPMorgan Chase Bank', value: 3, img: 'banks/jpmorganchase.jpg' },
+        { label: 'Truist Bank', value: 4, img: 'banks/truist.jpg' },
+        { label: 'Regions Bank', value: 5, img: 'banks/regions.jpg' },
+        { label: 'TD Bank', value: 6, img: 'banks/tdbank.jpg' },
+        { label: 'PNC Bank', value: 7, img: 'banks/pncbank.jpg' },
+        { label: 'Fifth Third Bank', value: 8, img: 'banks/fifththirdbank.jpg' },
+        { label: 'Synovus Bank', value: 9, img: 'banks/synovusbank.jpg' },
+        { label: 'Citibank', value: 10, img: 'banks/citybank.jpg' }
+      ]
     }
   },
   methods: {
@@ -88,6 +111,16 @@ export default {
       } else if (accountType === 'saving') {
         return 'Saving'
       }
+    },
+    returnAccountName (val) {
+      const dataBank = [...this.dataBank]
+      const find = dataBank.find(item => item.value === val)
+      return find.label
+    },
+    returnAccountImg (val) {
+      const dataBank = [...this.dataBank]
+      const find = dataBank.find(item => item.value === val)
+      return find.img
     }
   }
 }
