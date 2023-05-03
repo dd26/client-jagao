@@ -7,8 +7,8 @@
             <div class="container-icon">
               <q-icon name="img:vectors/mail1.svg" size="63px" />
             </div>
-            <div class="text-primary col-12 text-center q-pt-sm" style="font-size: 20px; font-weight: 700;">Check your mail</div>
-            <div class="col-7 text-center q-px-sm" style="font-size: 16px; font-weight: 400;">We have sent a verification link to your email.</div>
+            <div class="text-primary col-12 text-center q-pt-sm" style="font-size: 20px; font-weight: 700;">You registered successfully</div>
+            <div class="col-7 text-center q-px-sm" style="font-size: 16px; font-weight: 400;">We sent you the details to access Jagao to your email address.</div>
           </div>
         </section>
     </div>

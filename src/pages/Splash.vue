@@ -1,34 +1,30 @@
 <template>
   <section class="absolute-full flex flex-center">
-    <!-- <img src="logos/logo1.svg" alt="logo_jagao_1">
+    <img src="logos/logo1.svg" alt="logo_jagao_1">
     <div
       class="text-uppercase text-bold text-primary fixed-bottom full-width text-center q-pb-xl"
       style="font-size: 20px;"
-    >Welcome</div> -->
-  <GoogleMapView />
+    >Welcome</div>
+  <!-- <GoogleMapView /> -->
   </section>
 </template>
 
 <script>
-import GoogleMapView from 'src/components/googleMaps/GoogleMapView.vue'
 
 export default {
-  components: {
-    GoogleMapView
-  },
   data () {
     return {
       timer: ''
     }
   },
   beforeDestroy () {
-    // clearInterval(this.timer)
+    clearInterval(this.timer)
   },
   mounted () {
-    // this.timer = setInterval(this.redirectToLogin, 4000)
+    this.timer = setInterval(this.redirectToLogin, 4000)
   },
   methods: {
-    /* redirectToLogin () {
+    redirectToLogin () {
       const getLs = localStorage.getItem('JAGAO_SESSION_INFO')
       if (getLs) {
         this.$api.post('verify_token', { api_token: JSON.parse(getLs).api_token }).then(res => {
@@ -47,7 +43,6 @@ export default {
         this.$router.push('/login')
       }
     }
-  } */
   }
 }
 </script>

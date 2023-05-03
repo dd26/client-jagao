@@ -240,71 +240,6 @@
             placeholder="Your ZIP Code"
           />
         </div>
-
-        <!-- <section class="col-12 q-px-md row">
-          <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Important</div>
-        </section>
-
-        <section class="col-12 row q-px-md" v-if="form.isEmployee">
-          <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Attach your CV here</div>
-          <div
-            class="col-12 text-negative text-caption q-pb-md"
-            v-if="$v.stateForm.profileImg.$error"
-          >Your cv is required!</div>
-          <div
-            @click="clickEmployeeFile"
-            class="col-12 container-upload-file-employee bg-primary row"
-          >
-            <div class="col-2 row items-center justify-center">
-              <q-icon name="img:vectors/attach1.svg" size="20px" />
-            </div>
-            <div class="col-10 row justify-start items-center container-name-file-employee">
-              <div class="q-pl-md" style="font-size: 16px;font-weight: 300;color: #B3B3B3">
-                {{ emploFile ? subCadena(emploFile.name, 19) : 'Attach your CV' }}
-              </div>
-            </div>
-            <q-file
-              ref="emploFilePDF"
-              accept="application/pdf"
-              style="display: none;"
-              v-model="emploFile"
-            />
-          </div>
-        </section>
-
-        <section class="col-12 row q-px-md">
-          <div class="q-pt-md text-bold text-primary" style="font-size:20px; font-weight: 700;">Attach your ID here</div>
-          <div
-            class="col-12 text-negative text-caption q-pb-md"
-            v-if="$v.stateForm.profileImg.$error"
-          >Your ID is required</div>
-          <div
-            @click="clickIDFile"
-            class="col-12 container-upload-file-employee bg-primary row"
-          >
-            <div class="col-2 row items-center justify-center">
-              <q-icon name="img:vectors/attach1.svg" size="20px" />
-            </div>
-            <div class="col-10 row justify-start items-center container-name-file-employee">
-              <div class="q-pl-md" style="font-size: 16px;font-weight: 300;color: #B3B3B3">
-                {{ IDFile ? subCadena(IDFile.name, 19) : 'Attach your ID' }}
-              </div>
-            </div>
-            <q-file
-              ref="IDFileRF"
-              accept=".jpg, image/*"
-              style="display: none;"
-              v-model="IDFile"
-            />
-          </div>
-        </section>
-
-        <div class="col-12 text-center q-pt-lg" style="font-weight: 400; font-size: 16px; line-height: 20px">When all your information has been validated you can use our tools to get the services!</div>
-
-        <div class="col-12 text-center q-pt-md text-primary" style="font-size: 16px; font-weight: 500; line-height: 20px">You will receive a notification when your profile is validated.</div>
-
-        <div class="col-12 text-center q-pt-md" style="color: #A1A1A1; font-size: 12px; font-weight: 400;">Privacy Policy</div>
--->
         <div class="btn-progress-container col-12 row justify-center items-center q-pt-xl">
           <q-btn
             @click="nextStep"
@@ -324,27 +259,6 @@
       </section>
 
     </q-scroll-area>
-
-    <!--
-    <div class="col-3 column items-center">
-      <div class="btn-progress-container row justify-center items-center">
-        <q-btn
-          @click="nextStep"
-          icon="arrow_forward"
-          round
-          class="btn-progress"
-          size="lg"
-          color="primary"
-        />
-        <q-circular-progress
-          size="80px"
-          :value="progressVal"
-          color="primary"
-          :thickness="0.07"
-        />
-      </div>
-    </div>
-     -->
 
   </section>
 </template>

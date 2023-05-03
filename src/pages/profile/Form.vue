@@ -2,7 +2,7 @@
   <q-page style="background-color: #D9F2EE; border-radius: 25px 25px 0 0;">
     <section class="row q-px-lg q-pb-xl">
 
-      <section class="column items-start q-px-lg q-pt-lg">
+      <section class="row items-center q-px-lg q-pt-lg justify-between col-12">
         <q-btn
           @click="$router.go(-1)"
           icon="arrow_back_ios"
@@ -168,7 +168,7 @@
         />
       </div>
 
-      <div class="col-12 row q-pt-lg">
+      <!-- <div class="col-12 row q-pt-lg">
         <div class="col-12 q-pl-lg">Country<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
         <q-select
           v-model="form.country_id"
@@ -182,7 +182,7 @@
           label="Country"
           :options="countries"
         />
-      </div>
+      </div> -->
 
       <div class="col-12 row q-pt-lg">
         <div class="col-12 q-pl-lg">City / Town<b class="text-bold text-negative" style="font-size: 20px;">*</b> </div>
@@ -256,8 +256,7 @@ export default {
         year: ''
       },
       countries: [
-        { label: 'Country 1', value: 1 },
-        { label: 'Country 2', value: 2 }
+        { label: 'United States', value: 1 }
       ],
       cities: [
         { label: 'City 1', value: 1 },
@@ -266,11 +265,22 @@ export default {
     }
   },
   mounted () {
+    this.getCities()
     this.profile.img = `${this.$api_url()}image/${this.$route.query.folder}/${this.$route.query.img_id}`
     this.getUserInfo()
     console.log(this.form, 'form')
   },
   methods: {
+    async getCities () {
+      await this.$api.get('cities').then(res => {
+        this.cities = res.map(city => {
+          return {
+            label: city.name,
+            value: city.id
+          }
+        })
+      })
+    },
     async save () {
       this.form.birthDate = this.birthdate
       this.$v.form.$touch()

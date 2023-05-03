@@ -11,6 +11,7 @@ export const FormMixin = {
     }
     console.log(this.id, 'id')
     if (this.id) {
+      console.log('getRecord')
       await this.getRecord()
       this.insert = false
     }
@@ -22,6 +23,7 @@ export const FormMixin = {
     async getRecord () {
       Loading.show()
       await this.$api.get(`${this.route}/${this.id}`).then(res => {
+        console.log(res, 'res')
         this.form = res
         if (typeof this.afterGetRecord === 'function') {
           this.afterGetRecord(res)
