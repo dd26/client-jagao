@@ -133,12 +133,17 @@ export default {
       accountType: 'check',
       banks: [
         { label: 'Select a bank', value: 0 },
-        { label: 'Bank 1', value: 1 },
-        { label: 'Bank 2', value: 2 },
-        { label: 'Bank 3', value: 3 },
-        { label: 'Bank 4', value: 4 },
-        { label: 'Bank 5', value: 5 },
-        { label: 'Bank 6', value: 6 }
+        { label: 'Bank of America', value: 1 },
+        { label: 'Wells Fargo', value: 2 },
+        { label: 'JPMorgan Chase Bank', value: 3 },
+        { label: 'Truist Bank', value: 4 },
+        { label: 'Regions Bank', value: 5 },
+        { label: 'TD Bank', value: 6 },
+        { label: 'PNC Bank', value: 7 },
+        { label: 'Fifth Third Bank', value: 8 },
+        { label: 'Synovus Bank', value: 9 },
+        { label: 'Citibank', value: 10 }
+
       ],
       route: 'banks',
       id: this.$route.params.id
