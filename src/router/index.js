@@ -19,7 +19,7 @@ Vue.use(VueGoogleMaps, {
     key: apiKeyGoogle,
     // libraries: 'places' // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
-    libraries: 'places,drawing,visualization'
+    libraries: 'places,drawing,visualization,routes'
     // (as you require)
 
     // If you want to set the version, you can do so:
