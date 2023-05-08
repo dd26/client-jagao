@@ -76,6 +76,28 @@
             />
             <div class="text-primary q-pl-xs" style="font-size: 12px; font-weight: 400;">{{ form.customer.phone }}</div>
           </section>
+
+          <section
+            @click="showLocation"
+            class="row col-12 items-center q-pt-xs cursor-pointer"
+            :style="{
+              position: 'relative',
+            }"
+            clickable
+            v-ripple
+          >
+            <q-icon
+              name="visibility"
+              size="sm"
+              color="primary"
+            />
+            <div
+              class="text-primary q-pl-xs"
+              style="font-size: 12px; font-weight: 400;"
+            >
+              Show location service
+            </div>
+          </section>
         </section>
 
       </section>
@@ -142,11 +164,33 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <!-- Show location service and mi ubication -->
+    <q-dialog
+      v-model="showMapDlg"
+      persistent
+      maximized
+    >
+      <q-card
+        class="bg-white"
+      >
+        <q-btn
+          style="position: absolute; top: 10px; right: 10px; z-index: 9999;"
+          @click="showMapDlg = false, coordinates = null"
+          color="negative"
+          icon="close"
+        />
+        <GoogleMapServiceDetail
+          :destination="coordinates"
+        />
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
 import SCategoryItem from '../../../components/services/SCategoryItem'
+import GoogleMapServiceDetail from '../../../components/googleMaps/GoogleMapServiceDetail.vue'
 
 const states = [
   {
@@ -175,7 +219,7 @@ const timeEstimates = [
 ]
 
 export default {
-  components: { SCategoryItem },
+  components: { SCategoryItem, GoogleMapServiceDetail },
   data () {
     return {
       route: 'master_request_services',
@@ -184,7 +228,10 @@ export default {
       statuteValue: 0,
       form: null,
       acceptServiceDlg: false,
-      times: timeEstimates
+      times: timeEstimates,
+      showLocationDlg: false,
+      showMapDlg: false,
+      coordinates: null
     }
   },
   mounted () {
@@ -252,6 +299,15 @@ export default {
         this.getData()
         this.acceptServiceDlg = false
       }
+    },
+    showLocation () {
+      console.log('show location', this.form)
+      this.coordinates = {
+        lat: parseFloat(this.form.address.latitude),
+        lng: parseFloat(this.form.address.longitude)
+      }
+      console.log('coordinates', this.coordinates)
+      this.showMapDlg = true
     }
   }
 }
