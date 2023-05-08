@@ -2,42 +2,18 @@
   <GmapMap
     ref="mapRef"
     :center="centerC"
-    :zoom="20"
+    :zoom="15"
     :options="mapOptions"
     @map-loaded="onMapLoaded"
     style="width: 100%; height: 100%; border-radius: 12px"
   >
-    <GmapMarker
-      :key="'current'"
-      :position="currentLocation"
-      :clickable="true"
-    />
-    <GmapMarker
-      :key="'destination'"
-      :position="destinationLocation"
-      :clickable="true"
-    />
-    <DirectionsRenderer
-      v-if="mapLoaded"
-      :origin="currentLocation"
-      :destination="destinationLocation"
-      :travelMode="travelMode"
-      :waypoints="[]"
-      :optimizeWaypoints="true"
-      @click="() => {}"
-      @map-loaded="handleMapLoaded"
-    />
   </GmapMap>
 </template>
 
 <script>
 import { gmapApi } from 'vue2-google-maps'
-import DirectionsRenderer from './DirectionsRenderer.vue'
 
 export default {
-  components: {
-    DirectionsRenderer
-  },
   props: ['destination'],
   computed: {
     google: gmapApi
@@ -50,6 +26,8 @@ export default {
       },
       currentLocation: null,
       destinationLocation: null,
+      estimatedTravelTime: null,
+      directionsRenderer: null,
       travelMode: 'DRIVING',
       mapObject: null,
       mapOptions: {
@@ -60,6 +38,12 @@ export default {
         gestureHandling: 'cooperative'
       },
       mapLoaded: false
+    }
+  },
+  watch: {
+    destination (val) {
+      console.log('Destino:', val);
+      this.drawRoute();
     }
   },
   methods: {
@@ -89,6 +73,7 @@ export default {
             }
             console.log('Ubicación actual:', this.currentLocation);
             this.centerC = this.currentLocation
+            this.drawerRouteBetweenTwoCors()
             resolve() // Resuelve la promesa aquí
           },
           error => {
@@ -113,6 +98,10 @@ export default {
           lng: position.coords.longitude
         };
         this.centerC = this.currentLocation;
+        // timeout para ejecutar el drawerRouteBetweenTwoCors() después de 5 segundos
+        setTimeout(() => {
+          this.drawerRouteBetweenTwoCors();
+        }, 3000);
       };
 
       const errorCallback = error => {
@@ -121,101 +110,78 @@ export default {
 
       const options = {
         enableHighAccuracy: true,
-        timeout: 5000,
+        // timeout: 10000,
         maximumAge: 0
       };
 
       navigator.geolocation.watchPosition(successCallback, errorCallback, options);
-    }
-  },
-  async mounted () {
-    console.log('mounted', this.destination)
-    this.$refs.mapRef.$mapPromise.then(() => {
-      this.getCurrentLocation()
-      this.watchCurrentLocation()
-      this.destinationLocation = this.destination
-    })
-  }
-}
-</script>
-
-<style></style>
-
-
-<!-- <template>
-  <div>
-    <GmapMap
-      :center="center"
-      :zoom="12"
-      ref="mapRef"
-      style="width: 100%; height: 500px"
-    >
-      <GmapMarker :position="center" />
-    </GmapMap>
-  </div>
-</template>
-
-<script>
-import { gmapApi } from 'vue2-google-maps'
-
-export default {
-  data () {
-    return {
-      center: { lat: 0, lng: 0 }
-    }
-  },
-  props: ['destination'],
-  computed: {
-    google: gmapApi
-  },
-  watch: {
-    destination (newValue) {
-      if (newValue && this.center) {
-        this.navigateTo(newValue)
-      }
-    }
-  },
-  mounted () {
-    this.getUserLocation()
-  },
-  methods: {
-    async getUserLocation () {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            this.center = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            }
-          },
-          () => {
-            console.error('Error al obtener la ubicación')
-          }
-        )
-      }
     },
-    navigateTo (destination) {
-      const directionsService = new this.google.maps.DirectionsService()
-      const directionsRenderer = new this.google.maps.DirectionsRenderer()
-
+    drawerRouteBetweenTwoCors () {
+      const directionsService = new google.maps.DirectionsService()
+      const directionsRenderer = new google.maps.DirectionsRenderer()
       directionsRenderer.setMap(this.$refs.mapRef.$mapObject)
+      console.log('Destino:', this.destination);
+      console.log('Centro:', this.centerC);
+      console.log('Viaje:', this.travelMode);
+      const request = {
+        origin: this.centerC,
+        destination: this.destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+      }
 
-      directionsService.route(
-        {
-          origin: this.center,
-          destination: destination,
-          travelMode: this.google.maps.TravelMode.DRIVING
-        },
-        (response, status) => {
-          if (status === this.google.maps.DirectionsStatus.OK) {
-            directionsRenderer.setDirections(response)
-          } else {
-            console.error('Error al obtener las direcciones:', status)
-          }
+      directionsService.route(request, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsRenderer.setDirections(result)
+
+          // Extraer y almacenar el tiempo de viaje estimado
+          const leg = result.routes[0].legs[0];
+          this.estimatedTravelTime = leg.duration;
+          console.log('Tiempo estimado de viaje:', this.estimatedTravelTime.text);
+        } else {
+          console.error('Error al obtener las direcciones:', status)
         }
-      )
+      })
+    },
+    drawRoute() {
+      if (!this.currentLocation || !this.destination) {
+        return;
+      }
+
+      if (this.directionsRenderer) {
+        this.directionsRenderer.setMap(null);
+      }
+
+      const directionsService = new google.maps.DirectionsService();
+      this.directionsRenderer = new google.maps.DirectionsRenderer();
+      this.directionsRenderer.setMap(this.$refs.mapRef.$mapObject);
+
+      const request = {
+        origin: this.currentLocation,
+        destination: this.destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+      };
+
+      directionsService.route(request, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.directionsRenderer.setDirections(result);
+
+          // Extraer y almacenar el tiempo de viaje estimado
+          const leg = result.routes[0].legs[0];
+          this.estimatedTravelTime = leg.duration;
+          console.log("Tiempo estimado de viaje:", this.estimatedTravelTime.text);
+        } else {
+          console.error("Error al obtener las direcciones:", status);
+        }
+      });
     }
+  },
+  mounted() {
+    this.$refs.mapRef.$mapPromise.then(() => {
+      this.getCurrentLocation();
+      this.watchCurrentLocation();
+      this.destinationLocation = this.destination;
+      this.drawRoute(); // Llama a drawRoute aquí en lugar de drawerRouteBetweenTwoCors
+    });
   }
 }
 </script>
- -->
