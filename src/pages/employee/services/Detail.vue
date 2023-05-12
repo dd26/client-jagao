@@ -182,6 +182,7 @@
         />
         <GoogleMapServiceDetail
           :destination="coordinates"
+          @changeWatch="changeWatch"
         />
       </q-card>
     </q-dialog>
@@ -231,7 +232,8 @@ export default {
       times: timeEstimates,
       showLocationDlg: false,
       showMapDlg: false,
-      coordinates: null
+      coordinates: null,
+      watchId: null
     }
   },
   mounted () {
@@ -251,7 +253,16 @@ export default {
       return this.$formatDate(this.form.date_request, 'D/M/YYYY HH:mm A')
     }
   },
+  watch: {
+    showMapDlg () {
+      navigator.geolocation.clearWatch(this.watchId)
+    }
+  },
   methods: {
+    changeWatch (id) {
+      console.log('changeWatch', id)
+      this.watchId = id
+    },
     async cancelService () {
       const { id } = this.$route.params
       this.$q.loading.show()
