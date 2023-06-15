@@ -1,5 +1,5 @@
 export default {
   // apiUrl: 'https://jagao.dev/backend/public/api/',
-  apiUrl: 'http://localhost:8000/api/',
-  googleApiKey: 'AIzaSyCvl2HQcTY0jIw3TTWj3C92dUCln95aYv8'
+  apiUrl: 'https://jagao.co/back_jagao/public/api/',
+  googleApiKey: 'AIzaSyC62qW1RdPQLPCGgL3MwzFjl43mEjk5cd0'
 }

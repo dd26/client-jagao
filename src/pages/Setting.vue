@@ -8,7 +8,7 @@
           round
           flat
           size="15px"
-          to="/home"
+          :to="routes.home"
         />
       </div>
       <div class="text-primary q-ml-sm" style="font-weight: 700; font-size: 20px">Settings</div>
@@ -65,13 +65,15 @@ import { mapMutations } from 'vuex'
 const routeCustomer = {
   notification: '/notifications/client',
   profile: '/profile/info/',
-  accounts: '/accounts'
+  accounts: '/accounts',
+  home: '/home'
 }
 
 const routeEmployee = {
   notification: '/notifications/employee',
   profile: '/profile/info/',
-  accounts: '/accounts'
+  accounts: '/accounts',
+  home: '/home/employee'
 }
 
 export default {
@@ -80,7 +82,8 @@ export default {
       routes: {
         notification: '/notifications/client',
         profile: '/profile/info/',
-        accounts: '/accounts'
+        accounts: '/accounts',
+        home: '/home'
       },
       profileRoute: ''
     }
