@@ -96,7 +96,7 @@
     <q-footer v-if="user.id">
       <q-tabs v-model="tab">
         <q-tab :name="1" icon="img:vectors/home1.svg" @click="$router.push(routeFooter.home)" />
-        <q-tab :name="2" icon="img:vectors/search1.svg" @click="$router.push(routeFooter.search)" />
+        <!-- <q-tab :name="2" icon="img:vectors/search1.svg" @click="$router.push(routeFooter.search)" /> -->
         <q-tab :name="3" icon="img:vectors/notify1.svg" @click="$router.push(routeFooter.notifications)">
           <div v-if="hasNotifications" class="badge-style" />
         </q-tab>
