@@ -1,6 +1,6 @@
 import axios from 'axios'
 import env from '../env'
-import { Notify, Loading } from 'quasar'
+import { Notify, Loading, Dialog } from 'quasar'
 
 const axiosInstance = axios.create({
   baseURL: env.apiUrl
@@ -34,6 +34,21 @@ export default async ({ store, Vue }) => {
         color: 'warning'
       })
       localStorage.removeItem('JAGAO_SESSION_INFO')
+      Loading.hide()
+    }
+
+    // cuando es codigo 402, se debe redireccionar al login
+    if (error.response.status === 422) {
+      Loading.hide()
+      Dialog.create({
+        title: 'Session expired',
+        message: error.response.data.message,
+        ok: 'Ok',
+        persistent: true
+      }).onOk(() => {
+        localStorage.removeItem('JAGAO_SESSION_INFO')
+        window.location.href = '/#/login'
+      })
     }
 
     // cuando es codigo 403
