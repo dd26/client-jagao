@@ -166,13 +166,13 @@ export default {
     if (token) {
       const user = await this.$getUserInfo()
       if (user) {
-        this.fee = user.fee
         await this.getCategory()
         if (this.$route.query.services) {
           this.requestAgain()
         }
       }
     }
+    this.fee = await this.$getFee()
     await this.getServices()
   },
   methods: {

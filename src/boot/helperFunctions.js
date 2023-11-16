@@ -7,6 +7,11 @@ Vue.prototype.$getUserInfo = async function () {
   return res
 }
 
+Vue.prototype.$getFee = async function () {
+  const res = await this.$api.get('fee')
+  return res.fee
+}
+
 Vue.prototype.$api_url = function () {
   return env.apiUrl
 }

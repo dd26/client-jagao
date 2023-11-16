@@ -234,11 +234,7 @@ export default {
     }
   },
   async mounted () {
-    const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
-    if (token) {
-      const user = await this.$getUserInfo()
-      this.fee = user.fee
-    }
+    this.fee = await this.$getFee()
   },
   validations: {
     form: {

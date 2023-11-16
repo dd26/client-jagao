@@ -295,8 +295,7 @@ export default {
   },
   async mounted () {
     const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
-    const user = await this.$getUserInfo()
-    this.fee = user.fee
+    this.fee = await this.$getFee()
     if (token) {
       this.token = token
       this.getCards()
