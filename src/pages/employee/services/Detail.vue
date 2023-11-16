@@ -274,7 +274,8 @@ export default {
     },
     async getData () {
       this.$q.loading.show()
-      const res = await this.$api.get(`${this.route}/${this.$route.params.id}`)
+      console.debug(this.route)
+      const res = await this.$api.get(`${this.route}/${this.$route.params.id}`, { params: { type: 'employee' } })
       this.$q.loading.hide()
       this.form = res
       this.statuteValue = res.state

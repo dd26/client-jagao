@@ -53,14 +53,25 @@
           />
           <div style="font-size: 20px">{{item.quantity > 1 ? item.quantity : ''}} {{item.name}}</div>
         </div>
-        <div class="text-primary" style="font-size: 20px; font-weight: 700;">{{item.price * item.quantity}}$</div>
+        <div v-if="item.comision_is_porcentage" class="text-primary" style="font-size: 20px; font-weight: 700;">{{item.price * item.quantity}}$</div>
+        <div v-if="!item.comision_is_porcentage" class="text-primary" style="font-size: 20px; font-weight: 700;">{{(parseFloat(item.price) + parseFloat(item.comision_app) + parseFloat(item.comision_espcialist)) * item.quantity}}$</div>
       </div>
     </section>
     <hr class="col-11" style="border-top: 0.1em solid #000000;">
     <section class="row col-12 q-px-lg">
       <q-space />
-      <div class="text-black q-pr-lg" style="font-size: 20px;">Total</div>
-      <div class="text-primary text-bold" style="font-size: 20px;">{{totalAmount}}$</div>
+      <div class="text-black" style="font-size: 20px;">Subtotal</div>
+      <div class="text-primary text-bold col-4 text-right" style="font-size: 20px;">{{totalAmount}}$</div>
+    </section>
+    <section class="row col-12 q-px-lg">
+      <q-space />
+      <div class="text-black" style="font-size: 20px;">Fee</div>
+      <div class="text-primary text-bold col-4 text-right" style="font-size: 20px;">{{fee}}$</div>
+    </section>
+    <section class="row col-12 q-px-lg">
+      <q-space />
+      <div class="text-black" style="font-size: 20px;">Total</div>
+      <div class="text-primary text-bold col-4 text-right" style="font-size: 20px;">{{totalAmount + fee}}$</div>
     </section>
 
     <section class="col-12 row">
@@ -125,7 +136,7 @@
             <q-item-label class="text-primary" style="font-size: 20px;">Total amount</q-item-label>
           </q-item-section>
           <q-item-section side center>
-            <q-item-label class="text-primary text-bold" style="font-size: 20px;">{{$formatPrice(totalAmount)}}$</q-item-label>
+            <q-item-label class="text-primary text-bold" style="font-size: 20px;">{{$formatPrice(totalAmount + fee)}}$</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -278,11 +289,14 @@ export default {
         totalAmount: 0
       },
       token: null,
-      isDlg: false
+      isDlg: false,
+      fee: 0
     }
   },
-  mounted () {
+  async mounted () {
     const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
+    const user = await this.$getUserInfo()
+    this.fee = user.fee
     if (token) {
       this.token = token
       this.getCards()
@@ -290,7 +304,16 @@ export default {
   },
   computed: {
     totalAmount () {
-      return this.formPay.services.reduce((total, item) => total + (parseFloat(item.price) * parseInt(item.quantity)), 0)
+      return this.formPay.services.reduce((total, item) => {
+        if (item.select) {
+          if (item.comision_is_porcentage) {
+            return total + (parseFloat(item.price) * parseInt(item.quantity))
+          } else {
+            return total + ((parseFloat(item.price) + parseFloat(item.comision_app) + parseFloat(item.comision_espcialist)) * parseInt(item.quantity))
+          }
+        }
+        return total
+      }, 0)
     }
   },
   methods: {

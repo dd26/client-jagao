@@ -16,7 +16,10 @@
       <q-item-section class="q-py-xs q-px-md q-pr-xl">
         <q-item-label class="text-primary" style="font-size: 20px; font-weight: 700;"> {{name}} </q-item-label>
         <q-item-label lines="3" style="font-size: 14px; font-weight: 400; color: #5C5C5C">{{description}}</q-item-label>
-        <q-item-label class="text-primary text-bold q-pt-xs" style="font-size: 20px"> {{price}}$ </q-item-label>
+        <q-item-label class="text-primary text-bold q-pt-xs" style="font-size: 20px">
+          <span v-if="price > 0">{{price}}$</span>
+          <span v-else></span>
+        </q-item-label>
       </q-item-section>
 
       <div class="check-style">

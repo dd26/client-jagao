@@ -223,7 +223,7 @@ export default {
     },
     async getData () {
       this.$q.loading.show()
-      const res = await this.$api.get(`${this.route}/${this.$route.params.id}`)
+      const res = await this.$api.get(`${this.route}/${this.$route.params.id}`, { params: { type: 'customer' } })
       this.$q.loading.hide()
       this.form = res
       this.statuteValue = res.state

@@ -61,14 +61,25 @@
           />
           <div style="font-size: 20px">{{item.quantity > 1 ? item.quantity : ''}} {{item.name}}</div>
         </div>
-        <div class="text-primary" style="font-size: 20px; font-weight: 700;">{{item.price * item.quantity}}$</div>
+        <div v-if="item.comision_is_porcentage" class="text-primary" style="font-size: 20px; font-weight: 700;">{{item.price * item.quantity}}$</div>
+        <div v-if="!item.comision_is_porcentage" class="text-primary" style="font-size: 20px; font-weight: 700;">{{(parseFloat(item.price) + parseFloat(item.comision_app) + parseFloat(item.comision_espcialist)) * item.quantity}}$</div>
       </div>
     </section>
     <hr class="col-11" style="border-top: 0.1em solid #000000;">
     <section class="row col-12 q-px-lg">
       <q-space />
-      <div class="text-black q-pr-lg" style="font-size: 20px;">Total</div>
-      <div class="text-primary text-bold" style="font-size: 20px;">{{totalAmount}}$</div>
+      <div class="text-black" style="font-size: 20px;">Subtotal</div>
+      <div class="text-primary text-bold col-4 text-right" style="font-size: 20px;">{{totalAmount}}$</div>
+    </section>
+    <section class="row col-12 q-px-lg">
+      <q-space />
+      <div class="text-black" style="font-size: 20px;">Fee</div>
+      <div class="text-primary text-bold col-4 text-right" style="font-size: 20px;">{{fee}}$</div>
+    </section>
+    <section class="row col-12 q-px-lg">
+      <q-space />
+      <div class="text-black" style="font-size: 20px;">Total</div>
+      <div class="text-primary text-bold col-4 text-right" style="font-size: 20px;">{{totalAmount + fee}}$</div>
     </section>
 
     <section class="col-12 row q-pa-lg">
@@ -165,13 +176,21 @@ export default {
         right_now: false
       },
       modeEdit: false,
-      isErrorCoords: false
+      isErrorCoords: false,
+      fee: 0
     }
   },
   computed: {
     totalAmount () {
       return this.form.services.reduce((total, item) => {
-        return total + (parseFloat(item.price) * parseFloat(item.quantity))
+        if (item.select) {
+          if (item.comision_is_porcentage) {
+            return total + (parseFloat(item.price) * parseInt(item.quantity))
+          } else {
+            return total + ((parseFloat(item.price) + parseFloat(item.comision_app) + parseFloat(item.comision_espcialist)) * parseInt(item.quantity))
+          }
+        }
+        return total
       }, 0)
     }
   },
@@ -212,6 +231,13 @@ export default {
     successCoords () {
       console.log('success confirmar ubicacion')
       this.isErrorCoords = false
+    }
+  },
+  async mounted () {
+    const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
+    if (token) {
+      const user = await this.$getUserInfo()
+      this.fee = user.fee
     }
   },
   validations: {

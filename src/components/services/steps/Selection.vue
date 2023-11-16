@@ -73,8 +73,9 @@
             v-for="item in servicesCheck"
             :key="item.id"
           >
-            <div style="font-size: 20px" class="col-5">{{item.quantity > 1 ? item.quantity : ''}} {{item.name}}</div>
-            <div class="text-primary col-5" style="font-size: 20px; font-weight: 700;">{{item.price * item.quantity}}$</div>
+            <div style="font-size: 20px" class="col-4">{{item.quantity > 1 ? item.quantity : ''}} {{item.name}}</div>
+            <div v-if="item.comision_is_porcentage" class="text-primary col-5" style="font-size: 20px; font-weight: 700;">{{item.price * item.quantity}}$</div>
+            <div v-if="!item.comision_is_porcentage" class="text-primary col-5" style="font-size: 20px; font-weight: 700;">{{(parseFloat(item.price) + parseFloat(item.comision_app) + parseFloat(item.comision_espcialist)) * item.quantity}}$</div>
             <q-btn
               icon="img:vectors/icon_trash.svg"
               flat
@@ -83,6 +84,32 @@
               size="md"
               @click="unselectService(item.id)"
             />
+          </div>
+          <div v-if="servicesCheck.length > 0" class="col-12 row" style="border-top: 3px solid #000">
+            <div class="col-12 row justify-between text-black q-pr-sm" style="font-size: 20px; font-weight: 700;">
+              <div class="col-4">Subtotal</div>
+              <div class="col-5">{{ totalAmount }}$</div>
+              <q-btn
+                icon="img:vectors/icon_trash.svg"
+                style="visibility: hidden;" flat round dense size="md"
+              />
+            </div>
+            <div class="col-12 row justify-between text-black q-pr-sm" style="font-size: 20px; font-weight: 700;">
+              <div class="col-4">Fee </div>
+              <div class="col-5">{{ fee }}$</div>
+              <q-btn
+                icon="img:vectors/icon_trash.svg"
+                style="visibility: hidden;" flat round dense size="md"
+              />
+            </div>
+            <div class="col-12 row justify-between q-pr-sm text-primary" style="font-size: 20px; font-weight: 700;">
+              <div class="col-4">Total </div>
+              <div class="col-5">{{ $formatPrice(totalAmount + fee)  }}$</div>
+              <q-btn
+                icon="img:vectors/icon_trash.svg"
+                style="visibility: hidden;" flat round dense size="md"
+              />
+            </div>
           </div>
         </section>
       </section>
@@ -105,14 +132,19 @@ export default {
       services: [],
       category_id: this.$route.params.category_id,
       category: {},
-      render: true
+      render: true,
+      fee: 0
     }
   },
   computed: {
     totalAmount () {
       return this.services.reduce((total, item) => {
         if (item.select) {
-          return total + (parseFloat(item.price) * parseInt(item.quantity))
+          if (item.comision_is_porcentage) {
+            return total + (parseFloat(item.price) * parseInt(item.quantity))
+          } else {
+            return total + ((parseFloat(item.price) + parseFloat(item.comision_app) + parseFloat(item.comision_espcialist)) * parseInt(item.quantity))
+          }
         }
         return total
       }, 0)
@@ -134,6 +166,7 @@ export default {
     if (token) {
       const user = await this.$getUserInfo()
       if (user) {
+        this.fee = user.fee
         await this.getCategory()
         if (this.$route.query.services) {
           this.requestAgain()
@@ -194,6 +227,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>

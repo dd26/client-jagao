@@ -2,7 +2,7 @@
   <div class="footer row" :class="{ 'footerNoUser': !user.id }">
     <div class="col-6 row items-start">
       <div class="col-12 q-pt-md" style="font-weight: 700; font-size: 25px; line-height: 1px;">Amount</div>
-      <div class="col-12" style="font-weight: 700; font-size: 25px; line-height: 1px;">{{$formatPrice(amount)}}$</div>
+      <div class="col-12" style="font-weight: 700; font-size: 25px; line-height: 1px;">{{$formatPrice(amount + 1.5)}}$</div>
     </div>
     <div class="col-6 flex flex-center">
       <q-btn
@@ -22,13 +22,15 @@ export default {
   props: ['amount', 'isConfirm'],
   data () {
     return {
-      user: {}
+      user: {},
+      fee: 0
     }
   },
   async created () {
     const token = JSON.parse(localStorage.getItem('JAGAO_SESSION_INFO'))
     if (token) {
       this.user = await this.$getUserInfo()
+      this.fee = this.user.fee
     }
   }
 }
