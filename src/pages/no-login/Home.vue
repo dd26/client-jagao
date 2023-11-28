@@ -5,7 +5,17 @@
     </q-toolbar>
 
     <div class="row q-px-lg q-pb-md q-pt-lg">
-      <div class="col-12 text-primary" style="font-weight: 700; font-size: 20px;">Welcome! </div>
+      <q-btn
+          @click="$router.go(-1)"
+          icon="arrow_back_ios"
+          flat
+          rounded
+          dense
+          align="left"
+          class="col-1"
+          style="font-size: 15px; color: rgb(125, 186, 71);"
+        />
+      <div class="col-10 text-primary" style="font-weight: 700; font-size: 20px;">Welcome! </div>
       <div class="col-12" style="font-weight: 400; font-size: 16px; color: #5C5C5C">Let’s start work! </div>
     </div>
 
@@ -13,7 +23,32 @@
       <img src="illustrations/14.svg" alt="ilustratio" width="100%" height="100%">
     </section>
 
-    <section class="row col-12 q-pt-lg q-px-md">
+    <section v-if="serviceschilds.length > 0"
+      class="row col-12 q-pt-lg q-px-md">
+      <div
+        class="col-6 row q-px-sm q-py-md"
+        v-for="b in serviceschilds"
+        :key="b.id"
+      >
+        <card-item
+          class="col-12"
+          v-bind="b"
+          @selectCategory="showServices(b.id)"
+        />
+      </div>
+      <div class="col-12 row q-px-sm q-py-lg">
+        <q-btn
+            icon="arrow_back_ios"
+            color="primary"
+            unelevated
+            dense
+            style="border-radius: 8px; height: 35px; width: 100px"
+            @click="backToServices()"
+          />
+      </div>
+    </section>
+    <section v-else
+      class="row col-12 q-pt-lg q-px-md">
       <div
         class="col-6 row q-px-sm q-py-md"
         v-for="b in services"
@@ -73,6 +108,8 @@ export default {
         { icon: 'img:vectors/briefcase1.svg', title: 'Road Service', id: 3 },
         { icon: 'img:vectors/wheel1.svg', title: 'Company Service', id: 4 }
       ],
+      serviceschilds: [],
+      servicesTmp: [],
       isDlg: false
     }
   },
@@ -85,9 +122,20 @@ export default {
       const res = await this.$api.get('categories_actives')
       this.$q.loading.hide()
       this.services = res
+      this.servicesTmp = this.services
+      this.services = this.services.filter(item => item.is_child !== true)
     },
     async showServices (id) {
-      this.$router.push(`/services/customer/process/${id}`)
+      const service = this.servicesTmp.find(item => item.id === id)
+      if (service.is_parent) {
+        this.serviceschilds = []
+        this.serviceschilds = this.servicesTmp.filter(item => item.parent_id === service.id)
+      } else {
+        this.$router.push(`/services/customer/process/${id}`)
+      }
+    },
+    backToServices () {
+      this.serviceschilds = []
     }
   }
 }

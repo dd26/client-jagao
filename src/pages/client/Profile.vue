@@ -123,7 +123,7 @@ export default {
     async getUserInfo () {
       const user = await this.$getUserInfo()
       this.hasVerified = user.verified
-      this.name = user.name ? user.user.name : this.name
+      this.name = user.user.name ? user.user.name : this.name
       user.role_id = user.user.role_id
       this.role_id = user.role_id
       const folder = user.role_id === 3 ? 'customers' : 'specialists'

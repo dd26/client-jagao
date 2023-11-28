@@ -66,6 +66,7 @@
         <section class="col-3 q-pa-md column justify-end">
           <div class="row">
             <q-item
+              v-if="isUserSession"
               clickable
               v-ripple
               class="col-12"
@@ -173,6 +174,19 @@ const menuItemsDataEmployee = [
   }
 ]
 
+const menuItemsNoAccount = [
+  {
+    title: 'Home',
+    icon: 'img:vectors/home1.svg',
+    to: '/login'
+  },
+  {
+    title: 'Get started',
+    icon: 'img:vectors/user-plus.svg',
+    to: '/register'
+  }
+]
+
 const routeEmployee = {
   home: '/home/employee',
   search: '/search',
@@ -211,6 +225,17 @@ export default {
       this.getUserInfo()
       if (user) {
         this.getNotifications()
+      }
+    } else {
+      this.menuItems = menuItemsNoAccount
+    }
+  },
+  computed: {
+    isUserSession () {
+      if (localStorage.getItem('JAGAO_SESSION_INFO') === null) {
+        return false
+      } else {
+        return true
       }
     }
   },

@@ -185,6 +185,7 @@ export default {
       this.$q.loading.hide()
       if (response) {
         this.categories = response
+        this.categories = this.categories.filter(item => item.is_parent !== true)
       }
     },
     subCadena (cadena, longitud) {

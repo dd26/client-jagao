@@ -18,19 +18,44 @@
     <section class="row q-pt-xl">
       <div class="col-12 text-primary q-px-lg" style="font-size: 25px; font-weight: 700">Find services</div>
 
-      <section class="row col-12 q-pt-lg q-px-md">
-        <div
-          class="col-6 row q-px-sm q-py-md"
-          v-for="b in services"
-          :key="b.id"
-        >
-          <card-item
-            class="col-12"
-            v-bind="b"
-            @selectCategory="selectCategory"
+    <section v-if="serviceschilds.length > 0"
+      class="row col-12 q-pt-lg q-px-md">
+      <div
+        class="col-6 row q-px-sm q-py-md"
+        v-for="b in serviceschilds"
+        :key="b.id"
+      >
+        <card-item
+          class="col-12"
+          v-bind="b"
+          @selectCategory="selectCategory(b.id)"
+        />
+      </div>
+      <div class="col-12 row q-px-sm q-py-lg">
+        <q-btn
+            icon="arrow_back_ios"
+            color="primary"
+            unelevated
+            dense
+            style="border-radius: 8px; height: 35px; width: 100px"
+            @click="backToServices()"
           />
-        </div>
-      </section>
+      </div>
+    </section>
+    <section v-else
+      class="row col-12 q-pt-lg q-px-md">
+      <div
+        class="col-6 row q-px-sm q-py-md"
+        v-for="b in services"
+        :key="b.id"
+      >
+        <card-item
+          class="col-12"
+          v-bind="b"
+          @selectCategory="selectCategory(b.id)"
+        />
+      </div>
+    </section>
     </section>
   </q-page>
 </template>
@@ -52,7 +77,9 @@ export default {
         { icon: 'img:vectors/can1.svg', title: 'House Service', id: 2 },
         { icon: 'img:vectors/briefcase1.svg', title: 'Road Service', id: 3 },
         { icon: 'img:vectors/wheel1.svg', title: 'Company Service', id: 4 }
-      ]
+      ],
+      serviceschilds: [],
+      servicesTmp: []
     }
   },
   mounted () {
@@ -68,9 +95,20 @@ export default {
       const res = await this.$api.get('categories_actives')
       this.$q.loading.hide()
       this.services = res
+      this.servicesTmp = this.services
+      this.services = this.services.filter(item => item.is_child !== true)
     },
-    selectCategory (category) {
-      this.$router.push('/services/customer/process/' + category)
+    selectCategory (id) {
+      const service = this.servicesTmp.find(item => item.id === id)
+      if (service.is_parent) {
+        this.serviceschilds = []
+        this.serviceschilds = this.servicesTmp.filter(item => item.parent_id === service.id)
+      } else {
+        this.$router.push(`/services/customer/process/${id}`)
+      }
+    },
+    backToServices () {
+      this.serviceschilds = []
     }
   }
 }

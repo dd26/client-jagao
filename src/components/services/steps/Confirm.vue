@@ -196,6 +196,14 @@ export default {
   },
   methods: {
     continueStep () {
+      if (localStorage.getItem('JAGAO_SESSION_INFO') === null) {
+        this.$q.notify({
+          color: 'negative',
+          message: 'Please login to continue'
+        })
+        return
+      }
+
       // validar coordenadas
       if (this.isErrorCoords) {
         this.$q.notify({

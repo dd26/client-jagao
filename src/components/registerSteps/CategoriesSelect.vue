@@ -44,6 +44,7 @@ export default {
       const res = await this.$api.get('categories_actives')
       this.$q.loading.hide()
       this.categories = res
+      this.categories = this.categories.filter(item => item.is_parent !== true)
     },
     selectCategory (category) {
       this.$emit('nextStep', { category_id: category })

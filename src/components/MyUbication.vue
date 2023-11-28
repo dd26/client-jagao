@@ -45,7 +45,7 @@
     >
       <!-- No tienes direcciones agregadas, para agregar una haga click aqui -->
       <q-item
-        to="/address/form"
+        @click="goToNewAddress"
         clickable
         v-ripple
         class="text-white q-py-md"
@@ -144,6 +144,16 @@ export default {
         if (this.addresses.length > 0) {
           this.changeAddress(this.addresses[0].id)
         }
+      }
+    },
+    goToNewAddress () {
+      if (localStorage.getItem('JAGAO_SESSION_INFO') === null) {
+        this.$q.notify({
+          color: 'negative',
+          message: 'Please login to continue'
+        })
+      } else {
+        this.$router.push('/address/form')
       }
     }
   }
